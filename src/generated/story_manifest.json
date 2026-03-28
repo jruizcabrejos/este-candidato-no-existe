@@ -1,0 +1,889 @@
+{
+  "version": 4,
+  "sourceFingerprint": "3348874d57878109612fc20efe6adefe8a15e10f0b230f0f60887c79b54fedfd",
+  "summary": {
+    "totalPortraits": 4376,
+    "sexCount": 2,
+    "regionCount": 27,
+    "districtCount": 27,
+    "partyCount": 37
+  },
+  "hero": {
+    "label": "Peru 2026",
+    "assetUrl": "/generated/composites/hero.webp",
+    "portraitCount": 4376
+  },
+  "sexes": [
+    {
+      "slug": "male",
+      "label": "Hombres",
+      "portraitCount": 2612,
+      "assetUrl": "/generated/composites/sexes/male.webp"
+    },
+    {
+      "slug": "female",
+      "label": "Mujeres",
+      "portraitCount": 1764,
+      "assetUrl": "/generated/composites/sexes/female.webp"
+    }
+  ],
+  "regionsBySex": [
+    {
+      "slug": "male",
+      "label": "Hombres",
+      "overall": {
+        "slug": "male",
+        "label": "Hombres",
+        "portraitCount": 2612,
+        "assetUrl": "/generated/composites/sexes/male.webp",
+        "percentage": 59.7
+      },
+      "regions": [
+        {
+          "slug": "amazonas",
+          "label": "Amazonas",
+          "portraitCount": 58,
+          "assetUrl": "/generated/composites/regions-by-sex/male/amazonas.webp",
+          "shapeUrl": "/generated/region-shapes/amazonas.svg"
+        },
+        {
+          "slug": "ancash",
+          "label": "Ancash",
+          "portraitCount": 95,
+          "assetUrl": "/generated/composites/regions-by-sex/male/ancash.webp",
+          "shapeUrl": "/generated/region-shapes/ancash.svg"
+        },
+        {
+          "slug": "apurimac",
+          "label": "Apurimac",
+          "portraitCount": 70,
+          "assetUrl": "/generated/composites/regions-by-sex/male/apurimac.webp",
+          "shapeUrl": "/generated/region-shapes/apurimac.svg"
+        },
+        {
+          "slug": "arequipa",
+          "label": "Arequipa",
+          "portraitCount": 93,
+          "assetUrl": "/generated/composites/regions-by-sex/male/arequipa.webp",
+          "shapeUrl": "/generated/region-shapes/arequipa.svg"
+        },
+        {
+          "slug": "ayacucho",
+          "label": "Ayacucho",
+          "portraitCount": 60,
+          "assetUrl": "/generated/composites/regions-by-sex/male/ayacucho.webp",
+          "shapeUrl": "/generated/region-shapes/ayacucho.svg"
+        },
+        {
+          "slug": "cajamarca",
+          "label": "Cajamarca",
+          "portraitCount": 115,
+          "assetUrl": "/generated/composites/regions-by-sex/male/cajamarca.webp",
+          "shapeUrl": "/generated/region-shapes/cajamarca.svg"
+        },
+        {
+          "slug": "callao",
+          "label": "Callao",
+          "portraitCount": 74,
+          "assetUrl": "/generated/composites/regions-by-sex/male/callao.webp",
+          "shapeUrl": "/generated/region-shapes/callao.svg"
+        },
+        {
+          "slug": "cusco",
+          "label": "Cusco",
+          "portraitCount": 88,
+          "assetUrl": "/generated/composites/regions-by-sex/male/cusco.webp",
+          "shapeUrl": "/generated/region-shapes/cusco.svg"
+        },
+        {
+          "slug": "huancavelica",
+          "label": "Huancavelica",
+          "portraitCount": 51,
+          "assetUrl": "/generated/composites/regions-by-sex/male/huancavelica.webp",
+          "shapeUrl": "/generated/region-shapes/huancavelica.svg"
+        },
+        {
+          "slug": "huanuco",
+          "label": "Huanuco",
+          "portraitCount": 68,
+          "assetUrl": "/generated/composites/regions-by-sex/male/huanuco.webp",
+          "shapeUrl": "/generated/region-shapes/huanuco.svg"
+        },
+        {
+          "slug": "ica",
+          "label": "Ica",
+          "portraitCount": 67,
+          "assetUrl": "/generated/composites/regions-by-sex/male/ica.webp",
+          "shapeUrl": "/generated/region-shapes/ica.svg"
+        },
+        {
+          "slug": "junin",
+          "label": "Junin",
+          "portraitCount": 107,
+          "assetUrl": "/generated/composites/regions-by-sex/male/junin.webp",
+          "shapeUrl": "/generated/region-shapes/junin.svg"
+        },
+        {
+          "slug": "la-libertad",
+          "label": "La Libertad",
+          "portraitCount": 147,
+          "assetUrl": "/generated/composites/regions-by-sex/male/la-libertad.webp",
+          "shapeUrl": "/generated/region-shapes/la-libertad.svg"
+        },
+        {
+          "slug": "lambayeque",
+          "label": "Lambayeque",
+          "portraitCount": 104,
+          "assetUrl": "/generated/composites/regions-by-sex/male/lambayeque.webp",
+          "shapeUrl": "/generated/region-shapes/lambayeque.svg"
+        },
+        {
+          "slug": "lima-metropolitana",
+          "label": "Lima Metropolitana",
+          "portraitCount": 559,
+          "assetUrl": "/generated/composites/regions-by-sex/male/lima-metropolitana.webp",
+          "shapeUrl": "/generated/region-shapes/lima-metropolitana.svg"
+        },
+        {
+          "slug": "lima-provincias",
+          "label": "Lima Provincias",
+          "portraitCount": 76,
+          "assetUrl": "/generated/composites/regions-by-sex/male/lima-provincias.webp",
+          "shapeUrl": "/generated/region-shapes/lima-provincias.svg"
+        },
+        {
+          "slug": "loreto",
+          "label": "Loreto",
+          "portraitCount": 59,
+          "assetUrl": "/generated/composites/regions-by-sex/male/loreto.webp",
+          "shapeUrl": "/generated/region-shapes/loreto.svg"
+        },
+        {
+          "slug": "madre-de-dios",
+          "label": "Madre De Dios",
+          "portraitCount": 53,
+          "assetUrl": "/generated/composites/regions-by-sex/male/madre-de-dios.webp",
+          "shapeUrl": "/generated/region-shapes/madre-de-dios.svg"
+        },
+        {
+          "slug": "moquegua",
+          "label": "Moquegua",
+          "portraitCount": 52,
+          "assetUrl": "/generated/composites/regions-by-sex/male/moquegua.webp",
+          "shapeUrl": "/generated/region-shapes/moquegua.svg"
+        },
+        {
+          "slug": "pasco",
+          "label": "Pasco",
+          "portraitCount": 54,
+          "assetUrl": "/generated/composites/regions-by-sex/male/pasco.webp",
+          "shapeUrl": "/generated/region-shapes/pasco.svg"
+        },
+        {
+          "slug": "piura",
+          "label": "Piura",
+          "portraitCount": 148,
+          "assetUrl": "/generated/composites/regions-by-sex/male/piura.webp",
+          "shapeUrl": "/generated/region-shapes/piura.svg"
+        },
+        {
+          "slug": "puno",
+          "label": "Puno",
+          "portraitCount": 101,
+          "assetUrl": "/generated/composites/regions-by-sex/male/puno.webp",
+          "shapeUrl": "/generated/region-shapes/puno.svg"
+        },
+        {
+          "slug": "san-martin",
+          "label": "San Martin",
+          "portraitCount": 71,
+          "assetUrl": "/generated/composites/regions-by-sex/male/san-martin.webp",
+          "shapeUrl": "/generated/region-shapes/san-martin.svg"
+        },
+        {
+          "slug": "tacna",
+          "label": "Tacna",
+          "portraitCount": 53,
+          "assetUrl": "/generated/composites/regions-by-sex/male/tacna.webp",
+          "shapeUrl": "/generated/region-shapes/tacna.svg"
+        },
+        {
+          "slug": "tumbes",
+          "label": "Tumbes",
+          "portraitCount": 53,
+          "assetUrl": "/generated/composites/regions-by-sex/male/tumbes.webp",
+          "shapeUrl": "/generated/region-shapes/tumbes.svg"
+        },
+        {
+          "slug": "ucayali",
+          "label": "Ucayali",
+          "portraitCount": 70,
+          "assetUrl": "/generated/composites/regions-by-sex/male/ucayali.webp",
+          "shapeUrl": "/generated/region-shapes/ucayali.svg"
+        },
+        {
+          "slug": "peruanos-residentes-en-el-extranjero",
+          "label": "Peruanos Residentes En El Extranjero",
+          "portraitCount": 66,
+          "assetUrl": "/generated/composites/regions-by-sex/male/peruanos-residentes-en-el-extranjero.webp",
+          "shapeUrl": "/generated/region-shapes/peruanos-residentes-en-el-extranjero.svg"
+        }
+      ]
+    },
+    {
+      "slug": "female",
+      "label": "Mujeres",
+      "overall": {
+        "slug": "female",
+        "label": "Mujeres",
+        "portraitCount": 1764,
+        "assetUrl": "/generated/composites/sexes/female.webp",
+        "percentage": 40.3
+      },
+      "regions": [
+        {
+          "slug": "amazonas",
+          "label": "Amazonas",
+          "portraitCount": 42,
+          "assetUrl": "/generated/composites/regions-by-sex/female/amazonas.webp",
+          "shapeUrl": "/generated/region-shapes/amazonas.svg"
+        },
+        {
+          "slug": "ancash",
+          "label": "Ancash",
+          "portraitCount": 80,
+          "assetUrl": "/generated/composites/regions-by-sex/female/ancash.webp",
+          "shapeUrl": "/generated/region-shapes/ancash.svg"
+        },
+        {
+          "slug": "apurimac",
+          "label": "Apurimac",
+          "portraitCount": 34,
+          "assetUrl": "/generated/composites/regions-by-sex/female/apurimac.webp",
+          "shapeUrl": "/generated/region-shapes/apurimac.svg"
+        },
+        {
+          "slug": "arequipa",
+          "label": "Arequipa",
+          "portraitCount": 88,
+          "assetUrl": "/generated/composites/regions-by-sex/female/arequipa.webp",
+          "shapeUrl": "/generated/region-shapes/arequipa.svg"
+        },
+        {
+          "slug": "ayacucho",
+          "label": "Ayacucho",
+          "portraitCount": 35,
+          "assetUrl": "/generated/composites/regions-by-sex/female/ayacucho.webp",
+          "shapeUrl": "/generated/region-shapes/ayacucho.svg"
+        },
+        {
+          "slug": "cajamarca",
+          "label": "Cajamarca",
+          "portraitCount": 75,
+          "assetUrl": "/generated/composites/regions-by-sex/female/cajamarca.webp",
+          "shapeUrl": "/generated/region-shapes/cajamarca.svg"
+        },
+        {
+          "slug": "callao",
+          "label": "Callao",
+          "portraitCount": 52,
+          "assetUrl": "/generated/composites/regions-by-sex/female/callao.webp",
+          "shapeUrl": "/generated/region-shapes/callao.svg"
+        },
+        {
+          "slug": "cusco",
+          "label": "Cusco",
+          "portraitCount": 79,
+          "assetUrl": "/generated/composites/regions-by-sex/female/cusco.webp",
+          "shapeUrl": "/generated/region-shapes/cusco.svg"
+        },
+        {
+          "slug": "huancavelica",
+          "label": "Huancavelica",
+          "portraitCount": 35,
+          "assetUrl": "/generated/composites/regions-by-sex/female/huancavelica.webp",
+          "shapeUrl": "/generated/region-shapes/huancavelica.svg"
+        },
+        {
+          "slug": "huanuco",
+          "label": "Huanuco",
+          "portraitCount": 42,
+          "assetUrl": "/generated/composites/regions-by-sex/female/huanuco.webp",
+          "shapeUrl": "/generated/region-shapes/huanuco.svg"
+        },
+        {
+          "slug": "ica",
+          "label": "Ica",
+          "portraitCount": 50,
+          "assetUrl": "/generated/composites/regions-by-sex/female/ica.webp",
+          "shapeUrl": "/generated/region-shapes/ica.svg"
+        },
+        {
+          "slug": "junin",
+          "label": "Junin",
+          "portraitCount": 69,
+          "assetUrl": "/generated/composites/regions-by-sex/female/junin.webp",
+          "shapeUrl": "/generated/region-shapes/junin.svg"
+        },
+        {
+          "slug": "la-libertad",
+          "label": "La Libertad",
+          "portraitCount": 94,
+          "assetUrl": "/generated/composites/regions-by-sex/female/la-libertad.webp",
+          "shapeUrl": "/generated/region-shapes/la-libertad.svg"
+        },
+        {
+          "slug": "lambayeque",
+          "label": "Lambayeque",
+          "portraitCount": 77,
+          "assetUrl": "/generated/composites/regions-by-sex/female/lambayeque.webp",
+          "shapeUrl": "/generated/region-shapes/lambayeque.svg"
+        },
+        {
+          "slug": "lima-metropolitana",
+          "label": "Lima Metropolitana",
+          "portraitCount": 359,
+          "assetUrl": "/generated/composites/regions-by-sex/female/lima-metropolitana.webp",
+          "shapeUrl": "/generated/region-shapes/lima-metropolitana.svg"
+        },
+        {
+          "slug": "lima-provincias",
+          "label": "Lima Provincias",
+          "portraitCount": 48,
+          "assetUrl": "/generated/composites/regions-by-sex/female/lima-provincias.webp",
+          "shapeUrl": "/generated/region-shapes/lima-provincias.svg"
+        },
+        {
+          "slug": "loreto",
+          "label": "Loreto",
+          "portraitCount": 45,
+          "assetUrl": "/generated/composites/regions-by-sex/female/loreto.webp",
+          "shapeUrl": "/generated/region-shapes/loreto.svg"
+        },
+        {
+          "slug": "madre-de-dios",
+          "label": "Madre De Dios",
+          "portraitCount": 40,
+          "assetUrl": "/generated/composites/regions-by-sex/female/madre-de-dios.webp",
+          "shapeUrl": "/generated/region-shapes/madre-de-dios.svg"
+        },
+        {
+          "slug": "moquegua",
+          "label": "Moquegua",
+          "portraitCount": 41,
+          "assetUrl": "/generated/composites/regions-by-sex/female/moquegua.webp",
+          "shapeUrl": "/generated/region-shapes/moquegua.svg"
+        },
+        {
+          "slug": "pasco",
+          "label": "Pasco",
+          "portraitCount": 30,
+          "assetUrl": "/generated/composites/regions-by-sex/female/pasco.webp",
+          "shapeUrl": "/generated/region-shapes/pasco.svg"
+        },
+        {
+          "slug": "piura",
+          "label": "Piura",
+          "portraitCount": 99,
+          "assetUrl": "/generated/composites/regions-by-sex/female/piura.webp",
+          "shapeUrl": "/generated/region-shapes/piura.svg"
+        },
+        {
+          "slug": "puno",
+          "label": "Puno",
+          "portraitCount": 58,
+          "assetUrl": "/generated/composites/regions-by-sex/female/puno.webp",
+          "shapeUrl": "/generated/region-shapes/puno.svg"
+        },
+        {
+          "slug": "san-martin",
+          "label": "San Martin",
+          "portraitCount": 37,
+          "assetUrl": "/generated/composites/regions-by-sex/female/san-martin.webp",
+          "shapeUrl": "/generated/region-shapes/san-martin.svg"
+        },
+        {
+          "slug": "tacna",
+          "label": "Tacna",
+          "portraitCount": 40,
+          "assetUrl": "/generated/composites/regions-by-sex/female/tacna.webp",
+          "shapeUrl": "/generated/region-shapes/tacna.svg"
+        },
+        {
+          "slug": "tumbes",
+          "label": "Tumbes",
+          "portraitCount": 36,
+          "assetUrl": "/generated/composites/regions-by-sex/female/tumbes.webp",
+          "shapeUrl": "/generated/region-shapes/tumbes.svg"
+        },
+        {
+          "slug": "ucayali",
+          "label": "Ucayali",
+          "portraitCount": 38,
+          "assetUrl": "/generated/composites/regions-by-sex/female/ucayali.webp",
+          "shapeUrl": "/generated/region-shapes/ucayali.svg"
+        },
+        {
+          "slug": "peruanos-residentes-en-el-extranjero",
+          "label": "Peruanos Residentes En El Extranjero",
+          "portraitCount": 41,
+          "assetUrl": "/generated/composites/regions-by-sex/female/peruanos-residentes-en-el-extranjero.webp",
+          "shapeUrl": "/generated/region-shapes/peruanos-residentes-en-el-extranjero.svg"
+        }
+      ]
+    }
+  ],
+  "regions": [
+    {
+      "slug": "amazonas",
+      "label": "Amazonas",
+      "portraitCount": 100,
+      "assetUrl": "/generated/composites/regions/amazonas.webp",
+      "shapeUrl": "/generated/region-shapes/amazonas.svg"
+    },
+    {
+      "slug": "ancash",
+      "label": "Ancash",
+      "portraitCount": 175,
+      "assetUrl": "/generated/composites/regions/ancash.webp",
+      "shapeUrl": "/generated/region-shapes/ancash.svg"
+    },
+    {
+      "slug": "apurimac",
+      "label": "Apurimac",
+      "portraitCount": 104,
+      "assetUrl": "/generated/composites/regions/apurimac.webp",
+      "shapeUrl": "/generated/region-shapes/apurimac.svg"
+    },
+    {
+      "slug": "arequipa",
+      "label": "Arequipa",
+      "portraitCount": 181,
+      "assetUrl": "/generated/composites/regions/arequipa.webp",
+      "shapeUrl": "/generated/region-shapes/arequipa.svg"
+    },
+    {
+      "slug": "ayacucho",
+      "label": "Ayacucho",
+      "portraitCount": 95,
+      "assetUrl": "/generated/composites/regions/ayacucho.webp",
+      "shapeUrl": "/generated/region-shapes/ayacucho.svg"
+    },
+    {
+      "slug": "cajamarca",
+      "label": "Cajamarca",
+      "portraitCount": 190,
+      "assetUrl": "/generated/composites/regions/cajamarca.webp",
+      "shapeUrl": "/generated/region-shapes/cajamarca.svg"
+    },
+    {
+      "slug": "callao",
+      "label": "Callao",
+      "portraitCount": 126,
+      "assetUrl": "/generated/composites/regions/callao.webp",
+      "shapeUrl": "/generated/region-shapes/callao.svg"
+    },
+    {
+      "slug": "cusco",
+      "label": "Cusco",
+      "portraitCount": 167,
+      "assetUrl": "/generated/composites/regions/cusco.webp",
+      "shapeUrl": "/generated/region-shapes/cusco.svg"
+    },
+    {
+      "slug": "huancavelica",
+      "label": "Huancavelica",
+      "portraitCount": 86,
+      "assetUrl": "/generated/composites/regions/huancavelica.webp",
+      "shapeUrl": "/generated/region-shapes/huancavelica.svg"
+    },
+    {
+      "slug": "huanuco",
+      "label": "Huanuco",
+      "portraitCount": 110,
+      "assetUrl": "/generated/composites/regions/huanuco.webp",
+      "shapeUrl": "/generated/region-shapes/huanuco.svg"
+    },
+    {
+      "slug": "ica",
+      "label": "Ica",
+      "portraitCount": 117,
+      "assetUrl": "/generated/composites/regions/ica.webp",
+      "shapeUrl": "/generated/region-shapes/ica.svg"
+    },
+    {
+      "slug": "junin",
+      "label": "Junin",
+      "portraitCount": 176,
+      "assetUrl": "/generated/composites/regions/junin.webp",
+      "shapeUrl": "/generated/region-shapes/junin.svg"
+    },
+    {
+      "slug": "la-libertad",
+      "label": "La Libertad",
+      "portraitCount": 241,
+      "assetUrl": "/generated/composites/regions/la-libertad.webp",
+      "shapeUrl": "/generated/region-shapes/la-libertad.svg"
+    },
+    {
+      "slug": "lambayeque",
+      "label": "Lambayeque",
+      "portraitCount": 181,
+      "assetUrl": "/generated/composites/regions/lambayeque.webp",
+      "shapeUrl": "/generated/region-shapes/lambayeque.svg"
+    },
+    {
+      "slug": "lima-metropolitana",
+      "label": "Lima Metropolitana",
+      "portraitCount": 918,
+      "assetUrl": "/generated/composites/regions/lima-metropolitana.webp",
+      "shapeUrl": "/generated/region-shapes/lima-metropolitana.svg"
+    },
+    {
+      "slug": "lima-provincias",
+      "label": "Lima Provincias",
+      "portraitCount": 124,
+      "assetUrl": "/generated/composites/regions/lima-provincias.webp",
+      "shapeUrl": "/generated/region-shapes/lima-provincias.svg"
+    },
+    {
+      "slug": "loreto",
+      "label": "Loreto",
+      "portraitCount": 104,
+      "assetUrl": "/generated/composites/regions/loreto.webp",
+      "shapeUrl": "/generated/region-shapes/loreto.svg"
+    },
+    {
+      "slug": "madre-de-dios",
+      "label": "Madre De Dios",
+      "portraitCount": 93,
+      "assetUrl": "/generated/composites/regions/madre-de-dios.webp",
+      "shapeUrl": "/generated/region-shapes/madre-de-dios.svg"
+    },
+    {
+      "slug": "moquegua",
+      "label": "Moquegua",
+      "portraitCount": 93,
+      "assetUrl": "/generated/composites/regions/moquegua.webp",
+      "shapeUrl": "/generated/region-shapes/moquegua.svg"
+    },
+    {
+      "slug": "pasco",
+      "label": "Pasco",
+      "portraitCount": 84,
+      "assetUrl": "/generated/composites/regions/pasco.webp",
+      "shapeUrl": "/generated/region-shapes/pasco.svg"
+    },
+    {
+      "slug": "piura",
+      "label": "Piura",
+      "portraitCount": 247,
+      "assetUrl": "/generated/composites/regions/piura.webp",
+      "shapeUrl": "/generated/region-shapes/piura.svg"
+    },
+    {
+      "slug": "puno",
+      "label": "Puno",
+      "portraitCount": 159,
+      "assetUrl": "/generated/composites/regions/puno.webp",
+      "shapeUrl": "/generated/region-shapes/puno.svg"
+    },
+    {
+      "slug": "san-martin",
+      "label": "San Martin",
+      "portraitCount": 108,
+      "assetUrl": "/generated/composites/regions/san-martin.webp",
+      "shapeUrl": "/generated/region-shapes/san-martin.svg"
+    },
+    {
+      "slug": "tacna",
+      "label": "Tacna",
+      "portraitCount": 93,
+      "assetUrl": "/generated/composites/regions/tacna.webp",
+      "shapeUrl": "/generated/region-shapes/tacna.svg"
+    },
+    {
+      "slug": "tumbes",
+      "label": "Tumbes",
+      "portraitCount": 89,
+      "assetUrl": "/generated/composites/regions/tumbes.webp",
+      "shapeUrl": "/generated/region-shapes/tumbes.svg"
+    },
+    {
+      "slug": "ucayali",
+      "label": "Ucayali",
+      "portraitCount": 108,
+      "assetUrl": "/generated/composites/regions/ucayali.webp",
+      "shapeUrl": "/generated/region-shapes/ucayali.svg"
+    },
+    {
+      "slug": "peruanos-residentes-en-el-extranjero",
+      "label": "Peruanos Residentes En El Extranjero",
+      "portraitCount": 107,
+      "assetUrl": "/generated/composites/regions/peruanos-residentes-en-el-extranjero.webp",
+      "shapeUrl": "/generated/region-shapes/peruanos-residentes-en-el-extranjero.svg"
+    }
+  ],
+  "parties": [
+    {
+      "slug": "ahora-nacion-an",
+      "label": "Ahora Nacion - An",
+      "portraitCount": 145,
+      "assetUrl": "/generated/composites/parties/ahora-nacion-an.webp",
+      "logoUrl": "/generated/party-logos/ahora-nacion-an.webp"
+    },
+    {
+      "slug": "alianza-electoral-venceremos",
+      "label": "Alianza Electoral Venceremos",
+      "portraitCount": 143,
+      "assetUrl": "/generated/composites/parties/alianza-electoral-venceremos.webp",
+      "logoUrl": "/generated/party-logos/alianza-electoral-venceremos.webp"
+    },
+    {
+      "slug": "alianza-para-el-progreso",
+      "label": "Alianza Para El Progreso",
+      "portraitCount": 146,
+      "assetUrl": "/generated/composites/parties/alianza-para-el-progreso.webp",
+      "logoUrl": "/generated/party-logos/alianza-para-el-progreso.bmp"
+    },
+    {
+      "slug": "avanza-pais-partido-de-integracion-social",
+      "label": "Avanza Pais - Partido De Integracion Social",
+      "portraitCount": 122,
+      "assetUrl": "/generated/composites/parties/avanza-pais-partido-de-integracion-social.webp",
+      "logoUrl": "/generated/party-logos/avanza-pais-partido-de-integracion-social.webp"
+    },
+    {
+      "slug": "fe-en-el-peru",
+      "label": "Fe En El Peru",
+      "portraitCount": 77,
+      "assetUrl": "/generated/composites/parties/fe-en-el-peru.webp",
+      "logoUrl": "/generated/party-logos/fe-en-el-peru.webp"
+    },
+    {
+      "slug": "frente-popular-agricola-fia-del-peru",
+      "label": "Frente Popular Agricola Fia Del Peru",
+      "portraitCount": 147,
+      "assetUrl": "/generated/composites/parties/frente-popular-agricola-fia-del-peru.webp",
+      "logoUrl": "/generated/party-logos/frente-popular-agricola-fia-del-peru.webp"
+    },
+    {
+      "slug": "fuerza-popular",
+      "label": "Fuerza Popular",
+      "portraitCount": 144,
+      "assetUrl": "/generated/composites/parties/fuerza-popular.webp",
+      "logoUrl": "/generated/party-logos/fuerza-popular.webp"
+    },
+    {
+      "slug": "fuerza-y-libertad",
+      "label": "Fuerza Y Libertad",
+      "portraitCount": 145,
+      "assetUrl": "/generated/composites/parties/fuerza-y-libertad.webp",
+      "logoUrl": "/generated/party-logos/fuerza-y-libertad.webp"
+    },
+    {
+      "slug": "juntos-por-el-peru",
+      "label": "Juntos Por El Peru",
+      "portraitCount": 115,
+      "assetUrl": "/generated/composites/parties/juntos-por-el-peru.webp",
+      "logoUrl": "/generated/party-logos/juntos-por-el-peru.webp"
+    },
+    {
+      "slug": "libertad-popular",
+      "label": "Libertad Popular",
+      "portraitCount": 96,
+      "assetUrl": "/generated/composites/parties/libertad-popular.webp",
+      "logoUrl": "/generated/party-logos/libertad-popular.webp"
+    },
+    {
+      "slug": "partido-aprista-peruano",
+      "label": "Partido Aprista Peruano",
+      "portraitCount": 140,
+      "assetUrl": "/generated/composites/parties/partido-aprista-peruano.webp",
+      "logoUrl": "/generated/party-logos/partido-aprista-peruano.webp"
+    },
+    {
+      "slug": "partido-civico-obras",
+      "label": "Partido Civico Obras",
+      "portraitCount": 128,
+      "assetUrl": "/generated/composites/parties/partido-civico-obras.webp",
+      "logoUrl": "/generated/party-logos/partido-civico-obras.webp"
+    },
+    {
+      "slug": "partido-de-los-trabajadores-y-emprendedores-pte-peru",
+      "label": "Partido De Los Trabajadores Y Emprendedores Pte - Peru",
+      "portraitCount": 42,
+      "assetUrl": "/generated/composites/parties/partido-de-los-trabajadores-y-emprendedores-pte-peru.webp",
+      "logoUrl": "/generated/party-logos/partido-de-los-trabajadores-y-emprendedores-pte-peru.webp"
+    },
+    {
+      "slug": "partido-del-buen-gobierno",
+      "label": "Partido Del Buen Gobierno",
+      "portraitCount": 144,
+      "assetUrl": "/generated/composites/parties/partido-del-buen-gobierno.webp",
+      "logoUrl": "/generated/party-logos/partido-del-buen-gobierno.webp"
+    },
+    {
+      "slug": "partido-democrata-unido-peru",
+      "label": "Partido Democrata Unido Peru",
+      "portraitCount": 70,
+      "assetUrl": "/generated/composites/parties/partido-democrata-unido-peru.webp",
+      "logoUrl": "/generated/party-logos/partido-democrata-unido-peru.webp"
+    },
+    {
+      "slug": "partido-democrata-verde",
+      "label": "Partido Democrata Verde",
+      "portraitCount": 139,
+      "assetUrl": "/generated/composites/parties/partido-democrata-verde.webp",
+      "logoUrl": "/generated/party-logos/partido-democrata-verde.webp"
+    },
+    {
+      "slug": "partido-democratico-federal",
+      "label": "Partido Democratico Federal",
+      "portraitCount": 100,
+      "assetUrl": "/generated/composites/parties/partido-democratico-federal.webp",
+      "logoUrl": "/generated/party-logos/partido-democratico-federal.webp"
+    },
+    {
+      "slug": "partido-democratico-somos-peru",
+      "label": "Partido Democratico Somos Peru",
+      "portraitCount": 142,
+      "assetUrl": "/generated/composites/parties/partido-democratico-somos-peru.webp",
+      "logoUrl": "/generated/party-logos/partido-democratico-somos-peru.webp"
+    },
+    {
+      "slug": "partido-frente-de-la-esperanza-2021",
+      "label": "Partido Frente De La Esperanza 2021",
+      "portraitCount": 123,
+      "assetUrl": "/generated/composites/parties/partido-frente-de-la-esperanza-2021.webp",
+      "logoUrl": "/generated/party-logos/partido-frente-de-la-esperanza-2021.webp"
+    },
+    {
+      "slug": "partido-morado",
+      "label": "Partido Morado",
+      "portraitCount": 114,
+      "assetUrl": "/generated/composites/parties/partido-morado.webp",
+      "logoUrl": "/generated/party-logos/partido-morado.webp"
+    },
+    {
+      "slug": "partido-pais-para-todos",
+      "label": "Partido Pais Para Todos",
+      "portraitCount": 120,
+      "assetUrl": "/generated/composites/parties/partido-pais-para-todos.webp",
+      "logoUrl": "/generated/party-logos/partido-pais-para-todos.webp"
+    },
+    {
+      "slug": "partido-patriotico-del-peru",
+      "label": "Partido Patriotico Del Peru",
+      "portraitCount": 85,
+      "assetUrl": "/generated/composites/parties/partido-patriotico-del-peru.webp",
+      "logoUrl": "/generated/party-logos/partido-patriotico-del-peru.webp"
+    },
+    {
+      "slug": "partido-politico-cooperacion-popular",
+      "label": "Partido Politico Cooperacion Popular",
+      "portraitCount": 152,
+      "assetUrl": "/generated/composites/parties/partido-politico-cooperacion-popular.webp",
+      "logoUrl": "/generated/party-logos/partido-politico-cooperacion-popular.webp"
+    },
+    {
+      "slug": "partido-politico-integridad-democratica",
+      "label": "Partido Politico Integridad Democratica",
+      "portraitCount": 131,
+      "assetUrl": "/generated/composites/parties/partido-politico-integridad-democratica.webp",
+      "logoUrl": "/generated/party-logos/partido-politico-integridad-democratica.webp"
+    },
+    {
+      "slug": "partido-politico-nacional-peru-libre",
+      "label": "Partido Politico Nacional Peru Libre",
+      "portraitCount": 148,
+      "assetUrl": "/generated/composites/parties/partido-politico-nacional-peru-libre.webp",
+      "logoUrl": "/generated/party-logos/partido-politico-nacional-peru-libre.webp"
+    },
+    {
+      "slug": "partido-politico-peru-accion",
+      "label": "Partido Politico Peru Accion",
+      "portraitCount": 93,
+      "assetUrl": "/generated/composites/parties/partido-politico-peru-accion.webp",
+      "logoUrl": "/generated/party-logos/partido-politico-peru-accion.webp"
+    },
+    {
+      "slug": "partido-politico-peru-primero",
+      "label": "Partido Politico Peru Primero",
+      "portraitCount": 142,
+      "assetUrl": "/generated/composites/parties/partido-politico-peru-primero.webp",
+      "logoUrl": "/generated/party-logos/partido-politico-peru-primero.webp"
+    },
+    {
+      "slug": "partido-politico-prin",
+      "label": "Partido Politico Prin",
+      "portraitCount": 95,
+      "assetUrl": "/generated/composites/parties/partido-politico-prin.webp",
+      "logoUrl": "/generated/party-logos/partido-politico-prin.webp"
+    },
+    {
+      "slug": "partido-sicreo",
+      "label": "Partido Sicreo",
+      "portraitCount": 50,
+      "assetUrl": "/generated/composites/parties/partido-sicreo.webp",
+      "logoUrl": "/generated/party-logos/partido-sicreo.webp"
+    },
+    {
+      "slug": "peru-moderno",
+      "label": "Peru Moderno",
+      "portraitCount": 80,
+      "assetUrl": "/generated/composites/parties/peru-moderno.webp",
+      "logoUrl": "/generated/party-logos/peru-moderno.webp"
+    },
+    {
+      "slug": "podemos-peru",
+      "label": "Podemos Peru",
+      "portraitCount": 140,
+      "assetUrl": "/generated/composites/parties/podemos-peru.webp",
+      "logoUrl": "/generated/party-logos/podemos-peru.webp"
+    },
+    {
+      "slug": "primero-la-gente-comunidad-ecologia-libertad-y-progreso",
+      "label": "Primero La Gente - Comunidad, Ecologia, Libertad Y Progreso",
+      "portraitCount": 87,
+      "assetUrl": "/generated/composites/parties/primero-la-gente-comunidad-ecologia-libertad-y-progreso.webp",
+      "logoUrl": "/generated/party-logos/primero-la-gente-comunidad-ecologia-libertad-y-progreso.webp"
+    },
+    {
+      "slug": "progresemos",
+      "label": "Progresemos",
+      "portraitCount": 134,
+      "assetUrl": "/generated/composites/parties/progresemos.webp",
+      "logoUrl": "/generated/party-logos/progresemos.webp"
+    },
+    {
+      "slug": "renovacion-popular",
+      "label": "Renovacion Popular",
+      "portraitCount": 150,
+      "assetUrl": "/generated/composites/parties/renovacion-popular.webp",
+      "logoUrl": "/generated/party-logos/renovacion-popular.webp"
+    },
+    {
+      "slug": "salvemos-al-peru",
+      "label": "Salvemos Al Peru",
+      "portraitCount": 75,
+      "assetUrl": "/generated/composites/parties/salvemos-al-peru.webp",
+      "logoUrl": "/generated/party-logos/salvemos-al-peru.webp"
+    },
+    {
+      "slug": "un-camino-diferente",
+      "label": "Un Camino Diferente",
+      "portraitCount": 141,
+      "assetUrl": "/generated/composites/parties/un-camino-diferente.webp",
+      "logoUrl": "/generated/party-logos/un-camino-diferente.webp"
+    },
+    {
+      "slug": "unidad-nacional",
+      "label": "Unidad Nacional",
+      "portraitCount": 131,
+      "assetUrl": "/generated/composites/parties/unidad-nacional.webp",
+      "logoUrl": "/generated/party-logos/unidad-nacional.webp"
+    }
+  ],
+  "footnote": ""
+}
