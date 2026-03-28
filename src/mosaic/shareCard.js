@@ -19,6 +19,9 @@ const PERCENT_FORMATTER = new Intl.NumberFormat("es-PE", {
 });
 
 const COUNT_FORMATTER = new Intl.NumberFormat("es-PE");
+const FOOTER_LOGO_URL = "/favicon/logo.png";
+
+let footerLogoPromise = null;
 
 export const SHARE_CARD_FORMATS = Object.entries(SHARE_CARD_CONFIG).map(([value, config]) => ({
   value,
@@ -55,6 +58,7 @@ export async function createShareCardAsset({
   }
 
   drawBackdrop(context, canvas.width, canvas.height);
+  const footerLogo = await loadFooterLogo();
 
   if (format === "square") {
     drawSquareCard(context, {
@@ -62,6 +66,7 @@ export async function createShareCardAsset({
       composition,
       stats,
       websiteUrl,
+      footerLogo,
       width: canvas.width,
       height: canvas.height,
     });
@@ -71,6 +76,7 @@ export async function createShareCardAsset({
       composition,
       stats,
       websiteUrl,
+      footerLogo,
       width: canvas.width,
       height: canvas.height,
     });
@@ -107,7 +113,7 @@ export function downloadBlobFile(blob, filename) {
 
 function drawPortraitCard(
   context,
-  { mosaicCanvas, composition, stats, websiteUrl, width, height },
+  { mosaicCanvas, composition, stats, websiteUrl, footerLogo, width, height },
 ) {
   const padding = 72;
   const contentWidth = width - padding * 2;
@@ -140,7 +146,7 @@ function drawPortraitCard(
   drawHeader(context, {
     eyebrow: "Este candidato no existe",
     title: "Tu foto hecha de congresistas",
-    subtitle: "Exporta una version lista para compartir con quienes mas componen tu mosaico.",
+    subtitle: "",
     x: padding,
     y: 82,
     width: contentWidth,
@@ -159,9 +165,11 @@ function drawPortraitCard(
     title: "Top del mosaico",
     rowHeight: 31,
     titleSize: 28,
-    nameFontSize: 19,
+    nameFontSize: 18,
+    metaFontSize: 12,
     percentageFontSize: 18,
     rankFontSize: 14,
+    showMeta: true,
   });
 
   drawStatCard(context, {
@@ -181,12 +189,14 @@ function drawPortraitCard(
     value: COUNT_FORMATTER.format(stats?.totalTiles ?? 0),
   });
 
-  drawFooter(context, footerRect, websiteUrl);
+  drawFooter(context, footerRect, websiteUrl, {
+    logo: footerLogo,
+  });
 }
 
 function drawSquareCard(
   context,
-  { mosaicCanvas, composition, stats, websiteUrl, width, height },
+  { mosaicCanvas, composition, stats, websiteUrl, footerLogo, width, height },
 ) {
   const padding = 56;
   const headerWidth = width - padding * 2;
@@ -215,7 +225,7 @@ function drawSquareCard(
   drawHeader(context, {
     eyebrow: "Este candidato no existe",
     title: "Tu foto dentro del mosaico electoral",
-    subtitle: "Top 10, Otros y cifras clave en una sola tarjeta PNG.",
+    subtitle: "",
     x: padding,
     y: 74,
     width: headerWidth,
@@ -233,10 +243,12 @@ function drawSquareCard(
   drawRankingPanel(context, sideRect, composition, {
     title: "Top del mosaico",
     rowHeight: 30,
-    titleSize: 27,
-    nameFontSize: 18,
+    titleSize: 26,
+    nameFontSize: 16,
+    metaFontSize: 11,
     percentageFontSize: 17,
     rankFontSize: 13,
+    showMeta: true,
     footerStats: [
       {
         label: "Total de candidatos utilizados",
@@ -250,6 +262,7 @@ function drawSquareCard(
   });
   drawFooter(context, footerRect, websiteUrl, {
     eyebrow: "Publicalo y explora mas en",
+    logo: footerLogo,
   });
 }
 
@@ -379,6 +392,17 @@ function drawRankingPanel(context, rect, composition, options) {
   const statsHeight = footerStats.length ? 108 : 0;
   const footerGap = footerStats.length ? 20 : 0;
   const listAvailableHeight = rect.height - (listStartY - rect.y) - statsHeight - footerGap - 24;
+  const rankWidth = 48;
+  const percentageWidth = 116;
+  const columnGap = 12;
+  const metaWidth = options.showMeta
+    ? Math.min(Math.max(contentWidth * 0.28, 98), 220)
+    : 0;
+  const nameX = contentX + rankWidth;
+  const metaX = nameX + (contentWidth - rankWidth - percentageWidth - metaWidth - columnGap * 2) + columnGap;
+  const nameWidth = options.showMeta
+    ? contentWidth - rankWidth - percentageWidth - metaWidth - columnGap * 2
+    : contentWidth - rankWidth - percentageWidth;
 
   context.save();
   context.textBaseline = "middle";
@@ -388,6 +412,10 @@ function drawRankingPanel(context, rect, composition, options) {
 
   context.fillStyle = "rgba(246, 238, 225, 0.62)";
   context.font = '600 14px "Source Sans 3", sans-serif';
+  if (options.showMeta) {
+    context.textAlign = "left";
+    context.fillText("Region / partido", metaX, titleY + 12);
+  }
   context.textAlign = "right";
   context.fillText("Participacion", rect.x + rect.width - horizontalPadding, titleY + 12);
   context.textAlign = "left";
@@ -400,11 +428,7 @@ function drawRankingPanel(context, rect, composition, options) {
   for (let index = 0; index < maxRows; index += 1) {
     const item = composition.entries[index];
     const rowY = listStartY + index * options.rowHeight;
-    const rankWidth = 48;
-    const percentageWidth = 116;
-    const nameX = contentX + rankWidth;
     const percentageX = rect.x + rect.width - horizontalPadding;
-    const nameWidth = contentWidth - rankWidth - percentageWidth;
 
     context.fillStyle = index % 2 === 0
       ? "rgba(255, 244, 225, 0.035)"
@@ -420,6 +444,22 @@ function drawRankingPanel(context, rect, composition, options) {
     context.fillStyle = "#f6eee1";
     context.font = `${item.isOthers ? "700" : "600"} ${options.nameFontSize}px "Source Sans 3", sans-serif`;
     context.fillText(truncateText(context, item.name, nameWidth), nameX, rowY + 3);
+
+    if (options.showMeta) {
+      context.fillStyle = item.isOthers
+        ? "rgba(246, 238, 225, 0.42)"
+        : "rgba(246, 238, 225, 0.58)";
+      context.font = `600 ${options.metaFontSize ?? 12}px "Source Sans 3", sans-serif`;
+      context.fillText(
+        truncateText(
+          context,
+          item.isOthers ? "Resto del mosaico" : `${item.region} / ${item.party}`,
+          metaWidth,
+        ),
+        metaX,
+        rowY + 3,
+      );
+    }
 
     context.fillStyle = "rgba(239, 208, 160, 0.94)";
     context.font = `700 ${options.percentageFontSize}px "Source Sans 3", sans-serif`;
@@ -479,16 +519,54 @@ function drawFooter(context, rect, websiteUrl, options = {}) {
     stroke: "rgba(239, 208, 160, 0.12)",
   });
 
+  const linkFontSize = options.linkFontSize ?? 24;
+  const linkY = rect.y + 30;
+  const iconSize = options.logo ? Math.min(30, rect.height - 26) : 0;
+  const iconX = rect.x + 24;
+  const iconY = linkY - 1;
+  const linkX = options.logo ? iconX + iconSize + 12 : rect.x + 24;
+
   context.save();
   context.textBaseline = "top";
   context.fillStyle = "rgba(239, 208, 160, 0.82)";
   context.font = '700 16px "Source Sans 3", sans-serif';
-  context.fillText((options.eyebrow ?? "Explora mas en").toUpperCase(), rect.x + 24, rect.y + 18);
+  context.fillText((options.eyebrow ?? "Explora mas en").toUpperCase(), rect.x + 24, rect.y + 10);
+
+  if (options.logo) {
+    context.save();
+    roundedRectPath(context, iconX, iconY, iconSize, iconSize, 9);
+    context.clip();
+    context.drawImage(options.logo, iconX, iconY, iconSize, iconSize);
+    context.restore();
+
+    context.strokeStyle = "rgba(239, 208, 160, 0.18)";
+    context.lineWidth = 1.5;
+    roundedRectPath(context, iconX, iconY, iconSize, iconSize, 9);
+    context.stroke();
+  }
 
   context.fillStyle = "#f6eee1";
-  context.font = '700 28px "Source Sans 3", sans-serif';
-  context.fillText(websiteUrl, rect.x + 24, rect.y + 42);
+  context.font = `700 ${linkFontSize}px "Source Sans 3", sans-serif`;
+  context.fillText(websiteUrl, linkX, linkY);
   context.restore();
+}
+
+async function loadFooterLogo() {
+  if (!footerLogoPromise) {
+    footerLogoPromise = loadImageAsset(FOOTER_LOGO_URL).catch(() => null);
+  }
+
+  return footerLogoPromise;
+}
+
+function loadImageAsset(url) {
+  return new Promise((resolve, reject) => {
+    const image = new Image();
+    image.decoding = "async";
+    image.onload = () => resolve(image);
+    image.onerror = () => reject(new Error(`No se pudo cargar el asset ${url}.`));
+    image.src = url;
+  });
 }
 
 function fillPanel(context, rect, { fill, stroke }) {

@@ -45,7 +45,7 @@ const DEFAULT_UPLOAD_MAX_DIMENSION = 1600;
 const HIGH_FIDELITY_UPLOAD_MAX_DIMENSION = 2200;
 const INITIAL_PROGRESS = {
   status: "idle",
-  label: "Sube una foto para cerrar la historia con tu propio mosaico.",
+  label: "Selecciona una imagen para empezar.",
   fraction: 0,
 };
 const COMPOSITION_PREVIEW_LIMIT = 24;
@@ -692,7 +692,7 @@ export default function MosaicGeneratorSection({
                   {!showCroppedPreview && !sourceUrl ? (
                     <div className="mosaic-placeholder mosaic-upload-empty">
                       <div>
-                        <p className="mosaic-upload-title">Sube una foto</p>
+                        <p className="mosaic-upload-title">[+] Sube una foto</p>
                         <p className="mosaic-upload-copy">
                           Arrastrala aqui o haz click para elegir un archivo PNG, JPG o
                           WebP.
@@ -794,7 +794,11 @@ export default function MosaicGeneratorSection({
               </div>
 
               <div className="mosaic-actions mosaic-actions-primary">
-                <button className="mosaic-button" type="submit" disabled={!canGenerate}>
+                <button
+                  className={`mosaic-button${canGenerate ? " is-ready" : ""}`}
+                  type="submit"
+                  disabled={!canGenerate}
+                >
                   {isGenerating ? "Generando..." : "Generar mosaico"}
                 </button>
                 <button

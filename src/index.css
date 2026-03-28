@@ -781,6 +781,24 @@ select {
   border-color: rgba(239, 208, 160, 0.4);
 }
 
+.mosaic-actions-primary .mosaic-button.is-ready {
+  border-color: rgba(255, 241, 178, 0.84);
+  background:
+    linear-gradient(135deg, #fff3a4 0%, #ffbf66 50%, #ff7d59 100%),
+    rgba(26, 9, 13, 0.96);
+  color: #2d1107;
+  box-shadow:
+    0 0 0 1px rgba(255, 248, 214, 0.16),
+    0 18px 34px rgba(255, 130, 84, 0.28);
+}
+
+.mosaic-actions-primary .mosaic-button.is-ready:hover:not(:disabled) {
+  border-color: rgba(255, 247, 206, 0.96);
+  background:
+    linear-gradient(135deg, #fff8bf 0%, #ffd07c 50%, #ff8f68 100%),
+    rgba(26, 9, 13, 0.96);
+}
+
 .mosaic-button:disabled {
   opacity: 0.45;
   cursor: not-allowed;
