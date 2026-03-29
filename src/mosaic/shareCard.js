@@ -128,7 +128,7 @@ function drawPortraitCard(
     x: padding,
     y: 638,
     width: contentWidth,
-    height: 418,
+    height: 432,
     radius: 30,
   };
   const statRectHeight = 98;
@@ -152,8 +152,8 @@ function drawPortraitCard(
     width: contentWidth,
     maxTitleWidth: 780,
     maxTitleLines: 1,
-    titleSize: 38,
-    titleLineHeight: 42,
+    titleSize: 40,
+    titleLineHeight: 44,
     subtitleSize: 18,
     subtitleLineHeight: 22,
     maxSubtitleLines: 1,
@@ -163,15 +163,16 @@ function drawPortraitCard(
   drawFramedMosaic(context, mosaicCanvas, mosaicRect);
   drawRankingPanel(context, rankingRect, composition, {
     title: "Candidatos más frecuentes",
-    rowHeight: 31,
-    titleSize: 28,
-    nameFontSize: 18,
-    metaFontSize: 13,
-    percentageFontSize: 18,
-    rankFontSize: 14,
+    rowHeight: 32,
+    titleSize: 30,
+    headerFontSize: 15,
+    nameFontSize: 20,
+    metaFontSize: 14,
+    percentageFontSize: 20,
+    rankFontSize: 15,
     showMeta: true,
-    metaWidthRatio: 0.31,
-    metaShiftX: -8,
+    metaWidthRatio: 0.3,
+    metaShiftX: -4,
   });
 
   drawStatCard(context, {
@@ -420,7 +421,7 @@ function drawRankingPanel(context, rect, composition, options) {
   context.fillText(options.title, contentX, titleY + 10);
 
   context.fillStyle = "rgba(246, 238, 225, 0.62)";
-  context.font = '600 14px "Source Sans 3", sans-serif';
+  context.font = `600 ${options.headerFontSize ?? 14}px "Source Sans 3", sans-serif`;
   if (options.showMeta) {
     context.textAlign = "left";
     context.fillText("Region / partido", metaX, titleY + 12);
@@ -507,7 +508,7 @@ function drawStatCard(context, { x, y, width, height, label, value, compact = fa
   context.save();
   context.textBaseline = "top";
   context.fillStyle = "rgba(246, 238, 225, 0.7)";
-  context.font = `700 ${compact ? 13 : 15}px "Source Sans 3", sans-serif`;
+  context.font = `700 ${compact ? 13 : 16}px "Source Sans 3", sans-serif`;
   drawWrappedText(context, label, {
     x: x + 22,
     y: y + 18,
@@ -517,8 +518,8 @@ function drawStatCard(context, { x, y, width, height, label, value, compact = fa
   });
 
   context.fillStyle = "#f6eee1";
-  context.font = `700 ${compact ? 30 : 36}px "Cinzel", serif`;
-  context.fillText(value, x + 22, y + (compact ? 52 : 48));
+  context.font = `700 ${compact ? 30 : 40}px "Cinzel", serif`;
+  context.fillText(value, x + 22, y + (compact ? 52 : 46));
   context.restore();
 }
 
@@ -528,7 +529,7 @@ function drawFooter(context, rect, websiteUrl, options = {}) {
     stroke: "rgba(239, 208, 160, 0.12)",
   });
 
-  const linkFontSize = options.linkFontSize ?? 24;
+  const linkFontSize = options.linkFontSize ?? 26;
   const linkY = rect.y + 30;
   const iconSize = options.logo ? Math.min(30, rect.height - 26) : 0;
   const iconX = rect.x + 24;

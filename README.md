@@ -60,9 +60,7 @@ Versiones internas que regeneran assets antes de arrancar o compilar.
 - `src/`: frontend en React.
 - `public/generated/`: imagenes, atlas y assets web ya preparados.
 - `src/generated/`: manifiestos consumidos por la app.
-- `.github/workflows/deploy.yml`: build y deploy.
-- `INTERNAL_README.md`: documentacion tecnica e interna del pipeline.
 
 ## Nota
 
-La documentacion operativa completa, el pipeline de generacion y los detalles del dataset viven en `INTERNAL_README.md`. Las carpetas pesadas de trabajo interno como `output/`, `tmp/` y `run/` no forman parte del shape publico del repositorio.
+Las carpetas pesadas de trabajo interno como `output/`, `tmp/` y `run/` no forman parte del shape publico del repositorio.

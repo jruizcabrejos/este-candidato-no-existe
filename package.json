@@ -10,8 +10,7 @@
     "generate": "node ./scripts/generate-assets.mjs",
     "build": "npm run sync:favicon && vite build",
     "build:full": "npm run generate && npm run sync:favicon && vite build",
-    "preview": "vite preview",
-    "deploy": "powershell -ExecutionPolicy Bypass -File ./scripts/deploy.ps1"
+    "preview": "vite preview"
   },
   "dependencies": {
     "gsap": "^3.14.2",
