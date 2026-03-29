@@ -316,12 +316,18 @@ export default function App() {
               </p>
             </div>
 
-            <figure className="story-slide-portrait story-slide-portrait-secondary">
-              <img
-                src={storyManifest.hero.assetUrl}
-                alt="Rostro promedio nacional de las candidaturas al Congreso 2026"
-              />
-            </figure>
+            <div className="story-slide-portrait-block">
+              <figure className="story-slide-portrait story-slide-portrait-secondary">
+                <img
+                  src={storyManifest.hero.assetUrl}
+                  alt="Rostro promedio nacional de las candidaturas al Congreso 2026"
+                />
+              </figure>
+              <p className="story-slide-portrait-note">
+                Este es el rostro{" "}
+                <span className="story-slide-portrait-note-script">promedio</span>
+              </p>
+            </div>
           </div>
         </section>
 

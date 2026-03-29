@@ -317,8 +317,36 @@ select {
   filter: contrast(1.04) saturate(0.92);
 }
 
+.story-slide-portrait-block {
+  display: grid;
+  justify-items: center;
+  gap: 0.72rem;
+  width: min(34vw, 340px);
+}
+
+.story-slide-portrait-block .story-slide-portrait-secondary {
+  width: 100%;
+}
+
 .story-slide-portrait-secondary {
   width: min(34vw, 340px);
+}
+
+.story-slide-portrait-note {
+  width: min(100%, 16rem);
+  margin: 0;
+  color: rgba(246, 238, 225, 0.82);
+  font-size: clamp(0.92rem, 1.75vw, 1.06rem);
+  line-height: 1.12;
+  text-align: center;
+  text-wrap: balance;
+}
+
+.story-slide-portrait-note-script {
+  margin-left: 0.08em;
+  color: var(--accent-soft);
+  font: inherit;
+  font-style: italic;
 }
 
 .story-slide-question .story-slide-portrait {
@@ -1880,6 +1908,11 @@ select {
     justify-self: center;
   }
 
+  .story-slide-portrait-block {
+    width: min(82vw, 360px);
+    gap: 0.56rem;
+  }
+
   .story-slide-stat {
     width: 100%;
     font-size: 0.98rem;
@@ -1944,6 +1977,15 @@ select {
   .story-slide-portrait {
     width: min(82vw, 360px);
     min-width: 0;
+  }
+
+  .story-slide-portrait-note {
+    width: min(100%, 14.5rem);
+    font-size: 0.9rem;
+  }
+
+  .story-slide-portrait-note-script {
+    font-size: inherit;
   }
 
   .story-slide-stat {
