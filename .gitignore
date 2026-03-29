@@ -4,4 +4,8 @@ output
 .npm-cache
 tmp
 run
-ejemplos
+ejemplos/*
+!ejemplos/card/
+!ejemplos/card/**
+!ejemplos/mosaic/
+!ejemplos/mosaic/**

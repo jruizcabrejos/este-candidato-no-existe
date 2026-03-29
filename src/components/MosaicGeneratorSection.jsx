@@ -13,9 +13,6 @@ import {
   downloadBlobFile,
 } from "../mosaic/shareCard.js";
 import backgroundManifest from "../generated/background_manifest.json";
-import cardExampleA from "../../ejemplos/card/download.png";
-import cardExampleB from "../../ejemplos/card/download alan.png";
-import cardExampleC from "../../ejemplos/card/download (1).png";
 
 const DATASET_URL = `/generated/mosaic/tiles.json?v=${backgroundManifest.assetVersion ?? "1"}`;
 const DETAIL_OPTIONS = [
@@ -52,7 +49,11 @@ const INITIAL_PROGRESS = {
 const COMPOSITION_PREVIEW_LIMIT = 24;
 const WEBSITE_URL = "https://candidatos.incaslop.online/";
 const ACCEPTED_IMAGE_TYPES = "image/png,image/jpeg,image/webp";
-const CARD_EXAMPLES = [cardExampleA, cardExampleB, cardExampleC];
+const CARD_EXAMPLES = [
+  "/examples/card/card-example-1.png",
+  "/examples/card/card-example-2.png",
+  "/examples/card/card-example-3.png",
+];
 
 export default function MosaicGeneratorSection({
   sectionRef: providedSectionRef = null,
