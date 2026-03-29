@@ -1,6 +1,6 @@
 const SHARE_CARD_CONFIG = {
   portrait: {
-    label: "Retrato",
+    label: "Vertical",
     width: 1080,
     height: 1350,
     filename: "mosaico-candidaturas-2026-share-portrait.png",
@@ -145,7 +145,7 @@ function drawPortraitCard(
 
   drawHeader(context, {
     eyebrow: "Este candidato no existe",
-    title: "Tu foto hecha de candidatos",
+    title: "Tu foto con los candidatos 2026",
     subtitle: "",
     x: padding,
     y: 82,
@@ -163,16 +163,18 @@ function drawPortraitCard(
   drawFramedMosaic(context, mosaicCanvas, mosaicRect);
   drawRankingPanel(context, rankingRect, composition, {
     title: "Candidatos más frecuentes",
-    rowHeight: 32,
+    rowHeight: 42,
     titleSize: 30,
     headerFontSize: 15,
-    nameFontSize: 20,
-    metaFontSize: 14,
-    percentageFontSize: 20,
-    rankFontSize: 15,
+    nameFontSize: 24,
+    metaFontSize: 15,
+    percentageFontSize: 23,
+    rankFontSize: 16,
     showMeta: true,
-    metaWidthRatio: 0.3,
-    metaShiftX: -4,
+    metaWidthRatio: 0.27,
+    metaShiftX: 2,
+    maxRows: 7,
+    reserveOthersRow: true,
   });
 
   drawStatCard(context, {
@@ -227,7 +229,7 @@ function drawSquareCard(
 
   drawHeader(context, {
     eyebrow: "Este candidato no existe",
-    title: "Tu foto dentro del mosaico electoral",
+    title: "Tu foto con los candidatos 2026",
     subtitle: "",
     x: padding,
     y: 74,
@@ -246,7 +248,11 @@ function drawSquareCard(
   drawRankingPanel(context, sideRect, composition, {
     title: "Candidatos más frecuentes",
     rowHeight: 30,
-    titleSize: 26,
+    titleSize: 24,
+    titleLineHeight: 28,
+    headerGap: 10,
+    listGap: 14,
+    headerFontSize: 11,
     nameFontSize: 16,
     metaFontSize: 12,
     percentageFontSize: 17,
@@ -389,14 +395,18 @@ function drawRankingPanel(context, rect, composition, options) {
   });
 
   const horizontalPadding = 30;
-  const titleY = rect.y + 24;
   const contentX = rect.x + horizontalPadding;
   const contentWidth = rect.width - horizontalPadding * 2;
-  const listStartY = titleY + 62;
+  const titleY = rect.y + (options.topPadding ?? 24);
+  const titleLineHeight = options.titleLineHeight ?? Math.round(options.titleSize * 1.12);
+  const titleMaxWidth = Math.min(options.titleMaxWidth ?? contentWidth, contentWidth);
+  const headerFontSize = options.headerFontSize ?? 14;
+  const headerLineHeight = options.headerLineHeight ?? Math.round(headerFontSize * 1.2);
   const footerStats = options.footerStats ?? [];
   const statsHeight = footerStats.length ? 108 : 0;
   const footerGap = footerStats.length ? 20 : 0;
-  const listAvailableHeight = rect.height - (listStartY - rect.y) - statsHeight - footerGap - 24;
+  const headerGap = options.headerGap ?? 12;
+  const listGap = options.listGap ?? 16;
   const rankWidth = 48;
   const percentageWidth = 116;
   const columnGap = 12;
@@ -415,45 +425,61 @@ function drawRankingPanel(context, rect, composition, options) {
     : contentWidth - rankWidth - percentageWidth;
 
   context.save();
-  context.textBaseline = "middle";
+  context.textBaseline = "top";
   context.fillStyle = "#f6eee1";
   context.font = `700 ${options.titleSize}px "Cinzel", serif`;
-  context.fillText(options.title, contentX, titleY + 10);
+  const titleLines = wrapText(
+    context,
+    options.title,
+    titleMaxWidth,
+    options.titleMaxLines ?? 2,
+  );
+  titleLines.forEach((line, index) => {
+    context.fillText(line, contentX, titleY + index * titleLineHeight);
+  });
+
+  const headerY = titleY + titleLines.length * titleLineHeight + headerGap;
+  const listStartY = headerY + headerLineHeight + listGap;
+  const listAvailableHeight = rect.height - (listStartY - rect.y) - statsHeight - footerGap - 24;
 
   context.fillStyle = "rgba(246, 238, 225, 0.62)";
-  context.font = `600 ${options.headerFontSize ?? 14}px "Source Sans 3", sans-serif`;
+  context.font = `600 ${headerFontSize}px "Source Sans 3", sans-serif`;
   if (options.showMeta) {
     context.textAlign = "left";
-    context.fillText("Region / partido", metaX, titleY + 12);
+    context.fillText("Region / partido", metaX, headerY);
   }
   context.textAlign = "right";
-  context.fillText("Participacion", rect.x + rect.width - horizontalPadding, titleY + 12);
+  context.fillText("Participacion", rect.x + rect.width - horizontalPadding, headerY);
   context.textAlign = "left";
+  context.textBaseline = "middle";
 
   const maxRows = Math.min(
+    options.maxRows ?? Number.POSITIVE_INFINITY,
     composition.entries.length,
     Math.floor(listAvailableHeight / options.rowHeight),
   );
+  const visibleEntries = getVisibleRankingEntries(composition, maxRows, options);
 
-  for (let index = 0; index < maxRows; index += 1) {
-    const item = composition.entries[index];
-    const rowY = listStartY + index * options.rowHeight;
+  for (let index = 0; index < visibleEntries.length; index += 1) {
+    const item = visibleEntries[index];
+    const rowTop = listStartY + index * options.rowHeight;
+    const rowCenterY = rowTop + options.rowHeight / 2 - 1;
     const percentageX = rect.x + rect.width - horizontalPadding;
 
     context.fillStyle = index % 2 === 0
       ? "rgba(255, 244, 225, 0.035)"
       : "rgba(255, 244, 225, 0.02)";
-    roundedRectPath(context, contentX - 12, rowY - 12, contentWidth + 12, options.rowHeight - 4, 16);
+    roundedRectPath(context, contentX - 12, rowTop + 1, contentWidth + 12, options.rowHeight - 4, 16);
     context.fill();
 
     context.fillStyle = item.isOthers ? "rgba(239, 208, 160, 0.76)" : "rgba(239, 208, 160, 0.88)";
     context.font = `700 ${options.rankFontSize}px "Source Sans 3", sans-serif`;
     const rankLabel = item.isOthers ? "OTR" : String(index + 1).padStart(2, "0");
-    context.fillText(rankLabel, contentX, rowY + 3);
+    context.fillText(rankLabel, contentX, rowCenterY);
 
     context.fillStyle = "#f6eee1";
     context.font = `${item.isOthers ? "700" : "600"} ${options.nameFontSize}px "Source Sans 3", sans-serif`;
-    context.fillText(truncateText(context, item.name, nameWidth), nameX, rowY + 3);
+    context.fillText(truncateText(context, item.name, nameWidth), nameX, rowCenterY);
 
     if (options.showMeta) {
       context.fillStyle = item.isOthers
@@ -467,14 +493,14 @@ function drawRankingPanel(context, rect, composition, options) {
           metaWidth,
         ),
         metaX,
-        rowY + 3,
+        rowCenterY,
       );
     }
 
     context.fillStyle = "rgba(239, 208, 160, 0.94)";
     context.font = `700 ${options.percentageFontSize}px "Source Sans 3", sans-serif`;
     context.textAlign = "right";
-    context.fillText(`${PERCENT_FORMATTER.format(item.percentage)}%`, percentageX, rowY + 3);
+    context.fillText(`${PERCENT_FORMATTER.format(item.percentage)}%`, percentageX, rowCenterY);
     context.textAlign = "left";
   }
 
@@ -497,6 +523,29 @@ function drawRankingPanel(context, rect, composition, options) {
   }
 
   context.restore();
+}
+
+function getVisibleRankingEntries(composition, maxRows, options) {
+  const entries = composition.entries ?? [];
+  if (!entries.length || maxRows <= 0) {
+    return [];
+  }
+
+  if (!options.reserveOthersRow || entries.length <= maxRows) {
+    return entries.slice(0, maxRows);
+  }
+
+  const othersEntry = entries.find((entry) => entry.isOthers);
+  if (!othersEntry) {
+    return entries.slice(0, maxRows);
+  }
+
+  const topEntries = (composition.topEntries ?? entries.filter((entry) => !entry.isOthers)).slice(
+    0,
+    Math.max(0, maxRows - 1),
+  );
+
+  return [...topEntries, othersEntry];
 }
 
 function drawStatCard(context, { x, y, width, height, label, value, compact = false }) {

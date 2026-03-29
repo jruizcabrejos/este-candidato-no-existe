@@ -11,6 +11,7 @@ import { downloadCanvasImage, renderMosaic } from "../mosaic/renderer.js";
 import {
   createShareCardAsset,
   downloadBlobFile,
+  SHARE_CARD_FORMATS,
 } from "../mosaic/shareCard.js";
 import backgroundManifest from "../generated/background_manifest.json";
 
@@ -37,6 +38,7 @@ const DEFAULT_SETTINGS = {
   extendedDetail: 72,
   tileSize: 16,
   highFidelitySource: false,
+  shareCardFormat: "portrait",
 };
 const DEFAULT_LUMA_WEIGHT = 0.85;
 const DEFAULT_UPLOAD_MAX_DIMENSION = 1600;
@@ -108,7 +110,7 @@ export default function MosaicGeneratorSection({
     () => buildShareCardComposition(compositionBreakdown),
     [compositionBreakdown],
   );
-  const shareCardFormat = "portrait";
+  const shareCardFormat = settings.shareCardFormat || "portrait";
   const isShareCardBusy = shareCardBusyAction !== "";
   const canExportShareCard =
     Boolean(resultStats) &&
@@ -584,7 +586,8 @@ export default function MosaicGeneratorSection({
     const { name, type, checked, value } = event.target;
     setSettings((current) => ({
       ...current,
-      [name]: type === "checkbox" ? checked : Number(value),
+      [name]:
+        type === "checkbox" ? checked : name === "shareCardFormat" ? value : Number(value),
     }));
   }
 
@@ -825,6 +828,35 @@ export default function MosaicGeneratorSection({
                                 </option>
                               ))}
                             </select>
+                          </label>
+
+                          <label className="mosaic-field">
+                            <span className="mosaic-label">Tarjeta para compartir</span>
+                            <div
+                              className="share-card-format-group"
+                              role="radiogroup"
+                              aria-label="Tarjeta para compartir"
+                            >
+                              {SHARE_CARD_FORMATS.map((option) => (
+                                <button
+                                  key={option.value}
+                                  className={`share-card-format-button ${shareCardFormat === option.value ? "is-active" : ""}`}
+                                  type="button"
+                                  role="radio"
+                                  aria-checked={shareCardFormat === option.value}
+                                  onClick={() => setSettings((current) => ({
+                                    ...current,
+                                    shareCardFormat: option.value,
+                                  }))}
+                                >
+                                  <span
+                                    className={`share-card-format-icon share-card-format-icon-${option.value}`}
+                                    aria-hidden="true"
+                                  />
+                                  <span>{option.label}</span>
+                                </button>
+                              ))}
+                            </div>
                           </label>
                         </div>
 
