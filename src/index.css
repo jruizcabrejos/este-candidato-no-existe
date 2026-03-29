@@ -1915,7 +1915,7 @@ select {
   }
 
   .mosaic-header-card-examples {
-    width: min(100%, 220px);
+    width: min(100%, 236px);
     height: 146px;
   }
 
@@ -1924,15 +1924,15 @@ select {
   }
 
   .mosaic-header-card-example-1 {
-    left: 12%;
+    left: 7%;
   }
 
   .mosaic-header-card-example-2 {
-    left: 34%;
+    left: 35%;
   }
 
   .mosaic-header-card-example-3 {
-    right: 12%;
+    right: 7%;
   }
 
   .story-drawer-switcher {
@@ -1958,26 +1958,26 @@ select {
   }
 
   .mosaic-header-card-examples {
-    width: min(100%, 190px);
+    width: min(100%, 206px);
     height: 126px;
   }
 
   .mosaic-header-card-example {
-    width: 76px;
+    width: 74px;
     border-radius: 15px;
   }
 
   .mosaic-header-card-example-1 {
-    left: 14%;
+    left: 8%;
   }
 
   .mosaic-header-card-example-2 {
-    left: 33%;
+    left: 35%;
     transform: translateY(-52%) rotate(-1deg);
   }
 
   .mosaic-header-card-example-3 {
-    right: 14%;
+    right: 8%;
   }
 
   .section-shell {

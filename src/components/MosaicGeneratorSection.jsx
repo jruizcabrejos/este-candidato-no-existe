@@ -94,6 +94,7 @@ export default function MosaicGeneratorSection({
   const [shareCardBusyAction, setShareCardBusyAction] = useState("");
   const [settings, setSettings] = useState(DEFAULT_SETTINGS);
   const [isDragOver, setIsDragOver] = useState(false);
+  const [hasGeneratedResult, setHasGeneratedResult] = useState(false);
 
   const tileIndex = useMemo(
     () => (datasetState.data ? buildTileIndex(datasetState.data) : null),
@@ -113,7 +114,7 @@ export default function MosaicGeneratorSection({
     Boolean(resultStats) &&
     shareCardSummary.entries.length > 0 &&
     !isShareCardBusy;
-  const showAdvancedSettings = Boolean(resultStats);
+  const showAdvancedSettings = Boolean(resultStats || hasGeneratedResult);
   const privacyHintContent = (
     <>
       No guardamos tu informacion.{" "}
@@ -398,6 +399,7 @@ export default function MosaicGeneratorSection({
         outputWidth,
         outputHeight,
       });
+      setHasGeneratedResult(true);
       setCompositionBreakdown(buildCompositionBreakdown(placements));
       setProgress({
         status: "done",
@@ -747,38 +749,42 @@ export default function MosaicGeneratorSection({
                   </div>
                 ) : null}
               </div>
-              {resultStats ? (
+              {resultStats || showAdvancedSettings ? (
                 <div className="mosaic-result-footer">
-                  <p className="mosaic-result-summary">
-                    Utilizamos {formatCount(resultStats.uniqueTiles)} candidatos un total de{" "}
-                    {formatCount(resultStats.totalTiles)} veces para hacer tu imagen (
-                    {`${resultStats.outputWidth} x ${resultStats.outputHeight}px`}).
-                  </p>
+                  {resultStats ? (
+                    <>
+                      <p className="mosaic-result-summary">
+                        Utilizamos {formatCount(resultStats.uniqueTiles)} candidatos un total de{" "}
+                        {formatCount(resultStats.totalTiles)} veces para hacer tu imagen (
+                        {`${resultStats.outputWidth} x ${resultStats.outputHeight}px`}).
+                      </p>
 
-                  <div className="mosaic-actions mosaic-result-actions">
-                    <button
-                      className="mosaic-button mosaic-button-secondary"
-                      type="button"
-                      onClick={() => handleDownload("png")}
-                    >
-                      Descargar imagen
-                    </button>
-                    <button
-                      className="mosaic-button mosaic-button-secondary"
-                      type="button"
-                      disabled={!canExportShareCard}
-                      onClick={handleShareCardExport}
-                    >
-                      {shareCardBusyAction === "export" ? "Preparando..." : "Compartir"}
-                    </button>
-                  </div>
+                      <div className="mosaic-actions mosaic-result-actions">
+                        <button
+                          className="mosaic-button mosaic-button-secondary"
+                          type="button"
+                          onClick={() => handleDownload("png")}
+                        >
+                          Descargar imagen
+                        </button>
+                        <button
+                          className="mosaic-button mosaic-button-secondary"
+                          type="button"
+                          disabled={!canExportShareCard}
+                          onClick={handleShareCardExport}
+                        >
+                          {shareCardBusyAction === "export" ? "Preparando..." : "Compartir"}
+                        </button>
+                      </div>
 
-                  {shareCardFeedback.message ? (
-                    <p
-                      className={`share-card-feedback share-card-feedback-${shareCardFeedback.status}`}
-                    >
-                      {shareCardFeedback.message}
-                    </p>
+                      {shareCardFeedback.message ? (
+                        <p
+                          className={`share-card-feedback share-card-feedback-${shareCardFeedback.status}`}
+                        >
+                          {shareCardFeedback.message}
+                        </p>
+                      ) : null}
+                    </>
                   ) : null}
 
                   {showAdvancedSettings ? (
