@@ -1,6 +1,10 @@
-# Ese candidato no existe
+# Este candidato no existe
+
+https://candidatos.incaslop.online/
 
 Micrositio narrativo hecho con React + Vite sobre el "rostro promedio" de las candidaturas al Congreso peruano 2026. El recorrido termina con un generador de mosaicos que recompone tu foto usando retratos reales del dataset electoral.
+
+Las imagenes son obtenidas, y procesadas de: https://github.com/jruizcabrejos/candidato2026
 
 ## Que muestra
 
