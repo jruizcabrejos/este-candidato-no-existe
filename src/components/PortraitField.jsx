@@ -31,6 +31,7 @@ export default function PortraitField({
     let pattern = null;
     const atlas = new Image();
     atlas.decoding = "async";
+    atlas.fetchPriority = "high";
     atlas.src = manifest.atlasUrl;
 
     const resizeCanvas = () => {

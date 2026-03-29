@@ -234,33 +234,43 @@ export default function App() {
 
       <main className="story-shell">
         <section ref={questionSectionRef} className="story-slide story-slide-question">
-          <div className="story-slide-stage">
-            <div ref={questionCopyRef} className="story-slide-copy">
-              <h1 className="story-slide-title">{"\u00BFConoces a este candidato?"}</h1>
+          <div className="story-slide-stage story-slide-stage-question">
+            <div className="story-slide-question-content">
+              <div ref={questionCopyRef} className="story-slide-copy">
+                <h1 className="story-slide-title">{"\u00BFConoces a este candidato?"}</h1>
+              </div>
+
+              <figure
+                ref={questionFigureRef}
+                className="story-slide-portrait story-slide-portrait-main story-slide-question-portrait"
+              >
+                <div className="question-face-window" aria-live="off">
+                  <div
+                    className={`question-face-track${
+                      prefersReducedMotion ? " question-face-track-static" : ""
+                    }`}
+                  >
+                    {getQuestionFaceFrames(questionFaces, questionFaceIndex).map((frame) => (
+                      <div
+                        key={frame.renderKey}
+                        className={`question-face-slide question-face-slide-${frame.slot}`}
+                        aria-hidden={frame.slot !== "center"}
+                      >
+                        <img
+                          src={frame.assetUrl}
+                          alt={frame.slot === "center" ? frame.alt : ""}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </figure>
             </div>
 
-            <figure
-              ref={questionFigureRef}
-              className="story-slide-portrait story-slide-portrait-main story-slide-question-portrait"
-            >
-              <div className="question-face-window" aria-live="off">
-                <div
-                  className={`question-face-track${
-                    prefersReducedMotion ? " question-face-track-static" : ""
-                  }`}
-                >
-                  {getQuestionFaceFrames(questionFaces, questionFaceIndex).map((frame) => (
-                    <div
-                      key={frame.renderKey}
-                      className={`question-face-slide question-face-slide-${frame.slot}`}
-                      aria-hidden={frame.slot !== "center"}
-                    >
-                      <img src={frame.assetUrl} alt={frame.slot === "center" ? frame.alt : ""} />
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </figure>
+            <div className="story-slide-scroll-cue" aria-hidden="true">
+              <span className="story-slide-scroll-cue-line" />
+              <span className="story-slide-scroll-cue-arrow">↓</span>
+            </div>
           </div>
         </section>
 
@@ -322,6 +332,38 @@ export default function App() {
             className="catalog-section region-sex-section story-drawer-section"
           >
             <div className="section-shell region-sex-shell story-drawer-shell js-reveal">
+              <header className="story-drawer-header">
+                <p className="story-drawer-switcher-label">Explora por</p>
+                <div
+                  className="story-drawer-switcher"
+                  role="tablist"
+                  aria-label="Cambiar entre region y partido"
+                >
+                  <button
+                    className={`story-drawer-switcher-button${
+                      activeDrawer === "regions" ? " is-active" : ""
+                    }`}
+                    type="button"
+                    role="tab"
+                    aria-selected={activeDrawer === "regions"}
+                    onClick={() => setActiveDrawer("regions")}
+                  >
+                    Region
+                  </button>
+                  <button
+                    className={`story-drawer-switcher-button${
+                      activeDrawer === "parties" ? " is-active" : ""
+                    }`}
+                    type="button"
+                    role="tab"
+                    aria-selected={activeDrawer === "parties"}
+                    onClick={() => setActiveDrawer("parties")}
+                  >
+                    Partido
+                  </button>
+                </div>
+              </header>
+
               {activeDrawer === "regions" ? (
                 regionsBySex.map((group) => (
                   <article key={group.slug} className="region-sex-band">
