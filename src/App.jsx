@@ -46,13 +46,16 @@ export default function App() {
   const prefersReducedMotion = usePrefersReducedMotion();
   const [backgroundMood, setBackgroundMood] = useState("question");
   const [mosaicBusy, setMosaicBusy] = useState(false);
+  const [questionFaceIndex, setQuestionFaceIndex] = useState(0);
+  const [activeDrawer, setActiveDrawer] = useState(null);
   const rootRef = useRef(null);
   const questionSectionRef = useRef(null);
   const questionCopyRef = useRef(null);
   const questionFigureRef = useRef(null);
   const statementSectionRef = useRef(null);
-  const regionsBySexSectionRef = useRef(null);
+  const drawerSectionRef = useRef(null);
   const mosaicSectionRef = useRef(null);
+  const drawerPanelId = useId();
 
   useLayoutEffect(() => {
     const root = rootRef.current;
@@ -64,7 +67,6 @@ export default function App() {
       const sections = [
         { element: questionSectionRef.current, mood: "question" },
         { element: statementSectionRef.current, mood: "statement" },
-        { element: regionsBySexSectionRef.current, mood: "comparison" },
         { element: mosaicSectionRef.current, mood: "mosaic" },
       ];
 
@@ -122,7 +124,6 @@ export default function App() {
       );
 
       animateSection(statementSectionRef.current, ".story-slide-copy, .story-slide-portrait");
-      animateSection(regionsBySexSectionRef.current, ".region-sex-band");
       animateSection(
         mosaicSectionRef.current,
         ".mosaic-panel, .mosaic-preview-card, .mosaic-stat-card",
@@ -135,6 +136,88 @@ export default function App() {
   const regionCount = storyManifest.summary.regionCount ?? storyManifest.summary.districtCount;
   const partyCount = storyManifest.summary.partyCount;
   const regionsBySex = getRegionsBySexGroups(storyManifest);
+  const partiesBySex = getPartiesBySexGroups(storyManifest);
+  const questionFaces = getQuestionFaces(regionsBySex);
+
+  useEffect(() => {
+    setQuestionFaceIndex(0);
+  }, [questionFaces.length]);
+
+  useEffect(() => {
+    if (prefersReducedMotion || questionFaces.length < 2) {
+      return undefined;
+    }
+
+    const intervalId = window.setInterval(() => {
+      setQuestionFaceIndex((current) => (current + 1) % questionFaces.length);
+    }, 2400);
+
+    return () => window.clearInterval(intervalId);
+  }, [prefersReducedMotion, questionFaces.length]);
+
+  useEffect(() => {
+    if (!activeDrawer || !drawerSectionRef.current) {
+      return undefined;
+    }
+
+    const trigger = ScrollTrigger.create({
+      trigger: drawerSectionRef.current,
+      start: "top center",
+      end: "bottom center",
+      onEnter: () => setBackgroundMood("comparison"),
+      onEnterBack: () => setBackgroundMood("comparison"),
+    });
+
+    ScrollTrigger.refresh();
+    return () => trigger.kill();
+  }, [activeDrawer]);
+
+  useEffect(() => {
+    if (!activeDrawer || !drawerSectionRef.current) {
+      return;
+    }
+
+    drawerSectionRef.current.scrollIntoView({
+      behavior: prefersReducedMotion ? "auto" : "smooth",
+      block: "start",
+    });
+  }, [activeDrawer, prefersReducedMotion]);
+
+  useEffect(() => {
+    if (!activeDrawer || prefersReducedMotion || !drawerSectionRef.current) {
+      return undefined;
+    }
+
+    const selector = activeDrawer === "regions" ? ".region-sex-band" : ".party-band";
+    const items = drawerSectionRef.current.querySelectorAll(selector);
+    if (!items.length) {
+      return undefined;
+    }
+
+    const animation = gsap.fromTo(
+      items,
+      {
+        autoAlpha: 0,
+        y: 28,
+        scale: 0.98,
+      },
+      {
+        autoAlpha: 1,
+        y: 0,
+        scale: 1,
+        duration: 0.72,
+        ease: "power3.out",
+        stagger: 0.08,
+      },
+    );
+
+    return () => animation.kill();
+  }, [activeDrawer, prefersReducedMotion]);
+
+  function handleDrawerToggle(nextDrawer) {
+    setActiveDrawer((current) => (current === nextDrawer ? null : nextDrawer));
+  }
+
   return (
     <div
       ref={rootRef}
@@ -153,20 +236,42 @@ export default function App() {
         <section ref={questionSectionRef} className="story-slide story-slide-question">
           <div className="story-slide-stage">
             <div ref={questionCopyRef} className="story-slide-copy">
-              <h1 className="story-slide-title">¿Conoces a este candidato?</h1>
+              <h1 className="story-slide-title">{"\u00BFConoces a este candidato?"}</h1>
             </div>
 
-            <figure ref={questionFigureRef} className="story-slide-portrait story-slide-portrait-main">
-              <img
-                src={storyManifest.hero.assetUrl}
-                alt="Rostro promedio nacional de las candidaturas al Congreso 2026"
-              />
+            <figure
+              ref={questionFigureRef}
+              className="story-slide-portrait story-slide-portrait-main story-slide-question-portrait"
+            >
+              <div className="question-face-window" aria-live="off">
+                <div
+                  className={`question-face-track${
+                    prefersReducedMotion ? " question-face-track-static" : ""
+                  }`}
+                >
+                  {getQuestionFaceFrames(questionFaces, questionFaceIndex).map((frame) => (
+                    <div
+                      key={frame.renderKey}
+                      className={`question-face-slide question-face-slide-${frame.slot}`}
+                      aria-hidden={frame.slot !== "center"}
+                    >
+                      <img src={frame.assetUrl} alt={frame.slot === "center" ? frame.alt : ""} />
+                    </div>
+                  ))}
+                </div>
+              </div>
             </figure>
           </div>
         </section>
 
         <section ref={statementSectionRef} className="story-slide story-slide-statement js-reveal">
-          <div className="story-slide-stage story-slide-stage-split">
+          <div className="story-slide-stage story-slide-stage-split story-slide-stage-ghosted">
+            <img
+              className="story-slide-background-face"
+              src={storyManifest.hero.assetUrl}
+              alt=""
+              aria-hidden="true"
+            />
             <div className="story-slide-copy">
               <h2 className="story-slide-title">Todos los candidatos son este candidato</h2>
               <p className="story-slide-stat">
@@ -175,8 +280,29 @@ export default function App() {
                   {formatCount(storyManifest.summary.totalPortraits)}
                 </span>{" "}
                 candidatos de las{" "}
-                <span className="story-slide-stat-number">{regionCount}</span> regiones y de los{" "}
-                <span className="story-slide-stat-number">{partyCount}</span> partidos
+                <button
+                  className={`story-slide-stat-button${
+                    activeDrawer === "regions" ? " is-active" : ""
+                  }`}
+                  type="button"
+                  aria-expanded={activeDrawer === "regions"}
+                  aria-controls={drawerPanelId}
+                  onClick={() => handleDrawerToggle("regions")}
+                >
+                  {regionCount} regiones
+                </button>{" "}
+                y de los{" "}
+                <button
+                  className={`story-slide-stat-button${
+                    activeDrawer === "parties" ? " is-active" : ""
+                  }`}
+                  type="button"
+                  aria-expanded={activeDrawer === "parties"}
+                  aria-controls={drawerPanelId}
+                  onClick={() => handleDrawerToggle("parties")}
+                >
+                  {partyCount} partidos
+                </button>
               </p>
             </div>
 
@@ -189,46 +315,79 @@ export default function App() {
           </div>
         </section>
 
-        <section
-          ref={regionsBySexSectionRef}
-          className="catalog-section region-sex-section"
-        >
-          <div className="section-shell region-sex-shell js-reveal">
-            {regionsBySex.map((group) => (
-              <article key={group.slug} className="region-sex-band">
-                <div className="sex-callout">
-                  <div className="sex-callout-face">
-                    <img
-                      src={group.overall.assetUrl}
-                      alt={`Rostro promedio de ${group.label?.toLowerCase?.() ?? group.label}`}
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  </div>
-                  <p className="sex-callout-copy">
-                    {`Este es el rostro promedio de los candidatos ${
-                      group.slug === "male" ? "hombres" : "mujeres"
-                    } (${formatPercentage(group.overall.percentage)}% de candidatos)`}
-                  </p>
-                </div>
+        {activeDrawer ? (
+          <section
+            id={drawerPanelId}
+            ref={drawerSectionRef}
+            className="catalog-section region-sex-section story-drawer-section"
+          >
+            <div className="section-shell region-sex-shell story-drawer-shell js-reveal">
+              {activeDrawer === "regions" ? (
+                regionsBySex.map((group) => (
+                  <article key={group.slug} className="region-sex-band">
+                    <div className="sex-callout">
+                      <p className="sex-callout-copy">
+                        {`Este es el rostro promedio de los candidatos ${
+                          group.slug === "male" ? "hombres" : "mujeres"
+                        } (${formatPercentage(group.overall.percentage)}% de candidatos)`}
+                      </p>
+                    </div>
 
-                <RegionStrip
-                  items={group.regions}
-                  label={`Rostros promedio por region de ${
-                    group.label?.toLowerCase?.() ?? group.slug
-                  }`}
-                  prefersReducedMotion={prefersReducedMotion}
-                  itemKeyPrefix={group.slug}
-                />
-              </article>
-            ))}
-          </div>
-        </section>
+                    <RegionStrip
+                      items={group.regions}
+                      label={`Rostros promedio por region de ${
+                        group.label?.toLowerCase?.() ?? group.slug
+                      }`}
+                      prefersReducedMotion={prefersReducedMotion}
+                      itemKeyPrefix={group.slug}
+                    />
+                  </article>
+                ))
+              ) : partiesBySex.length ? (
+                partiesBySex.map((group) => (
+                  <article key={group.slug} className="region-sex-band party-band">
+                    <div className="sex-callout">
+                      <p className="sex-callout-copy">
+                        {`Estos son los rostros promedio por afiliacion de ${
+                          group.slug === "male" ? "hombres" : "mujeres"
+                        } (${formatPercentage(group.overall.percentage)}% de candidatos)`}
+                      </p>
+                    </div>
+
+                    <RegionStrip
+                      items={group.items}
+                      label={`Rostros promedio por afiliacion de ${
+                        group.label?.toLowerCase?.() ?? group.slug
+                      }`}
+                      prefersReducedMotion={prefersReducedMotion}
+                      itemKeyPrefix={`party-${group.slug}`}
+                    />
+                  </article>
+                ))
+              ) : (
+                <article className="region-sex-band party-band">
+                  <div className="sex-callout">
+                    <p className="sex-callout-copy">
+                      Rostros promedio por afiliacion politica disponibles en el dataset.
+                    </p>
+                  </div>
+
+                  <RegionStrip
+                    items={storyManifest.parties}
+                    label="Rostros promedio por afiliacion politica"
+                    prefersReducedMotion={prefersReducedMotion}
+                    itemKeyPrefix="party"
+                  />
+                </article>
+              )}
+            </div>
+          </section>
+        ) : null}
 
         <MosaicGeneratorSection
           sectionRef={mosaicSectionRef}
           onBusyChange={setMosaicBusy}
-          title="Todos tenemos un poco de cada candidato al congreso dentro de nostros"
+          title={"Todos tenemos un poco de cada candidato:\n\u00BFCu\u00E1les tienes t\u00FA?"}
         />
       </main>
     </div>
@@ -304,12 +463,87 @@ function getRegionsBySexGroups(manifest) {
   }));
 }
 
+function getPartiesBySexGroups(manifest) {
+  const sourceGroups = manifest.partiesBySex ?? manifest.affiliationsBySex ?? [];
+  if (!Array.isArray(sourceGroups) || !sourceGroups.length) {
+    return [];
+  }
+
+  const totalPortraits = manifest.summary?.totalPortraits || 1;
+
+  return sourceGroups.map((group) => {
+    const items = group.items ?? group.parties ?? group.affiliations ?? group.regions ?? [];
+    return {
+      ...group,
+      overall: {
+        ...group.overall,
+        percentage:
+          typeof group.overall?.percentage === "number"
+            ? group.overall.percentage
+            : roundPercentage((group.overall?.portraitCount ?? 0) / totalPortraits),
+      },
+      items,
+    };
+  });
+}
+
 function roundPercentage(value) {
   return Number((value * 100).toFixed(1));
 }
 
 function formatPercentage(value) {
   return percentageFormatter.format(value ?? 0);
+}
+
+function getQuestionFaces(groups) {
+  const faces = groups.flatMap((group) =>
+    (group.regions ?? []).map((region) => ({
+      key: `${group.slug}-${region.slug}`,
+      assetUrl: region.assetUrl,
+      alt: `Rostro promedio de ${
+        group.slug === "male" ? "hombres" : "mujeres"
+      } en ${region.label}`,
+    })),
+  );
+
+  return faces.length
+    ? faces
+    : [
+        {
+          key: "hero-fallback",
+          assetUrl: storyManifest.hero.assetUrl,
+          alt: "Rostro promedio nacional de las candidaturas al Congreso 2026",
+        },
+      ];
+}
+
+function getQuestionFaceFrames(faces, activeIndex) {
+  if (!faces.length) {
+    return [];
+  }
+
+  const total = faces.length;
+  const centerIndex = activeIndex % total;
+  const leftIndex = (centerIndex - 1 + total) % total;
+  const rightIndex = (centerIndex + 1) % total;
+
+  return [
+    {
+      ...faces[leftIndex],
+      slot: "left",
+      renderKey: `left-${faces[leftIndex].key}-${centerIndex}`,
+    },
+    {
+      ...faces[centerIndex],
+      slot: "center",
+      renderKey: `center-${faces[centerIndex].key}-${centerIndex}`,
+    },
+    {
+      ...faces[rightIndex],
+      slot: "right",
+      renderKey: `right-${faces[rightIndex].key}-${centerIndex}`,
+    },
+  ];
 }
 
 function RegionStrip({ items, label, prefersReducedMotion, itemKeyPrefix }) {

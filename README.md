@@ -4,9 +4,9 @@ Micrositio narrativo hecho con React + Vite sobre el "rostro promedio" de las ca
 
 ## Que muestra
 
-- un rostro promedio nacional de todas las candidaturas,
-- una comparacion por region y sexo,
-- un generador de mosaicos que corre completamente en el navegador.
+- una apertura con la bandera del Peru y rostros promedio rotando por region y sexo,
+- un rostro promedio nacional con accesos a drawers comparativos por regiones y partidos,
+- un generador de mosaicos que corre completamente en el navegador, con exportacion de imagen y tarjeta en formato retrato.
 
 ## Desarrollo rapido
 

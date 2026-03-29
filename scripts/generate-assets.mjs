@@ -44,7 +44,7 @@ const MOSAIC_ATLAS_COLUMNS = 48;
 const SHUFFLE_SEED = 20260326;
 const STORY_MANIFEST_VERSION = 4;
 const MOSAIC_METADATA_VERSION = 2;
-const SOURCE_FINGERPRINT_VERSION = 1;
+const SOURCE_FINGERPRINT_VERSION = 2;
 const REGION_SHAPE_SIZE = 96;
 const REGION_SHAPE_PADDING = 6;
 const REGION_SHAPE_EPSILON = 0.000001;
@@ -135,7 +135,12 @@ async function main() {
     return;
   }
 
-  await fs.rm(PUBLIC_GENERATED_DIR, { recursive: true, force: true });
+  await Promise.all([
+    fs.rm(COMPOSITES_DIR, { recursive: true, force: true }),
+    fs.rm(BACKGROUND_DIR, { recursive: true, force: true }),
+    fs.rm(MOSAIC_DIR, { recursive: true, force: true }),
+    fs.rm(REGION_SHAPES_DIR, { recursive: true, force: true }),
+  ]);
   await fs.mkdir(COMPOSITES_DIR, { recursive: true });
   await fs.mkdir(BACKGROUND_DIR, { recursive: true });
   await fs.mkdir(MOSAIC_DIR, { recursive: true });
@@ -143,7 +148,7 @@ async function main() {
   await fs.mkdir(REGION_SHAPES_DIR, { recursive: true });
   await fs.mkdir(SRC_GENERATED_DIR, { recursive: true });
 
-  const heroSource = path.join(FILTERED_DIR, "all.jpg");
+  const heroSource = transparentAverageFacePath("all");
   const heroAssetPath = path.join(COMPOSITES_DIR, "hero.webp");
   await optimizeComposite(heroSource, heroAssetPath, 1200);
 
@@ -157,7 +162,7 @@ async function main() {
         label:
           SEX_LABELS[row.group_key] ??
           titleize((row.group_label ?? row.group_key).replace(/_/g, " ")),
-        sourcePath: path.join(FILTERED_DIR, "by_sex", `${row.group_key}.jpg`),
+        sourcePath: transparentAverageFacePath("by_sex", row.group_key),
         targetPath: path.join(COMPOSITES_DIR, "sexes", `${row.group_key}.webp`),
         assetUrl: `/generated/composites/sexes/${row.group_key}.webp`,
         count: Number(row.discovered_count) || Number(row.eligible_count) || 0,
@@ -174,7 +179,7 @@ async function main() {
       buildCompositeEntry({
         slug: row.group_key,
         label: regionLabelMap.get(row.group_key) ?? titleize(row.group_label ?? row.group_key),
-        sourcePath: path.join(FILTERED_DIR, "by_region", `${row.group_key}.jpg`),
+        sourcePath: transparentAverageFacePath("by_region", row.group_key),
         targetPath: path.join(COMPOSITES_DIR, "regions", `${row.group_key}.webp`),
         assetUrl: `/generated/composites/regions/${row.group_key}.webp`,
         count: regionCounts.get(row.group_key) ?? Number(row.discovered_count) ?? 0,
@@ -209,7 +214,7 @@ async function main() {
               label:
                 regionLabelMap.get(regionRow.group_key) ??
                 titleize(regionRow.group_label ?? regionRow.group_key),
-              sourcePath: path.join(FILTERED_DIR, "by_region_sex", regionSlug, `${row.group_key}.jpg`),
+              sourcePath: transparentAverageFacePath("by_region_sex", regionSlug, row.group_key),
               targetPath: path.join(
                 COMPOSITES_DIR,
                 "regions-by-sex",
@@ -236,7 +241,7 @@ async function main() {
       buildCompositeEntry({
         slug: row.group_key,
         label: partyLabelMap.get(row.group_key) ?? titleize(row.group_label ?? row.group_key),
-        sourcePath: path.join(FILTERED_DIR, "by_affiliation", `${row.group_key}.jpg`),
+        sourcePath: transparentAverageFacePath("by_affiliation", row.group_key),
         targetPath: path.join(COMPOSITES_DIR, "parties", `${row.group_key}.webp`),
         assetUrl: `/generated/composites/parties/${row.group_key}.webp`,
         count: partyCounts.get(row.group_key) ?? Number(row.discovered_count) ?? 0,
@@ -339,8 +344,14 @@ async function optimizeComposite(sourcePath, targetPath, maxWidth) {
       fit: "inside",
       withoutEnlargement: true,
     })
-    .webp({ quality: 88, effort: 4 })
+    .webp({ quality: 88, alphaQuality: 100, effort: 4 })
     .toFile(targetPath);
+}
+
+function transparentAverageFacePath(...parts) {
+  const pathParts = [...parts];
+  const baseName = pathParts.pop();
+  return path.join(FILTERED_DIR, ...pathParts, `${baseName}_transparent.png`);
 }
 
 async function buildPortraitAtlas(entries, outputPath, layout) {
@@ -499,7 +510,16 @@ async function buildPartyLogoAssets(partyManifestRows, partyLogoSourceMap) {
 }
 
 async function buildPartyLogoAsset(slug, sourceUrl) {
-  if (!slug || !sourceUrl) {
+  if (!slug) {
+    return "";
+  }
+
+  const existingAssetUrl = await findExistingPartyLogoAsset(slug);
+  if (existingAssetUrl) {
+    return existingAssetUrl;
+  }
+
+  if (!sourceUrl) {
     return "";
   }
 
@@ -550,6 +570,23 @@ async function buildPartyLogoAsset(slug, sourceUrl) {
     console.warn(`Party logo fallback for ${slug}: ${error.message}`);
     return "";
   }
+}
+
+async function findExistingPartyLogoAsset(slug) {
+  const extensions = ["webp", "bmp", "png", "jpg", "jpeg", "gif", "svg", "ico"];
+
+  for (const extension of extensions) {
+    const targetPath = path.join(PARTY_LOGOS_DIR, `${slug}.${extension}`);
+
+    try {
+      await fs.access(targetPath);
+      return `/generated/party-logos/${slug}.${extension}`;
+    } catch {
+      // Keep scanning until we find a local cached asset or exhaust the known extensions.
+    }
+  }
+
+  return "";
 }
 
 async function buildRegionShapeAssets() {

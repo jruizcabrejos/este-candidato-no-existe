@@ -11,10 +11,11 @@ import { downloadCanvasImage, renderMosaic } from "../mosaic/renderer.js";
 import {
   createShareCardAsset,
   downloadBlobFile,
-  getShareCardFormatConfig,
-  SHARE_CARD_FORMATS,
 } from "../mosaic/shareCard.js";
 import backgroundManifest from "../generated/background_manifest.json";
+import cardExampleA from "../../ejemplos/card/download.png";
+import cardExampleB from "../../ejemplos/card/download alan.png";
+import cardExampleC from "../../ejemplos/card/download (1).png";
 
 const DATASET_URL = `/generated/mosaic/tiles.json?v=${backgroundManifest.assetVersion ?? "1"}`;
 const DETAIL_OPTIONS = [
@@ -50,8 +51,8 @@ const INITIAL_PROGRESS = {
 };
 const COMPOSITION_PREVIEW_LIMIT = 24;
 const WEBSITE_URL = "https://candidatos.incaslop.online/";
-const SHARE_CARD_TITLE = "Este candidato no existe";
 const ACCEPTED_IMAGE_TYPES = "image/png,image/jpeg,image/webp";
+const CARD_EXAMPLES = [cardExampleA, cardExampleB, cardExampleC];
 
 export default function MosaicGeneratorSection({
   sectionRef: providedSectionRef = null,
@@ -76,7 +77,7 @@ export default function MosaicGeneratorSection({
   const [sourceUrl, setSourceUrl] = useState("");
   const [uploadState, setUploadState] = useState({
     status: "idle",
-    message: "Las fotos grandes se optimizan antes de generar el mosaico.",
+    message: "No guardamos tu informacion.",
     meta: null,
   });
   const [showCroppedPreview, setShowCroppedPreview] = useState(false);
@@ -86,7 +87,6 @@ export default function MosaicGeneratorSection({
   const [compositionBreakdown, setCompositionBreakdown] = useState([]);
   const [showAllComposition, setShowAllComposition] = useState(false);
   const [resultZoomMode, setResultZoomMode] = useState("fit");
-  const [shareCardFormat, setShareCardFormat] = useState("portrait");
   const [shareCardFeedback, setShareCardFeedback] = useState({
     status: "idle",
     message: "",
@@ -107,13 +107,28 @@ export default function MosaicGeneratorSection({
     () => buildShareCardComposition(compositionBreakdown),
     [compositionBreakdown],
   );
-  const shareCardFormatMeta = getShareCardFormatConfig(shareCardFormat);
+  const shareCardFormat = "portrait";
   const isShareCardBusy = shareCardBusyAction !== "";
   const canExportShareCard =
     Boolean(resultStats) &&
     shareCardSummary.entries.length > 0 &&
     !isShareCardBusy;
   const showAdvancedSettings = Boolean(resultStats) || isGenerating;
+  const uploadHintContent = uploadState.status === "idle"
+    ? (
+        <>
+          No guardamos tu informacion.{" "}
+          <a
+            className="mosaic-hint-link"
+            href="https://github.com/jruizcabrejos/este-candidato-no-existe"
+            target="_blank"
+            rel="noreferrer"
+          >
+            El codigo es abierto
+          </a>
+        </>
+      )
+    : uploadState.message;
 
   useEffect(() => {
     onBusyChange?.(isGenerating || uploadState.status === "processing");
@@ -208,7 +223,7 @@ export default function MosaicGeneratorSection({
   }, [resultZoomMode, resultStats]);
 
   const datasetSummary = tileIndex
-    ? `${formatCount(tileIndex.summary.tileCount)} congresistas listos para servirte`
+    ? `${formatCount(tileIndex.summary.tileCount)} candidatos listos para servirte`
     : datasetState.status === "loading"
       ? "Cargando la coleccion de retratos para el mosaico."
       : datasetState.error || "Preparando la coleccion de retratos para el mosaico.";
@@ -390,7 +405,7 @@ export default function MosaicGeneratorSection({
       setCompositionBreakdown(buildCompositionBreakdown(placements));
       setProgress({
         status: "done",
-        label: "Mosaico listo para descargar o compartir.",
+        label: "Mosaico listo para exportar.",
         fraction: 1,
       });
     } catch (error) {
@@ -445,7 +460,7 @@ export default function MosaicGeneratorSection({
     setShareCardBusyAction("export");
     setShareCardFeedback({
       status: "loading",
-      message: `Armando la tarjeta ${shareCardFormatMeta.label.toLowerCase()} en PNG.`,
+      message: "Armando la tarjeta PNG.",
     });
 
     try {
@@ -453,70 +468,13 @@ export default function MosaicGeneratorSection({
       downloadBlobFile(asset.blob, asset.filename);
       setShareCardFeedback({
         status: "done",
-        message: `Tarjeta ${shareCardFormatMeta.label.toLowerCase()} descargada.`,
+        message: "Tarjeta PNG descargada.",
       });
     } catch (error) {
       setShareCardFeedback({
         status: "error",
         message: error.message || "No se pudo exportar la tarjeta.",
       });
-    } finally {
-      setShareCardBusyAction("");
-    }
-  }
-
-  async function handleShareCardShare() {
-    if (!canExportShareCard) {
-      return;
-    }
-
-    setShareCardBusyAction("share");
-    setShareCardFeedback({
-      status: "loading",
-      message: `Preparando la tarjeta ${shareCardFormatMeta.label.toLowerCase()} para compartir.`,
-    });
-
-    try {
-      const asset = await createCurrentShareCardAsset();
-      const shareSupported =
-        asset.file &&
-        typeof navigator !== "undefined" &&
-        typeof navigator.share === "function" &&
-        typeof navigator.canShare === "function" &&
-        navigator.canShare({ files: [asset.file] });
-
-      if (!shareSupported) {
-        downloadBlobFile(asset.blob, asset.filename);
-        setShareCardFeedback({
-          status: "fallback",
-          message:
-            "Tu navegador no permite compartir archivos aqui. Descargamos la tarjeta PNG para que la publiques manualmente.",
-        });
-        return;
-      }
-
-      await navigator.share({
-        files: [asset.file],
-        title: SHARE_CARD_TITLE,
-        text: `Asi se ve mi foto dentro del mosaico electoral del Congreso 2026. ${WEBSITE_URL}`,
-        url: WEBSITE_URL,
-      });
-      setShareCardFeedback({
-        status: "done",
-        message: "Tarjeta compartida desde el navegador.",
-      });
-    } catch (error) {
-      if (error?.name === "AbortError") {
-        setShareCardFeedback({
-          status: "idle",
-          message: "Compartir cancelado.",
-        });
-      } else {
-        setShareCardFeedback({
-          status: "error",
-          message: error.message || "No se pudo compartir la tarjeta.",
-        });
-      }
     } finally {
       setShareCardBusyAction("");
     }
@@ -636,144 +594,96 @@ export default function MosaicGeneratorSection({
     <section ref={sectionRef} className="catalog-section mosaic-section">
       <div className="section-shell mosaic-shell js-reveal">
         <header className="section-header mosaic-header">
-          <h2 className="section-title">{title}</h2>
+          <div className="mosaic-header-main">
+            <h2 className="section-title">{title}</h2>
+            <div className="mosaic-header-card-examples" aria-hidden="true">
+              {CARD_EXAMPLES.map((assetUrl, index) => (
+                <figure
+                  key={assetUrl}
+                  className={`mosaic-header-card-example mosaic-header-card-example-${index + 1}`}
+                >
+                  <img src={assetUrl} alt="" />
+                </figure>
+              ))}
+            </div>
+          </div>
         </header>
 
         <div className="mosaic-layout">
           <div className="mosaic-stage">
-            <div className="mosaic-preview-grid">
-              <article className="mosaic-preview-card mosaic-preview-card-input">
-                <div className="mosaic-preview-meta">
-                  <span>Foto base</span>
-                  <span>
-                    {showCroppedPreview
-                      ? "Recorte listo para el mosaico"
-                      : uploadState.meta
-                        ? `${uploadState.meta.width} x ${uploadState.meta.height}px`
-                        : "Arrastra o haz click"}
-                  </span>
-                </div>
-                <input
-                  ref={fileInputRef}
-                  className="mosaic-input-file"
-                  type="file"
-                  accept={ACCEPTED_IMAGE_TYPES}
-                  tabIndex={-1}
-                  onChange={handleFileChange}
+            <article className="mosaic-preview-card mosaic-preview-card-input">
+              <div className="mosaic-preview-meta">
+                <span>Foto base</span>
+                <span>
+                  {showCroppedPreview
+                    ? "Recorte listo para el mosaico"
+                    : uploadState.meta
+                      ? `${uploadState.meta.width} x ${uploadState.meta.height}px`
+                      : "Arrastra o haz click"}
+                </span>
+              </div>
+              <input
+                ref={fileInputRef}
+                className="mosaic-input-file"
+                type="file"
+                accept={ACCEPTED_IMAGE_TYPES}
+                tabIndex={-1}
+                onChange={handleFileChange}
+              />
+              <div
+                className={`mosaic-preview-frame mosaic-upload-frame${
+                  isDragOver ? " is-drag-over" : ""
+                }${sourceUrl ? " has-image" : " is-empty"}`}
+                role="button"
+                tabIndex={uploadState.status === "processing" ? -1 : 0}
+                aria-label={
+                  sourceUrl ? "Cambiar foto base del mosaico" : "Subir foto base del mosaico"
+                }
+                aria-disabled={uploadState.status === "processing"}
+                onClick={openFilePicker}
+                onKeyDown={handleSourceKeyDown}
+                onDragEnter={handleSourceDragEnter}
+                onDragOver={handleSourceDragOver}
+                onDragLeave={handleSourceDragLeave}
+                onDrop={handleSourceDrop}
+              >
+                <canvas
+                  ref={sourceCanvasRef}
+                  className={`mosaic-canvas${showCroppedPreview ? " is-visible" : ""}`}
                 />
-                <div
-                  className={`mosaic-preview-frame mosaic-upload-frame${
-                    isDragOver ? " is-drag-over" : ""
-                  }${sourceUrl ? " has-image" : ""}`}
-                  role="button"
-                  tabIndex={uploadState.status === "processing" ? -1 : 0}
-                  aria-label={
-                    sourceUrl ? "Cambiar foto base del mosaico" : "Subir foto base del mosaico"
-                  }
-                  aria-disabled={uploadState.status === "processing"}
-                  onClick={openFilePicker}
-                  onKeyDown={handleSourceKeyDown}
-                  onDragEnter={handleSourceDragEnter}
-                  onDragOver={handleSourceDragOver}
-                  onDragLeave={handleSourceDragLeave}
-                  onDrop={handleSourceDrop}
-                >
-                  <canvas
-                    ref={sourceCanvasRef}
-                    className={`mosaic-canvas${showCroppedPreview ? " is-visible" : ""}`}
+                {!showCroppedPreview && sourceUrl ? (
+                  <img
+                    className="mosaic-preview-image"
+                    src={sourceUrl}
+                    alt="Imagen seleccionada para el mosaico"
                   />
-                  {!showCroppedPreview && sourceUrl ? (
-                    <img
-                      className="mosaic-preview-image"
-                      src={sourceUrl}
-                      alt="Imagen seleccionada para el mosaico"
-                    />
-                  ) : null}
-                  {!showCroppedPreview && !sourceUrl ? (
-                    <div className="mosaic-placeholder mosaic-upload-empty">
-                      <div>
-                        <p className="mosaic-upload-title">[+] Sube una foto</p>
-                        <p className="mosaic-upload-copy">
-                          Arrastrala aqui o haz click para elegir un archivo PNG, JPG o
-                          WebP.
-                        </p>
-                      </div>
+                ) : null}
+                {!showCroppedPreview && !sourceUrl ? (
+                  <div className="mosaic-placeholder mosaic-upload-empty">
+                    <div>
+                      <p className="mosaic-upload-title">[+] Sube una foto</p>
+                      <p className="mosaic-upload-copy">
+                        Arrastrala aqui o haz click para elegir un archivo PNG, JPG o
+                        WebP.
+                      </p>
                     </div>
-                  ) : null}
-                  {sourceUrl ? (
-                    <span className="mosaic-upload-chip">
-                      {showCroppedPreview ? "Cambiar foto" : "Arrastra otra o haz click"}
-                    </span>
-                  ) : null}
-                  {isDragOver ? (
-                    <div className="mosaic-drop-overlay" aria-hidden="true">
-                      <p>Suelta la foto aqui</p>
-                    </div>
-                  ) : null}
-                </div>
-                <p className={`mosaic-hint mosaic-hint-${uploadState.status}`}>
-                  {uploadState.message}
-                </p>
-              </article>
-
-              <article className="mosaic-preview-card mosaic-preview-card-result">
-                <div className="mosaic-preview-meta">
-                  <span>Salida</span>
-                  <div className="mosaic-preview-meta-actions">
-                    <span>
-                      {resultStats
-                        ? `${resultStats.outputWidth} x ${resultStats.outputHeight}px`
-                        : "Resultado del mosaico"}
-                    </span>
-                    {resultStats ? (
-                      <div className="mosaic-zoom-controls" role="group" aria-label="Zoom del mosaico">
-                        <button
-                          className={`mosaic-zoom-button${
-                            resultZoomMode === "fit" ? " is-active" : ""
-                          }`}
-                          type="button"
-                          aria-pressed={resultZoomMode === "fit"}
-                          onClick={() => setResultZoomMode("fit")}
-                        >
-                          Ajustar
-                        </button>
-                        <button
-                          className={`mosaic-zoom-button${
-                            resultZoomMode === "100" ? " is-active" : ""
-                          }`}
-                          type="button"
-                          aria-pressed={resultZoomMode === "100"}
-                          onClick={() => setResultZoomMode("100")}
-                        >
-                          100%
-                        </button>
-                      </div>
-                    ) : null}
                   </div>
-                </div>
-                <div className="mosaic-preview-frame">
-                  <div
-                    ref={resultViewportRef}
-                    className={`mosaic-result-viewport${
-                      resultZoomMode === "100" ? " is-full-detail" : " is-fit"
-                    }${resultStats ? " is-visible" : ""}`}
-                    tabIndex={resultStats ? 0 : -1}
-                  >
-                    <canvas
-                      ref={resultCanvasRef}
-                      className={`mosaic-canvas mosaic-result-canvas${
-                        resultStats ? " is-visible" : ""
-                      }${resultZoomMode === "100" ? " is-full-detail" : " is-fit"}`}
-                    />
+                ) : null}
+                {sourceUrl ? (
+                  <span className="mosaic-upload-chip">
+                    {showCroppedPreview ? "Cambiar foto" : "Arrastra otra o haz click"}
+                  </span>
+                ) : null}
+                {isDragOver ? (
+                  <div className="mosaic-drop-overlay" aria-hidden="true">
+                    <p>Suelta la foto aqui</p>
                   </div>
-                  {!resultStats ? (
-                    <div className="mosaic-placeholder">
-                      <p>El mosaico final aparecera aqui cuando termine el render.</p>
-                    </div>
-                  ) : null}
-                </div>
-              </article>
-            </div>
+                ) : null}
+              </div>
+              <p className={`mosaic-hint mosaic-hint-${uploadState.status}`}>
+                {uploadHintContent}
+              </p>
+            </article>
 
             <form className="mosaic-panel mosaic-control-panel" onSubmit={handleGenerate}>
               <div className="mosaic-panel-block">
@@ -807,12 +717,26 @@ export default function MosaicGeneratorSection({
                   disabled={!resultStats}
                   onClick={() => handleDownload("png")}
                 >
-                  Exportar PNG
+                  Exportar imagen
+                </button>
+                <button
+                  className="mosaic-button mosaic-button-secondary"
+                  type="button"
+                  disabled={!canExportShareCard}
+                  onClick={handleShareCardExport}
+                >
+                  {shareCardBusyAction === "export" ? "Preparando..." : "Exportar Tarjeta"}
                 </button>
               </div>
 
               {generateDisabledReason ? (
                 <p className="mosaic-hint">{generateDisabledReason}</p>
+              ) : null}
+
+              {shareCardFeedback.message ? (
+                <p className={`share-card-feedback share-card-feedback-${shareCardFeedback.status}`}>
+                  {shareCardFeedback.message}
+                </p>
               ) : null}
 
               {showAdvancedSettings ? (
@@ -890,101 +814,85 @@ export default function MosaicGeneratorSection({
               ) : null}
             </form>
 
-            {resultStats ? (
-              <>
-                <div className="mosaic-stat-grid">
-                  <div className="mosaic-stat-card">
-                    <span className="mosaic-stat-label">Total de candidatos utilizados</span>
-                    <strong className="mosaic-stat-value">
-                      {formatCount(resultStats.uniqueTiles)}
-                    </strong>
-                  </div>
-                  <div className="mosaic-stat-card">
-                    <span className="mosaic-stat-label">Total de piezas del mosaico</span>
-                    <strong className="mosaic-stat-value">
-                      {formatCount(resultStats.totalTiles)}
-                    </strong>
-                  </div>
-                  <div className="mosaic-stat-card">
-                    <span className="mosaic-stat-label">Resolucion</span>
-                    <strong className="mosaic-stat-value">
-                      {`${resultStats.outputWidth} x ${resultStats.outputHeight}`}
-                    </strong>
-                  </div>
+            <article className="mosaic-preview-card mosaic-preview-card-result">
+              <div className="mosaic-preview-meta">
+                <span>Salida</span>
+                <div className="mosaic-preview-meta-actions">
+                  <span>
+                    {resultStats
+                      ? `${resultStats.outputWidth} x ${resultStats.outputHeight}px`
+                      : "Resultado del mosaico"}
+                  </span>
+                  {resultStats ? (
+                    <div className="mosaic-zoom-controls" role="group" aria-label="Zoom del mosaico">
+                      <button
+                        className={`mosaic-zoom-button${
+                          resultZoomMode === "fit" ? " is-active" : ""
+                        }`}
+                        type="button"
+                        aria-pressed={resultZoomMode === "fit"}
+                        onClick={() => setResultZoomMode("fit")}
+                      >
+                        Ajustar
+                      </button>
+                      <button
+                        className={`mosaic-zoom-button${
+                          resultZoomMode === "100" ? " is-active" : ""
+                        }`}
+                        type="button"
+                        aria-pressed={resultZoomMode === "100"}
+                        onClick={() => setResultZoomMode("100")}
+                      >
+                        100%
+                      </button>
+                    </div>
+                  ) : null}
                 </div>
-
-                <section className="share-card-panel">
-                  <div className="share-card-header">
-                    <div>
-                      <p className="mosaic-panel-eyebrow">Tarjeta social</p>
-                      <p className="share-card-summary">
-                        Exporta una tarjeta lista para publicar con las estadisticas del
-                        mosaico.
-                      </p>
-                    </div>
-                    <p className="share-card-meta">
-                      {shareCardFormatMeta.width} x {shareCardFormatMeta.height}px PNG
-                    </p>
+              </div>
+              <div className="mosaic-preview-frame">
+                <div
+                  ref={resultViewportRef}
+                  className={`mosaic-result-viewport${
+                    resultZoomMode === "100" ? " is-full-detail" : " is-fit"
+                  }${resultStats ? " is-visible" : ""}`}
+                  tabIndex={resultStats ? 0 : -1}
+                >
+                  <canvas
+                    ref={resultCanvasRef}
+                    className={`mosaic-canvas mosaic-result-canvas${
+                      resultStats ? " is-visible" : ""
+                    }${resultZoomMode === "100" ? " is-full-detail" : " is-fit"}`}
+                  />
+                </div>
+                {!resultStats ? (
+                  <div className="mosaic-placeholder">
+                    <p>El mosaico final aparecera aqui cuando termine el render.</p>
                   </div>
+                ) : null}
+              </div>
+            </article>
 
-                  <div className="share-card-controls">
-                    <div
-                      className="share-card-format-group"
-                      role="group"
-                      aria-label="Formato de la tarjeta para compartir"
-                    >
-                      {SHARE_CARD_FORMATS.map((option) => (
-                        <button
-                          key={option.value}
-                          className={`share-card-format-button${
-                            shareCardFormat === option.value ? " is-active" : ""
-                          }`}
-                          type="button"
-                          aria-pressed={shareCardFormat === option.value}
-                          disabled={isShareCardBusy}
-                          onClick={() => {
-                            setShareCardFormat(option.value);
-                            setShareCardFeedback({
-                              status: "idle",
-                              message: "",
-                            });
-                          }}
-                        >
-                          <span
-                            className={`share-card-format-icon share-card-format-icon-${option.value}`}
-                            aria-hidden="true"
-                          />
-                          <span>{option.label}</span>
-                        </button>
-                      ))}
-                    </div>
-
-                    <div className="mosaic-actions share-card-actions">
-                      <button
-                        className="mosaic-button"
-                        type="button"
-                        disabled={!canExportShareCard}
-                        onClick={handleShareCardExport}
-                      >
-                        {shareCardBusyAction === "export" ? "Preparando..." : "Exportar tarjeta"}
-                      </button>
-                      <button
-                        className="mosaic-button mosaic-button-secondary"
-                        type="button"
-                        disabled={!canExportShareCard}
-                        onClick={handleShareCardShare}
-                      >
-                        {shareCardBusyAction === "share" ? "Preparando..." : "Compartir tarjeta"}
-                      </button>
-                    </div>
-                  </div>
-
-                  <p className={`share-card-feedback share-card-feedback-${shareCardFeedback.status}`}>
-                    {shareCardFeedback.message ||
-                      "La tarjeta incluye el top 10, Otros, tus cifras y el enlace https://candidatos.incaslop.online/."}
-                  </p>
-                </section>
-              </>
+            {resultStats ? (
+              <div className="mosaic-stat-grid">
+                <div className="mosaic-stat-card">
+                  <span className="mosaic-stat-label">Total de candidatos utilizados</span>
+                  <strong className="mosaic-stat-value">
+                    {formatCount(resultStats.uniqueTiles)}
+                  </strong>
+                </div>
+                <div className="mosaic-stat-card">
+                  <span className="mosaic-stat-label">Total de piezas del mosaico</span>
+                  <strong className="mosaic-stat-value">
+                    {formatCount(resultStats.totalTiles)}
+                  </strong>
+                </div>
+                <div className="mosaic-stat-card">
+                  <span className="mosaic-stat-label">Resolucion</span>
+                  <strong className="mosaic-stat-value">
+                    {`${resultStats.outputWidth} x ${resultStats.outputHeight}`}
+                  </strong>
+                </div>
+              </div>
             ) : null}
 
             {compositionBreakdown.length ? (

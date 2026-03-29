@@ -1,13 +1,13 @@
 {
-  "assetVersion": "3348874d5787",
-  "sourceFingerprint": "3348874d57878109612fc20efe6adefe8a15e10f0b230f0f60887c79b54fedfd",
+  "assetVersion": "2dad1681b74f",
+  "sourceFingerprint": "2dad1681b74f7dd2b17569cdf81656b3ba583a696a99ca9ea26629fadade97d2",
   "tileWidth": 48,
   "tileHeight": 72,
   "columns": 48,
   "rows": 92,
   "atlasWidth": 2304,
   "atlasHeight": 6624,
-  "atlasUrl": "/generated/background/portrait-atlas.webp?v=3348874d5787",
+  "atlasUrl": "/generated/background/portrait-atlas.webp?v=2dad1681b74f",
   "speedX": 10,
   "speedY": 14,
   "portraitIds": [

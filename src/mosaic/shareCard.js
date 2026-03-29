@@ -145,7 +145,7 @@ function drawPortraitCard(
 
   drawHeader(context, {
     eyebrow: "Este candidato no existe",
-    title: "Tu foto hecha de congresistas",
+    title: "Tu foto hecha de candidatos",
     subtitle: "",
     x: padding,
     y: 82,
