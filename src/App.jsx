@@ -126,7 +126,7 @@ export default function App() {
       animateSection(statementSectionRef.current, ".story-slide-copy, .story-slide-portrait");
       animateSection(
         mosaicSectionRef.current,
-        ".mosaic-panel, .mosaic-preview-card, .mosaic-stat-card",
+        ".mosaic-panel, .mosaic-preview-card, .composition-panel",
       );
     }, root);
 
@@ -137,7 +137,7 @@ export default function App() {
   const partyCount = storyManifest.summary.partyCount;
   const regionsBySex = getRegionsBySexGroups(storyManifest);
   const partiesBySex = getPartiesBySexGroups(storyManifest);
-  const questionFaces = getQuestionFaces(regionsBySex);
+  const questionFaces = getQuestionFaces(regionsBySex, partiesBySex);
 
   useEffect(() => {
     setQuestionFaceIndex(0);
@@ -495,16 +495,28 @@ function formatPercentage(value) {
   return percentageFormatter.format(value ?? 0);
 }
 
-function getQuestionFaces(groups) {
-  const faces = groups.flatMap((group) =>
+function getQuestionFaces(regionGroups, partyGroups) {
+  const regionFaces = regionGroups.flatMap((group) =>
     (group.regions ?? []).map((region) => ({
-      key: `${group.slug}-${region.slug}`,
+      key: `region-${group.slug}-${region.slug}`,
       assetUrl: region.assetUrl,
       alt: `Rostro promedio de ${
         group.slug === "male" ? "hombres" : "mujeres"
       } en ${region.label}`,
     })),
   );
+
+  const partyFaces = partyGroups.flatMap((group) =>
+    (group.items ?? []).map((party) => ({
+      key: `party-${group.slug}-${party.slug}`,
+      assetUrl: party.assetUrl,
+      alt: `Rostro promedio por afiliacion de ${
+        group.slug === "male" ? "hombres" : "mujeres"
+      } en ${party.label}`,
+    })),
+  );
+
+  const faces = [...regionFaces, ...partyFaces];
 
   return faces.length
     ? faces

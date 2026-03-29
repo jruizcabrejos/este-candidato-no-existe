@@ -87,7 +87,6 @@ export default function MosaicGeneratorSection({
   const [resultStats, setResultStats] = useState(null);
   const [compositionBreakdown, setCompositionBreakdown] = useState([]);
   const [showAllComposition, setShowAllComposition] = useState(false);
-  const [resultZoomMode, setResultZoomMode] = useState("fit");
   const [shareCardFeedback, setShareCardFeedback] = useState({
     status: "idle",
     message: "",
@@ -114,7 +113,7 @@ export default function MosaicGeneratorSection({
     Boolean(resultStats) &&
     shareCardSummary.entries.length > 0 &&
     !isShareCardBusy;
-  const showAdvancedSettings = Boolean(resultStats) || isGenerating;
+  const showAdvancedSettings = Boolean(resultStats);
   const uploadHintContent = uploadState.status === "idle"
     ? (
         <>
@@ -221,7 +220,7 @@ export default function MosaicGeneratorSection({
 
     resultViewportRef.current.scrollTop = 0;
     resultViewportRef.current.scrollLeft = 0;
-  }, [resultZoomMode, resultStats]);
+  }, [resultStats]);
 
   const datasetSummary = tileIndex
     ? `${formatCount(tileIndex.summary.tileCount)} candidatos listos para servirte`
@@ -253,7 +252,6 @@ export default function MosaicGeneratorSection({
     setResultStats(null);
     setCompositionBreakdown([]);
     setShowAllComposition(false);
-    setResultZoomMode("fit");
     setShareCardFeedback({
       status: "idle",
       message: "",
@@ -339,7 +337,6 @@ export default function MosaicGeneratorSection({
     setResultStats(null);
     setCompositionBreakdown([]);
     setShowAllComposition(false);
-    setResultZoomMode("fit");
     setShareCardFeedback({
       status: "idle",
       message: "",
@@ -406,7 +403,7 @@ export default function MosaicGeneratorSection({
       setCompositionBreakdown(buildCompositionBreakdown(placements));
       setProgress({
         status: "done",
-        label: "Mosaico listo para exportar.",
+        label: "Imagen lista para descargar o compartir.",
         fraction: 1,
       });
     } catch (error) {
@@ -461,7 +458,7 @@ export default function MosaicGeneratorSection({
     setShareCardBusyAction("export");
     setShareCardFeedback({
       status: "loading",
-      message: "Armando la tarjeta PNG.",
+      message: "Preparando imagen para compartir.",
     });
 
     try {
@@ -469,7 +466,7 @@ export default function MosaicGeneratorSection({
       downloadBlobFile(asset.blob, asset.filename);
       setShareCardFeedback({
         status: "done",
-        message: "Tarjeta PNG descargada.",
+        message: "Imagen para compartir descargada.",
       });
     } catch (error) {
       setShareCardFeedback({
@@ -710,191 +707,153 @@ export default function MosaicGeneratorSection({
                   type="submit"
                   disabled={!canGenerate}
                 >
-                  {isGenerating ? "Generando..." : "Generar mosaico"}
-                </button>
-                <button
-                  className="mosaic-button mosaic-button-secondary"
-                  type="button"
-                  disabled={!resultStats}
-                  onClick={() => handleDownload("png")}
-                >
-                  Exportar imagen
-                </button>
-                <button
-                  className="mosaic-button mosaic-button-secondary"
-                  type="button"
-                  disabled={!canExportShareCard}
-                  onClick={handleShareCardExport}
-                >
-                  {shareCardBusyAction === "export" ? "Preparando..." : "Exportar Tarjeta"}
+                  {isGenerating ? "Generando..." : "Generar imagen"}
                 </button>
               </div>
 
               {generateDisabledReason ? (
                 <p className="mosaic-hint">{generateDisabledReason}</p>
               ) : null}
-
-              {shareCardFeedback.message ? (
-                <p className={`share-card-feedback share-card-feedback-${shareCardFeedback.status}`}>
-                  {shareCardFeedback.message}
-                </p>
-              ) : null}
-
-              {showAdvancedSettings ? (
-                <details className="mosaic-advanced mosaic-advanced-postrun">
-                  <summary className="mosaic-advanced-summary">Ajustes</summary>
-                  <div className="mosaic-advanced-body">
-                    <p className="mosaic-advanced-copy">
-                      El preset inicial usa tile de 16 px, detalle fino y detalle
-                      extendido de 72 celdas.
-                    </p>
-
-                    <div className="mosaic-field-grid">
-                      <label className="mosaic-field">
-                        <span className="mosaic-label">Detalle</span>
-                        <select
-                          name="detail"
-                          value={settings.detail}
-                          onChange={handleSettingChange}
-                        >
-                          {DETAIL_OPTIONS.map((option) => (
-                            <option key={option.value} value={option.value}>
-                              {option.label}
-                            </option>
-                          ))}
-                        </select>
-                      </label>
-
-                      <label className="mosaic-field">
-                        <span className="mosaic-label">Tile final</span>
-                        <select
-                          name="tileSize"
-                          value={settings.tileSize}
-                          onChange={handleSettingChange}
-                        >
-                          {TILE_SIZE_OPTIONS.map((option) => (
-                            <option key={option.value} value={option.value}>
-                              {option.label}
-                            </option>
-                          ))}
-                        </select>
-                      </label>
-                    </div>
-
-                    <label className="mosaic-field">
-                      <span className="mosaic-label">
-                        Detalle extendido <strong>{effectiveDetail}</strong>
-                      </span>
-                      <select
-                        name="extendedDetail"
-                        value={settings.extendedDetail}
-                        onChange={handleSettingChange}
-                      >
-                        {EXTENDED_DETAIL_OPTIONS.map((option) => (
-                          <option key={option.value} value={option.value}>
-                            {option.label}
-                          </option>
-                        ))}
-                      </select>
-                    </label>
-
-                    <label className="mosaic-toggle">
-                      <input
-                        name="highFidelitySource"
-                        type="checkbox"
-                        checked={settings.highFidelitySource}
-                        onChange={handleSettingChange}
-                      />
-                      <span>
-                        Preparar la foto en alta fidelidad hasta{" "}
-                        <strong>{HIGH_FIDELITY_UPLOAD_MAX_DIMENSION}px</strong>
-                      </span>
-                    </label>
-                  </div>
-                </details>
-              ) : null}
             </form>
 
             <article className="mosaic-preview-card mosaic-preview-card-result">
               <div className="mosaic-preview-meta">
                 <span>Salida</span>
-                <div className="mosaic-preview-meta-actions">
-                  <span>
-                    {resultStats
-                      ? `${resultStats.outputWidth} x ${resultStats.outputHeight}px`
-                      : "Resultado del mosaico"}
-                  </span>
-                  {resultStats ? (
-                    <div className="mosaic-zoom-controls" role="group" aria-label="Zoom del mosaico">
-                      <button
-                        className={`mosaic-zoom-button${
-                          resultZoomMode === "fit" ? " is-active" : ""
-                        }`}
-                        type="button"
-                        aria-pressed={resultZoomMode === "fit"}
-                        onClick={() => setResultZoomMode("fit")}
-                      >
-                        Ajustar
-                      </button>
-                      <button
-                        className={`mosaic-zoom-button${
-                          resultZoomMode === "100" ? " is-active" : ""
-                        }`}
-                        type="button"
-                        aria-pressed={resultZoomMode === "100"}
-                        onClick={() => setResultZoomMode("100")}
-                      >
-                        100%
-                      </button>
-                    </div>
-                  ) : null}
-                </div>
+                <span>
+                  {resultStats
+                    ? `${resultStats.outputWidth} x ${resultStats.outputHeight}px`
+                    : "Resultado de la imagen"}
+                </span>
               </div>
               <div className="mosaic-preview-frame">
                 <div
                   ref={resultViewportRef}
-                  className={`mosaic-result-viewport${
-                    resultZoomMode === "100" ? " is-full-detail" : " is-fit"
-                  }${resultStats ? " is-visible" : ""}`}
+                  className={`mosaic-result-viewport is-fit${resultStats ? " is-visible" : ""}`}
                   tabIndex={resultStats ? 0 : -1}
                 >
                   <canvas
                     ref={resultCanvasRef}
                     className={`mosaic-canvas mosaic-result-canvas${
                       resultStats ? " is-visible" : ""
-                    }${resultZoomMode === "100" ? " is-full-detail" : " is-fit"}`}
+                    } is-fit`}
                   />
                 </div>
                 {!resultStats ? (
                   <div className="mosaic-placeholder">
-                    <p>El mosaico final aparecera aqui cuando termine el render.</p>
+                    <p>La imagen final aparecera aqui cuando termine el render.</p>
                   </div>
                 ) : null}
               </div>
-            </article>
+              {resultStats ? (
+                <div className="mosaic-result-footer">
+                  <p className="mosaic-result-summary">
+                    Utilizamos {formatCount(resultStats.uniqueTiles)} candidatos un total de{" "}
+                    {formatCount(resultStats.totalTiles)} veces para hacer tu imagen (
+                    {`${resultStats.outputWidth} x ${resultStats.outputHeight}px`}).
+                  </p>
 
-            {resultStats ? (
-              <div className="mosaic-stat-grid">
-                <div className="mosaic-stat-card">
-                  <span className="mosaic-stat-label">Total de candidatos utilizados</span>
-                  <strong className="mosaic-stat-value">
-                    {formatCount(resultStats.uniqueTiles)}
-                  </strong>
+                  <div className="mosaic-actions mosaic-result-actions">
+                    <button
+                      className="mosaic-button mosaic-button-secondary"
+                      type="button"
+                      onClick={() => handleDownload("png")}
+                    >
+                      Descargar imagen
+                    </button>
+                    <button
+                      className="mosaic-button mosaic-button-secondary"
+                      type="button"
+                      disabled={!canExportShareCard}
+                      onClick={handleShareCardExport}
+                    >
+                      {shareCardBusyAction === "export" ? "Preparando..." : "Compartir"}
+                    </button>
+                  </div>
+
+                  {shareCardFeedback.message ? (
+                    <p
+                      className={`share-card-feedback share-card-feedback-${shareCardFeedback.status}`}
+                    >
+                      {shareCardFeedback.message}
+                    </p>
+                  ) : null}
+
+                  {showAdvancedSettings ? (
+                    <details className="mosaic-advanced mosaic-advanced-postrun">
+                      <summary className="mosaic-advanced-summary">Ajustes</summary>
+                      <div className="mosaic-advanced-body">
+                        <p className="mosaic-advanced-copy">
+                          El preset inicial usa tile de 16 px, detalle fino y detalle
+                          extendido de 72 celdas.
+                        </p>
+
+                        <div className="mosaic-field-grid">
+                          <label className="mosaic-field">
+                            <span className="mosaic-label">Detalle</span>
+                            <select
+                              name="detail"
+                              value={settings.detail}
+                              onChange={handleSettingChange}
+                            >
+                              {DETAIL_OPTIONS.map((option) => (
+                                <option key={option.value} value={option.value}>
+                                  {option.label}
+                                </option>
+                              ))}
+                            </select>
+                          </label>
+
+                          <label className="mosaic-field">
+                            <span className="mosaic-label">Tile final</span>
+                            <select
+                              name="tileSize"
+                              value={settings.tileSize}
+                              onChange={handleSettingChange}
+                            >
+                              {TILE_SIZE_OPTIONS.map((option) => (
+                                <option key={option.value} value={option.value}>
+                                  {option.label}
+                                </option>
+                              ))}
+                            </select>
+                          </label>
+                        </div>
+
+                        <label className="mosaic-field">
+                          <span className="mosaic-label">
+                            Detalle extendido <strong>{effectiveDetail}</strong>
+                          </span>
+                          <select
+                            name="extendedDetail"
+                            value={settings.extendedDetail}
+                            onChange={handleSettingChange}
+                          >
+                            {EXTENDED_DETAIL_OPTIONS.map((option) => (
+                              <option key={option.value} value={option.value}>
+                                {option.label}
+                              </option>
+                            ))}
+                          </select>
+                        </label>
+
+                        <label className="mosaic-toggle">
+                          <input
+                            name="highFidelitySource"
+                            type="checkbox"
+                            checked={settings.highFidelitySource}
+                            onChange={handleSettingChange}
+                          />
+                          <span>
+                            Preparar la foto en alta fidelidad hasta{" "}
+                            <strong>{HIGH_FIDELITY_UPLOAD_MAX_DIMENSION}px</strong>
+                          </span>
+                        </label>
+                      </div>
+                    </details>
+                  ) : null}
                 </div>
-                <div className="mosaic-stat-card">
-                  <span className="mosaic-stat-label">Total de piezas del mosaico</span>
-                  <strong className="mosaic-stat-value">
-                    {formatCount(resultStats.totalTiles)}
-                  </strong>
-                </div>
-                <div className="mosaic-stat-card">
-                  <span className="mosaic-stat-label">Resolucion</span>
-                  <strong className="mosaic-stat-value">
-                    {`${resultStats.outputWidth} x ${resultStats.outputHeight}`}
-                  </strong>
-                </div>
-              </div>
-            ) : null}
+              ) : null}
+            </article>
 
             {compositionBreakdown.length ? (
               <section className="composition-panel">

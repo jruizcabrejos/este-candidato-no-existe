@@ -818,8 +818,7 @@ select {
 }
 
 .mosaic-panel,
-.mosaic-preview-card,
-.mosaic-stat-card {
+.mosaic-preview-card {
   border: 1px solid rgba(242, 214, 176, 0.18);
   border-radius: 24px;
   background:
@@ -1119,7 +1118,6 @@ select {
 .mosaic-preview-card-input,
 .mosaic-control-panel,
 .mosaic-preview-card-result,
-.mosaic-stat-grid,
 .composition-panel {
   min-width: 0;
 }
@@ -1246,6 +1244,11 @@ select {
   width: 100%;
 }
 
+.mosaic-preview-card-result {
+  display: grid;
+  gap: 0.85rem;
+}
+
 .mosaic-preview-meta {
   display: flex;
   justify-content: space-between;
@@ -1255,53 +1258,6 @@ select {
   font-size: 0.78rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-}
-
-.mosaic-preview-meta-actions {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 0.7rem;
-  flex-wrap: wrap;
-}
-
-.mosaic-zoom-controls {
-  display: inline-flex;
-  gap: 0.45rem;
-  flex-wrap: wrap;
-}
-
-.mosaic-zoom-button {
-  padding: 0.35rem 0.7rem;
-  border: 1px solid rgba(239, 208, 160, 0.24);
-  border-radius: 999px;
-  background: rgba(26, 9, 13, 0.72);
-  color: var(--accent-soft);
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition:
-    transform 180ms ease,
-    border-color 180ms ease,
-    background 180ms ease;
-}
-
-.mosaic-zoom-button:hover {
-  transform: translateY(-1px);
-  border-color: rgba(239, 208, 160, 0.4);
-}
-
-.mosaic-zoom-button.is-active {
-  border-color: rgba(239, 208, 160, 0.46);
-  background: rgba(201, 141, 71, 0.18);
-  color: var(--text-main);
-}
-
-.mosaic-zoom-button:focus-visible {
-  outline: 2px solid rgba(239, 208, 160, 0.72);
-  outline-offset: 2px;
 }
 
 .mosaic-preview-frame {
@@ -1438,13 +1394,6 @@ select {
   max-height: 100%;
 }
 
-.mosaic-result-canvas.is-visible.is-full-detail {
-  width: auto;
-  height: auto;
-  max-width: none;
-  max-height: none;
-}
-
 .mosaic-canvas {
   display: none;
 }
@@ -1525,22 +1474,23 @@ select {
   line-height: 1.2;
 }
 
-.mosaic-stat-grid {
+.mosaic-result-footer {
   display: grid;
   gap: 0.85rem;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
-.mosaic-stat-card {
-  padding: 1rem;
+.mosaic-result-summary {
+  margin: 0;
+  color: var(--text-soft);
+  line-height: 1.55;
 }
 
-.mosaic-stat-value {
-  display: block;
-  margin-top: 0.45rem;
-  font-family: "Cinzel", serif;
-  font-size: clamp(1.15rem, 2.6vw, 2rem);
-  line-height: 1.05;
+.mosaic-result-actions {
+  justify-content: flex-start;
+}
+
+.mosaic-result-actions .mosaic-button {
+  flex: 1 1 220px;
 }
 
 .share-card-panel {
@@ -1713,7 +1663,6 @@ select {
     grid-template-areas:
       "input controls"
       "input result"
-      "stats stats"
       "composition composition";
     justify-content: center;
   }
@@ -1729,10 +1678,6 @@ select {
 
   .mosaic-preview-card-result {
     grid-area: result;
-  }
-
-  .mosaic-stat-grid {
-    grid-area: stats;
   }
 
   .composition-panel {
@@ -1754,12 +1699,15 @@ select {
 
 @media (max-width: 900px) {
   .story-slide {
+    min-height: auto;
+    padding-block: 0.6rem;
     padding-inline: 0.8rem;
   }
 
   .story-slide-stage {
     gap: 1.1rem;
     min-height: auto;
+    padding: 1rem;
   }
 
   .story-slide-stage-split {
@@ -1810,11 +1758,6 @@ select {
     flex-direction: column;
     align-items: flex-start;
     gap: 0.35rem;
-  }
-
-  .mosaic-preview-meta-actions {
-    width: 100%;
-    justify-content: flex-start;
   }
 
   .mosaic-header-main {
@@ -1901,8 +1844,7 @@ select {
     padding: 0.9rem;
   }
 
-  .mosaic-field-grid,
-  .mosaic-stat-grid {
+  .mosaic-field-grid {
     grid-template-columns: 1fr;
   }
 
@@ -1935,8 +1877,13 @@ select {
     font-size: 0.66rem;
   }
 
-  .mosaic-actions-primary .mosaic-button {
+  .mosaic-actions-primary .mosaic-button,
+  .mosaic-result-actions .mosaic-button {
     flex-basis: 100%;
+  }
+
+  .mosaic-result-actions {
+    flex-direction: column;
   }
 
   .share-card-header,
