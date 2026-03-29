@@ -1,4 +1,4 @@
-import { cp, mkdir, readdir, stat } from "node:fs/promises";
+import { copyFile, mkdir, readdir, stat } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -23,10 +23,19 @@ async function main() {
     return;
   }
 
+  const files = await readdir(SOURCE_DIR, { withFileTypes: true });
   await mkdir(TARGET_DIR, { recursive: true });
-  await cp(SOURCE_DIR, TARGET_DIR, { recursive: true, force: true });
 
-  const files = await readdir(SOURCE_DIR);
+  for (const entry of files) {
+    if (!entry.isFile()) {
+      continue;
+    }
+
+    const sourcePath = path.join(SOURCE_DIR, entry.name);
+    const targetPath = path.join(TARGET_DIR, entry.name);
+    await copyFile(sourcePath, targetPath);
+  }
+
   console.log(`Synced ${files.length} favicon assets into public/favicon.`);
 }
 

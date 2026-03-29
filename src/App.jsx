@@ -370,7 +370,7 @@ export default function App() {
                     <div className="sex-callout">
                       <p className="sex-callout-copy">
                         {`Este es el rostro promedio de los candidatos ${
-                          group.slug === "male" ? "hombres" : "mujeres"
+                          getSexLabelWithSymbol(group.slug)
                         } (${formatPercentage(group.overall.percentage)}% de candidatos)`}
                       </p>
                     </div>
@@ -391,7 +391,7 @@ export default function App() {
                     <div className="sex-callout">
                       <p className="sex-callout-copy">
                         {`Estos son los rostros promedio por afiliacion de ${
-                          group.slug === "male" ? "hombres" : "mujeres"
+                          getSexLabelWithSymbol(group.slug)
                         } (${formatPercentage(group.overall.percentage)}% de candidatos)`}
                       </p>
                     </div>
@@ -535,6 +535,10 @@ function roundPercentage(value) {
 
 function formatPercentage(value) {
   return percentageFormatter.format(value ?? 0);
+}
+
+function getSexLabelWithSymbol(slug) {
+  return slug === "male" ? "hombres ♂" : "mujeres ♀";
 }
 
 function getQuestionFaces(regionGroups, partyGroups) {
