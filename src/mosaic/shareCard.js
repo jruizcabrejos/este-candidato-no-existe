@@ -162,14 +162,16 @@ function drawPortraitCard(
 
   drawFramedMosaic(context, mosaicCanvas, mosaicRect);
   drawRankingPanel(context, rankingRect, composition, {
-    title: "Top del mosaico",
+    title: "Candidatos más frecuentes",
     rowHeight: 31,
     titleSize: 28,
     nameFontSize: 18,
-    metaFontSize: 12,
+    metaFontSize: 13,
     percentageFontSize: 18,
     rankFontSize: 14,
     showMeta: true,
+    metaWidthRatio: 0.31,
+    metaShiftX: -8,
   });
 
   drawStatCard(context, {
@@ -185,7 +187,7 @@ function drawPortraitCard(
     y: statY,
     width: statWidth,
     height: statRectHeight,
-    label: "Total de piezas del mosaico",
+    label: "Total de imagenes utilizadas",
     value: COUNT_FORMATTER.format(stats?.totalTiles ?? 0),
   });
 
@@ -241,21 +243,23 @@ function drawSquareCard(
 
   drawFramedMosaic(context, mosaicCanvas, mosaicRect);
   drawRankingPanel(context, sideRect, composition, {
-    title: "Top del mosaico",
+    title: "Candidatos más frecuentes",
     rowHeight: 30,
     titleSize: 26,
     nameFontSize: 16,
-    metaFontSize: 11,
+    metaFontSize: 12,
     percentageFontSize: 17,
     rankFontSize: 13,
     showMeta: true,
+    metaWidthRatio: 0.31,
+    metaShiftX: -8,
     footerStats: [
       {
         label: "Total de candidatos utilizados",
         value: COUNT_FORMATTER.format(stats?.uniqueTiles ?? 0),
       },
       {
-        label: "Total de piezas del mosaico",
+        label: "Total de imagenes utilizadas",
         value: COUNT_FORMATTER.format(stats?.totalTiles ?? 0),
       },
     ],
@@ -396,12 +400,17 @@ function drawRankingPanel(context, rect, composition, options) {
   const percentageWidth = 116;
   const columnGap = 12;
   const metaWidth = options.showMeta
-    ? Math.min(Math.max(contentWidth * 0.28, 98), 220)
+    ? Math.min(Math.max(contentWidth * (options.metaWidthRatio ?? 0.28), 98), 220)
     : 0;
   const nameX = contentX + rankWidth;
-  const metaX = nameX + (contentWidth - rankWidth - percentageWidth - metaWidth - columnGap * 2) + columnGap;
+  const metaShiftX = options.metaShiftX ?? 0;
+  const metaX =
+    nameX +
+    (contentWidth - rankWidth - percentageWidth - metaWidth - columnGap * 2) +
+    columnGap +
+    metaShiftX;
   const nameWidth = options.showMeta
-    ? contentWidth - rankWidth - percentageWidth - metaWidth - columnGap * 2
+    ? contentWidth - rankWidth - percentageWidth - metaWidth - columnGap * 2 + metaShiftX
     : contentWidth - rankWidth - percentageWidth;
 
   context.save();

@@ -164,7 +164,10 @@ async function main() {
           titleize((row.group_label ?? row.group_key).replace(/_/g, " ")),
         sourcePath: transparentAverageFacePath("by_sex", row.group_key),
         targetPath: path.join(COMPOSITES_DIR, "sexes", `${row.group_key}.webp`),
-        assetUrl: `/generated/composites/sexes/${row.group_key}.webp`,
+        assetUrl: withAssetVersion(
+          `/generated/composites/sexes/${row.group_key}.webp`,
+          assetVersion,
+        ),
         count: Number(row.discovered_count) || Number(row.eligible_count) || 0,
       }),
     ),
@@ -181,7 +184,10 @@ async function main() {
         label: regionLabelMap.get(row.group_key) ?? titleize(row.group_label ?? row.group_key),
         sourcePath: transparentAverageFacePath("by_region", row.group_key),
         targetPath: path.join(COMPOSITES_DIR, "regions", `${row.group_key}.webp`),
-        assetUrl: `/generated/composites/regions/${row.group_key}.webp`,
+        assetUrl: withAssetVersion(
+          `/generated/composites/regions/${row.group_key}.webp`,
+          assetVersion,
+        ),
         count: regionCounts.get(row.group_key) ?? Number(row.discovered_count) ?? 0,
         extra: {
           shapeUrl: regionShapeAssetMap.get(row.group_key) ?? "",
@@ -221,7 +227,10 @@ async function main() {
                 row.group_key,
                 `${regionSlug}.webp`,
               ),
-              assetUrl: `/generated/composites/regions-by-sex/${row.group_key}/${regionSlug}.webp`,
+              assetUrl: withAssetVersion(
+                `/generated/composites/regions-by-sex/${row.group_key}/${regionSlug}.webp`,
+                assetVersion,
+              ),
               count: Number(regionSexRow?.discovered_count) || 0,
               extra: {
                 shapeUrl:
@@ -243,7 +252,10 @@ async function main() {
         label: partyLabelMap.get(row.group_key) ?? titleize(row.group_label ?? row.group_key),
         sourcePath: transparentAverageFacePath("by_affiliation", row.group_key),
         targetPath: path.join(COMPOSITES_DIR, "parties", `${row.group_key}.webp`),
-        assetUrl: `/generated/composites/parties/${row.group_key}.webp`,
+        assetUrl: withAssetVersion(
+          `/generated/composites/parties/${row.group_key}.webp`,
+          assetVersion,
+        ),
         count: partyCounts.get(row.group_key) ?? Number(row.discovered_count) ?? 0,
         extra: {
           logoUrl: partyLogoAssetMap.get(row.group_key) ?? "",
@@ -282,7 +294,7 @@ async function main() {
     },
     hero: {
       label: "Peru 2026",
-      assetUrl: "/generated/composites/hero.webp",
+      assetUrl: withAssetVersion("/generated/composites/hero.webp", assetVersion),
       portraitCount: candidates.length,
     },
     sexes,
@@ -1244,27 +1256,36 @@ async function shouldRegenerate({
       storyManifest?.summary?.regionCount === expectedSummary.regionCount &&
       storyManifest?.summary?.partyCount === expectedSummary.partyCount;
     const storyStructureMatches =
+      storyManifest?.hero?.assetUrl?.startsWith("/generated/composites/hero.webp?v=") &&
       Array.isArray(storyManifest?.sexes) &&
       storyManifest.sexes.length === expectedSummary.sexCount &&
+      storyManifest.sexes.every((group) =>
+        group?.assetUrl?.startsWith("/generated/composites/sexes/") &&
+        group?.assetUrl?.includes("?v="),
+      ) &&
       Array.isArray(storyManifest?.regionsBySex) &&
       storyManifest.regionsBySex.length === expectedSummary.sexCount &&
       storyManifest.regionsBySex.every(
         (group) =>
           group?.overall?.assetUrl?.startsWith("/generated/composites/sexes/") &&
+          group?.overall?.assetUrl?.includes("?v=") &&
           typeof group?.overall?.percentage === "number" &&
           Array.isArray(group?.regions) &&
           group.regions.length === expectedSummary.regionCount &&
           group.regions.every((region) =>
-            region?.assetUrl?.startsWith("/generated/composites/regions-by-sex/"),
+            region?.assetUrl?.startsWith("/generated/composites/regions-by-sex/") &&
+            region?.assetUrl?.includes("?v="),
           ),
       ) &&
       Array.isArray(storyManifest?.regions) &&
       storyManifest.regions.length === expectedSummary.regionCount &&
       storyManifest.footnote === "" &&
       storyManifest.regions.at(-1)?.slug === ABROAD_REGION_SLUG &&
+      storyManifest.regions.every((region) => region?.assetUrl?.includes("?v=")) &&
       storyManifest.regions.every((region) => region?.shapeUrl?.startsWith("/generated/region-shapes/")) &&
       Array.isArray(storyManifest?.parties) &&
-      storyManifest.parties.length === expectedSummary.partyCount;
+      storyManifest.parties.length === expectedSummary.partyCount &&
+      storyManifest.parties.every((party) => party?.assetUrl?.includes("?v="));
     const backgroundMatches =
       Array.isArray(backgroundManifest?.portraitIds) &&
       backgroundManifest.portraitIds.length === expectedSummary.totalPortraits &&
