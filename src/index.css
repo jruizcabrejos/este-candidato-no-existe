@@ -543,7 +543,7 @@ select {
 }
 
 .story-drawer-shell {
-  width: min(1280px, 100%);
+  width: min(1200px, 100%);
   transform-origin: top center;
 }
 
