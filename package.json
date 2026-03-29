@@ -4,11 +4,12 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "dev:full": "npm run generate && vite",
+    "sync:favicon": "node ./scripts/sync-favicon.mjs",
+    "dev": "npm run sync:favicon && vite",
+    "dev:full": "npm run generate && npm run sync:favicon && vite",
     "generate": "node ./scripts/generate-assets.mjs",
-    "build": "vite build",
-    "build:full": "npm run generate && vite build",
+    "build": "npm run sync:favicon && vite build",
+    "build:full": "npm run generate && npm run sync:favicon && vite build",
     "preview": "vite preview",
     "deploy": "powershell -ExecutionPolicy Bypass -File ./scripts/deploy.ps1"
   },
