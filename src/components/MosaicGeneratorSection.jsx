@@ -114,21 +114,19 @@ export default function MosaicGeneratorSection({
     shareCardSummary.entries.length > 0 &&
     !isShareCardBusy;
   const showAdvancedSettings = Boolean(resultStats);
-  const uploadHintContent = uploadState.status === "idle"
-    ? (
-        <>
-          No guardamos tu informacion.{" "}
-          <a
-            className="mosaic-hint-link"
-            href="https://github.com/jruizcabrejos/este-candidato-no-existe"
-            target="_blank"
-            rel="noreferrer"
-          >
-            El codigo es abierto
-          </a>
-        </>
-      )
-    : uploadState.message;
+  const privacyHintContent = (
+    <>
+      No guardamos tu informacion.{" "}
+      <a
+        className="mosaic-hint-link"
+        href="https://github.com/jruizcabrejos/este-candidato-no-existe"
+        target="_blank"
+        rel="noreferrer"
+      >
+        El codigo es abierto
+      </a>
+    </>
+  );
 
   useEffect(() => {
     onBusyChange?.(isGenerating || uploadState.status === "processing");
@@ -678,8 +676,13 @@ export default function MosaicGeneratorSection({
                   </div>
                 ) : null}
               </div>
-              <p className={`mosaic-hint mosaic-hint-${uploadState.status}`}>
-                {uploadHintContent}
+              {uploadState.status !== "idle" ? (
+                <p className={`mosaic-hint mosaic-hint-${uploadState.status}`}>
+                  {uploadState.message}
+                </p>
+              ) : null}
+              <p className="mosaic-hint mosaic-hint-static">
+                {privacyHintContent}
               </p>
             </article>
 

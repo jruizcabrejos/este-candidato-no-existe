@@ -239,13 +239,18 @@ select {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  padding: 0.12rem 0.55rem 0.16rem;
-  border: 1px solid rgba(239, 208, 160, 0.34);
+  margin-inline: 0.12rem;
+  padding: 0.18rem 0.72rem 0.22rem;
+  border: 1px solid rgba(255, 236, 184, 0.46);
   border-radius: 999px;
-  background: rgba(239, 208, 160, 0.12);
+  background:
+    linear-gradient(135deg, rgba(255, 244, 225, 0.12), rgba(255, 200, 120, 0.12)),
+    rgba(239, 208, 160, 0.16);
   color: #fff4da;
   font-weight: 700;
-  box-shadow: 0 0 0 1px rgba(255, 244, 225, 0.04);
+  box-shadow:
+    0 0 0 1px rgba(255, 244, 225, 0.05),
+    0 10px 22px rgba(0, 0, 0, 0.14);
   cursor: pointer;
   transition:
     transform 180ms ease,
@@ -265,8 +270,10 @@ select {
 .story-slide-stat-button:focus-visible,
 .story-slide-stat-button.is-active {
   transform: translateY(-1px);
-  border-color: rgba(255, 236, 184, 0.76);
-  background: rgba(255, 219, 137, 0.24);
+  border-color: rgba(255, 241, 196, 0.88);
+  background:
+    linear-gradient(135deg, rgba(255, 246, 201, 0.24), rgba(255, 179, 106, 0.24)),
+    rgba(255, 219, 137, 0.28);
   color: #fff9eb;
 }
 
@@ -1156,6 +1163,10 @@ select {
   color: var(--text-faint);
   font-size: 0.9rem;
   line-height: 1.45;
+}
+
+.mosaic-hint-static {
+  margin-top: 0.15rem;
 }
 
 .mosaic-hint-link {

@@ -289,7 +289,7 @@ export default function App() {
                 <span className="story-slide-stat-number">
                   {formatCount(storyManifest.summary.totalPortraits)}
                 </span>{" "}
-                candidatos de las{" "}
+                candidatos a diputados en las elecciones generales de Peru de 2026:{" "}
                 <button
                   className={`story-slide-stat-button${
                     activeDrawer === "regions" ? " is-active" : ""
@@ -301,7 +301,7 @@ export default function App() {
                 >
                   {regionCount} regiones
                 </button>{" "}
-                y de los{" "}
+                y{" "}
                 <button
                   className={`story-slide-stat-button${
                     activeDrawer === "parties" ? " is-active" : ""
