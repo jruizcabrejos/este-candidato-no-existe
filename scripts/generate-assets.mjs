@@ -42,7 +42,7 @@ const MOSAIC_BLUR = 0.8;
 const MOSAIC_BUCKET_STEP = 16;
 const MOSAIC_ATLAS_COLUMNS = 48;
 const SHUFFLE_SEED = 20260326;
-const STORY_MANIFEST_VERSION = 4;
+const STORY_MANIFEST_VERSION = 5;
 const MOSAIC_METADATA_VERSION = 2;
 const SOURCE_FINGERPRINT_VERSION = 2;
 const REGION_SHAPE_SIZE = 96;
@@ -68,9 +68,12 @@ const REGION_SLUG_ALIASES = {
 async function main() {
   await ensureInternalDatasetAvailable();
 
-  const candidates = JSON.parse(await fs.readFile(CANDIDATES_PATH, "utf8"));
+  const rawCandidates = JSON.parse(await fs.readFile(CANDIDATES_PATH, "utf8"));
+  const candidates = rawCandidates.filter(isDiputadoCandidate);
   if (!candidates.length) {
-    throw new Error("No candidates were found in output/album_export/candidates.json.");
+    throw new Error(
+      "No Diputado candidates were found in output/album_export/candidates.json.",
+    );
   }
   const backgroundAtlasLayout = buildBackgroundAtlasLayout(candidates.length);
 
@@ -118,6 +121,20 @@ async function main() {
   const partyRows = renderedRows
     .filter((row) => row.group_mode === "affiliation")
     .sort((a, b) => compareLabels(partyLabelMap.get(a.group_key), partyLabelMap.get(b.group_key)));
+  const partySexRows = renderedRows
+    .filter((row) => row.group_mode === "affiliation_sex")
+    .sort((a, b) => {
+      const sexOrderDifference =
+        (SEX_ORDER[a.sex_assigned] ?? 99) - (SEX_ORDER[b.sex_assigned] ?? 99);
+      if (sexOrderDifference !== 0) {
+        return sexOrderDifference;
+      }
+
+      return compareLabels(
+        partyLabelMap.get(a.affiliation_slug ?? a.group_key),
+        partyLabelMap.get(b.affiliation_slug ?? b.group_key),
+      );
+    });
 
   if (
     !(await shouldRegenerate({
@@ -263,6 +280,64 @@ async function main() {
       }),
     ),
   );
+  const partySexRowsByKey = new Map(
+    partySexRows.map((row) => [`${row.sex_assigned}::${row.affiliation_slug}`, row]),
+  );
+  const partiesBySex = await Promise.all(
+    sexRows.map(async (row) => {
+      const overall = sexesBySlug.get(row.group_key);
+      const sexPartyRows = partyRows.filter((partyRow) =>
+        partySexRowsByKey.has(`${row.group_key}::${partyRow.group_key}`),
+      );
+
+      return {
+        slug: row.group_key,
+        label:
+          SEX_LABELS[row.group_key] ??
+          titleize((row.group_label ?? row.group_key).replace(/_/g, " ")),
+        overall: {
+          ...overall,
+          percentage: roundPercentage((overall?.portraitCount ?? 0) / candidates.length),
+        },
+        items: await Promise.all(
+          sexPartyRows.map((partyRow) => {
+            const partySexRow = partySexRowsByKey.get(`${row.group_key}::${partyRow.group_key}`);
+            const partySlug = partySexRow?.affiliation_slug ?? partyRow.group_key;
+
+            return buildCompositeEntry({
+              slug: partySlug,
+              label:
+                partyLabelMap.get(partySlug) ??
+                partyLabelMap.get(partyRow.group_key) ??
+                titleize(partyRow.group_label ?? partySlug),
+              sourcePath: transparentAverageFacePath(
+                "by_affiliation_sex",
+                partySlug,
+                row.group_key,
+              ),
+              targetPath: path.join(
+                COMPOSITES_DIR,
+                "parties-by-sex",
+                row.group_key,
+                `${partySlug}.webp`,
+              ),
+              assetUrl: withAssetVersion(
+                `/generated/composites/parties-by-sex/${row.group_key}/${partySlug}.webp`,
+                assetVersion,
+              ),
+              count: Number(partySexRow?.discovered_count) || 0,
+              extra: {
+                logoUrl:
+                  partyLogoAssetMap.get(partySlug) ??
+                  partyLogoAssetMap.get(partyRow.group_key) ??
+                  "",
+              },
+            });
+          }),
+        ),
+      };
+    }),
+  );
 
   const portraitEntries = candidates.map((candidate) => ({
     id: candidate.id,
@@ -301,6 +376,7 @@ async function main() {
     regionsBySex,
     regions,
     parties,
+    partiesBySex,
     footnote: "",
   };
 
@@ -330,7 +406,7 @@ async function main() {
   ]);
 
   console.log(
-    `Generated story manifest with ${sexes.length} sex groups, ${regions.length} regions, ${regionsBySex.length} region-by-sex groups, ${parties.length} parties, ${candidates.length} portraits, and ${mosaicSummary.tileCount} mosaic tiles.`,
+    `Generated story manifest with ${sexes.length} sex groups, ${regions.length} regions, ${regionsBySex.length} region-by-sex groups, ${parties.length} parties, ${partiesBySex.length} party-by-sex groups, ${candidates.length} portraits, and ${mosaicSummary.tileCount} mosaic tiles.`,
   );
 }
 
@@ -826,6 +902,10 @@ function buildLabelMapFromCandidates(candidates, key) {
   return map;
 }
 
+function isDiputadoCandidate(candidate) {
+  return String(candidate?.type ?? "").trim().toLowerCase() === "diputado";
+}
+
 function countBySlug(candidates, key) {
   const counts = new Map();
   for (const candidate of candidates) {
@@ -1229,6 +1309,7 @@ async function shouldRegenerate({
     MOSAIC_METADATA_PATH,
     MOSAIC_ATLAS_PATH,
     path.join(COMPOSITES_DIR, "hero.webp"),
+    path.join(COMPOSITES_DIR, "parties-by-sex"),
     path.join(COMPOSITES_DIR, "regions-by-sex"),
     path.join(BACKGROUND_DIR, "portrait-atlas.webp"),
     PARTY_LOGOS_DIR,
@@ -1285,7 +1366,21 @@ async function shouldRegenerate({
       storyManifest.regions.every((region) => region?.shapeUrl?.startsWith("/generated/region-shapes/")) &&
       Array.isArray(storyManifest?.parties) &&
       storyManifest.parties.length === expectedSummary.partyCount &&
-      storyManifest.parties.every((party) => party?.assetUrl?.includes("?v="));
+      storyManifest.parties.every((party) => party?.assetUrl?.includes("?v=")) &&
+      Array.isArray(storyManifest?.partiesBySex) &&
+      storyManifest.partiesBySex.length === expectedSummary.sexCount &&
+      storyManifest.partiesBySex.every(
+        (group) =>
+          group?.overall?.assetUrl?.startsWith("/generated/composites/sexes/") &&
+          group?.overall?.assetUrl?.includes("?v=") &&
+          typeof group?.overall?.percentage === "number" &&
+          Array.isArray(group?.items) &&
+          group.items.every(
+            (party) =>
+              party?.assetUrl?.startsWith("/generated/composites/parties-by-sex/") &&
+              party?.assetUrl?.includes("?v="),
+          ),
+      );
     const backgroundMatches =
       Array.isArray(backgroundManifest?.portraitIds) &&
       backgroundManifest.portraitIds.length === expectedSummary.totalPortraits &&
