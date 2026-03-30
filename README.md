@@ -6,7 +6,7 @@ Micrositio narrativo hecho con React + Vite sobre el "rostro promedio" de las ca
 
 El recorrido termina con un generador de mosaicos que recompone tu foto usando retratos reales del dataset electoral.
 
-Hecho con la gente del colectivo IncaSlop.
+Hecho con la gente del colectivo IncaSlop: https://incaslop.online/
 <p align="center">
   <img src="ejemplos/mosaic/banner.png" />
 </p>
