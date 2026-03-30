@@ -5,6 +5,7 @@ output
 tmp
 run
 ejemplos/*
+memes/*
 !ejemplos/card/
 !ejemplos/card/**
 !ejemplos/mosaic/
