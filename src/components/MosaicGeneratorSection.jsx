@@ -36,7 +36,7 @@ const TILE_SIZE_OPTIONS = [
 ];
 const DEFAULT_SETTINGS = {
   detail: 56,
-  extendedDetail: 84,
+  extendedDetail: 96,
   tileSize: 16,
   highFidelitySource: false,
   shareCardFormat: "portrait",
