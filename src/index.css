@@ -661,8 +661,26 @@ select {
   justify-self: center;
   margin-top: clamp(1rem, 2.4vw, 1.8rem);
   opacity: 0.42;
-  pointer-events: none;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+  pointer-events: auto;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
   animation: story-scroll-cue-float 2.2s ease-in-out infinite;
+}
+
+.story-slide-scroll-cue:hover {
+  opacity: 0.62;
+}
+
+.story-slide-scroll-cue:focus-visible {
+  opacity: 0.72;
+  outline: 2px solid rgba(255, 244, 225, 0.84);
+  outline-offset: 0.45rem;
+  border-radius: 999px;
 }
 
 .story-slide-scroll-cue-line {
@@ -672,11 +690,18 @@ select {
 }
 
 .story-slide-scroll-cue-arrow {
+  font-size: 0;
+  line-height: 1;
+}
+
+.story-slide-scroll-cue-arrow::before {
+  content: "\2193";
   color: rgba(255, 244, 225, 0.92);
   font-size: clamp(2.5rem, 6vw, 4.2rem);
   font-weight: 300;
   line-height: 0.8;
   text-shadow: 0 10px 24px rgba(0, 0, 0, 0.24);
+  display: block;
 }
 
 @keyframes story-scroll-cue-float {

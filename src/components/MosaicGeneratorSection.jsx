@@ -29,13 +29,14 @@ const EXTENDED_DETAIL_OPTIONS = [
   { value: 120, label: "120 celdas" },
 ];
 const TILE_SIZE_OPTIONS = [
+  { value: 8, label: "8 px" },
   { value: 16, label: "16 px" },
   { value: 20, label: "20 px" },
   { value: 24, label: "24 px" },
 ];
 const DEFAULT_SETTINGS = {
   detail: 56,
-  extendedDetail: 72,
+  extendedDetail: 84,
   tileSize: 16,
   highFidelitySource: false,
   shareCardFormat: "portrait",
@@ -402,7 +403,7 @@ export default function MosaicGeneratorSection({
         outputHeight,
       });
       setHasGeneratedResult(true);
-      setCompositionBreakdown(buildCompositionBreakdown(placements));
+      setCompositionBreakdown(buildCompositionBreakdown(placements, variationSeed));
       setProgress({
         status: "done",
         label: "Imagen lista para descargar o compartir.",
@@ -796,7 +797,7 @@ export default function MosaicGeneratorSection({
                       <div className="mosaic-advanced-body">
                         <p className="mosaic-advanced-copy">
                           El preset inicial usa tile de 16 px, detalle fino y detalle
-                          extendido de 72 celdas.
+                          extendido de 84 celdas.
                         </p>
 
                         <div className="mosaic-field-grid">
@@ -964,7 +965,7 @@ function formatFileSize(value) {
   return `${Math.round(value / 1024)} KB`;
 }
 
-function buildCompositionBreakdown(placements) {
+function buildCompositionBreakdown(placements, variationSeed = 0) {
   const counts = new Map();
 
   for (const tile of placements) {
@@ -995,7 +996,7 @@ function buildCompositionBreakdown(placements) {
       ...entry,
       percentage: (entry.count / total) * 100,
     }))
-    .sort((left, right) => right.count - left.count || left.name.localeCompare(right.name, "es"));
+    .sort((left, right) => compareCompositionEntries(left, right, variationSeed));
 }
 
 function buildShareCardComposition(breakdown) {
@@ -1026,6 +1027,35 @@ function formatPercent(value) {
     minimumFractionDigits: value >= 10 ? 1 : 2,
     maximumFractionDigits: value >= 10 ? 1 : 2,
   }).format(value);
+}
+
+function compareCompositionEntries(left, right, variationSeed) {
+  const countDiff = right.count - left.count;
+  if (countDiff !== 0) {
+    return countDiff;
+  }
+
+  const leftTieScore = scoreCompositionTie(left.id, variationSeed);
+  const rightTieScore = scoreCompositionTie(right.id, variationSeed);
+
+  return leftTieScore - rightTieScore || left.name.localeCompare(right.name, "es");
+}
+
+function scoreCompositionTie(value, variationSeed) {
+  let hash = 2166136261 ^ ((Number(variationSeed) || 0) >>> 0);
+  const text = String(value ?? "");
+
+  for (let index = 0; index < text.length; index += 1) {
+    hash ^= text.charCodeAt(index);
+    hash = Math.imul(hash, 16777619);
+  }
+
+  hash ^= hash >>> 16;
+  hash = Math.imul(hash, 0x7feb352d);
+  hash ^= hash >>> 15;
+  hash = Math.imul(hash, 0x846ca68b);
+  hash ^= hash >>> 16;
+  return hash >>> 0;
 }
 
 function createVariationSeed() {

@@ -223,6 +223,13 @@ export default function App() {
     setActiveDrawer((current) => (current === nextDrawer ? null : nextDrawer));
   }
 
+  function handleQuestionScrollCueClick() {
+    statementSectionRef.current?.scrollIntoView({
+      behavior: prefersReducedMotion ? "auto" : "smooth",
+      block: "start",
+    });
+  }
+
   return (
     <div
       ref={rootRef}
@@ -272,10 +279,15 @@ export default function App() {
               </figure>
             </div>
 
-            <div className="story-slide-scroll-cue" aria-hidden="true">
+            <button
+              className="story-slide-scroll-cue"
+              type="button"
+              aria-label="Ir a la siguiente seccion"
+              onClick={handleQuestionScrollCueClick}
+            >
               <span className="story-slide-scroll-cue-line" />
               <span className="story-slide-scroll-cue-arrow">↓</span>
-            </div>
+            </button>
           </div>
         </section>
 

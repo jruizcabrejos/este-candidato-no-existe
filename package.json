@@ -10,7 +10,9 @@
     "generate": "node ./scripts/generate-assets.mjs",
     "build": "npm run sync:favicon && vite build",
     "build:full": "npm run generate && npm run sync:favicon && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test:matcher": "node --test --test-isolation=none src/mosaic/matcher.test.js",
+    "benchmark:matcher:examples": "node ./scripts/benchmark-matcher-examples.mjs"
   },
   "dependencies": {
     "gsap": "^3.14.2",
