@@ -127,7 +127,7 @@ export default function MosaicGeneratorSection({
         target="_blank"
         rel="noreferrer"
       >
-        El codigo es abierto
+        El código es público.
       </a>
     </>
   );
