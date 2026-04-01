@@ -34,6 +34,7 @@ export function getShareCardFormatConfig(format) {
 
 export async function createShareCardAsset({
   mosaicCanvas,
+  mosaicAtlas = null,
   format = "portrait",
   composition,
   stats,
@@ -58,11 +59,16 @@ export async function createShareCardAsset({
   }
 
   drawBackdrop(context, canvas.width, canvas.height);
-  const footerLogo = await loadFooterLogo();
+  const [footerLogo, mosaicAtlasImage] = await Promise.all([
+    loadFooterLogo(),
+    loadMosaicAtlasImage(mosaicAtlas),
+  ]);
 
   if (format === "square") {
     drawSquareCard(context, {
       mosaicCanvas,
+      mosaicAtlas,
+      mosaicAtlasImage,
       composition,
       stats,
       websiteUrl,
@@ -73,6 +79,8 @@ export async function createShareCardAsset({
   } else {
     drawPortraitCard(context, {
       mosaicCanvas,
+      mosaicAtlas,
+      mosaicAtlasImage,
       composition,
       stats,
       websiteUrl,
@@ -113,7 +121,17 @@ export function downloadBlobFile(blob, filename) {
 
 function drawPortraitCard(
   context,
-  { mosaicCanvas, composition, stats, websiteUrl, footerLogo, width, height },
+  {
+    mosaicCanvas,
+    mosaicAtlas,
+    mosaicAtlasImage,
+    composition,
+    stats,
+    websiteUrl,
+    footerLogo,
+    width,
+    height,
+  },
 ) {
   const padding = 72;
   const contentWidth = width - padding * 2;
@@ -160,7 +178,10 @@ function drawPortraitCard(
     subtitleGap: 6,
   });
 
-  drawFramedMosaic(context, mosaicCanvas, mosaicRect);
+  drawFramedMosaic(context, mosaicCanvas, mosaicRect, {
+    mosaicAtlas,
+    mosaicAtlasImage,
+  });
   drawRankingPanel(context, rankingRect, composition, {
     title: "Candidatos más frecuentes",
     rowHeight: 42,
@@ -201,7 +222,17 @@ function drawPortraitCard(
 
 function drawSquareCard(
   context,
-  { mosaicCanvas, composition, stats, websiteUrl, footerLogo, width, height },
+  {
+    mosaicCanvas,
+    mosaicAtlas,
+    mosaicAtlasImage,
+    composition,
+    stats,
+    websiteUrl,
+    footerLogo,
+    width,
+    height,
+  },
 ) {
   const padding = 56;
   const headerWidth = width - padding * 2;
@@ -244,7 +275,10 @@ function drawSquareCard(
     subtitleGap: 6,
   });
 
-  drawFramedMosaic(context, mosaicCanvas, mosaicRect);
+  drawFramedMosaic(context, mosaicCanvas, mosaicRect, {
+    mosaicAtlas,
+    mosaicAtlasImage,
+  });
   drawRankingPanel(context, sideRect, composition, {
     title: "Candidatos más frecuentes",
     rowHeight: 30,
@@ -278,6 +312,7 @@ function drawSquareCard(
 }
 
 function drawBackdrop(context, width, height) {
+  context.save();
   const background = context.createLinearGradient(0, 0, 0, height);
   background.addColorStop(0, "#22080d");
   background.addColorStop(0.52, "#120509");
@@ -310,6 +345,74 @@ function drawBackdrop(context, width, height) {
   glowRight.addColorStop(1, "rgba(163, 53, 44, 0)");
   context.fillStyle = glowRight;
   context.fillRect(0, 0, width, height);
+  context.restore();
+}
+
+function drawMosaicBackdrop(context, mosaicCanvas, rect, options = {}) {
+  const {
+    baseFill = null,
+    blurAlpha = 0.58,
+    blur = 24,
+    blurZoom = 1.34,
+    blurSaturate = 0.9,
+    blurBrightness = 0.78,
+    blurContrast = 1.02,
+    detailAlpha = 0.2,
+    detailZoom = 1.18,
+    detailSaturate = 0.92,
+    detailBrightness = 0.88,
+    detailContrast = 1.04,
+    bleedRatio = 0.08,
+    overlayStops = null,
+  } = options;
+
+  context.save();
+
+  if (baseFill) {
+    context.fillStyle = baseFill;
+    context.fillRect(rect.x, rect.y, rect.width, rect.height);
+  }
+
+  if (mosaicCanvas?.width && mosaicCanvas?.height) {
+    const bleed = Math.round(Math.max(rect.width, rect.height) * bleedRatio);
+
+    if (blurAlpha > 0) {
+      context.save();
+      context.globalAlpha = blurAlpha;
+      context.filter = `blur(${blur}px) saturate(${blurSaturate}) brightness(${blurBrightness}) contrast(${blurContrast})`;
+      drawCoverImage(
+        context,
+        mosaicCanvas,
+        {
+          x: rect.x - bleed,
+          y: rect.y - bleed,
+          width: rect.width + bleed * 2,
+          height: rect.height + bleed * 2,
+        },
+        blurZoom,
+      );
+      context.restore();
+    }
+
+    if (detailAlpha > 0) {
+      context.save();
+      context.globalAlpha = detailAlpha;
+      context.filter = `saturate(${detailSaturate}) brightness(${detailBrightness}) contrast(${detailContrast})`;
+      drawCoverImage(context, mosaicCanvas, rect, detailZoom);
+      context.restore();
+    }
+  }
+
+  if (overlayStops?.length) {
+    const overlay = context.createLinearGradient(rect.x, rect.y, rect.x, rect.y + rect.height);
+    overlayStops.forEach(([stop, color]) => {
+      overlay.addColorStop(stop, color);
+    });
+    context.fillStyle = overlay;
+    context.fillRect(rect.x, rect.y, rect.width, rect.height);
+  }
+
+  context.restore();
 }
 
 function drawHeader(
@@ -364,7 +467,7 @@ function drawHeader(
   context.restore();
 }
 
-function drawFramedMosaic(context, mosaicCanvas, rect) {
+function drawFramedMosaic(context, mosaicCanvas, rect, options = {}) {
   fillPanel(context, rect, {
     fill: "rgba(16, 6, 9, 0.92)",
     stroke: "rgba(239, 208, 160, 0.18)",
@@ -382,8 +485,35 @@ function drawFramedMosaic(context, mosaicCanvas, rect) {
   context.save();
   roundedRectPath(context, imageRect.x, imageRect.y, imageRect.width, imageRect.height, imageRect.radius);
   context.clip();
-  context.fillStyle = "rgba(8, 2, 4, 0.9)";
-  context.fillRect(imageRect.x, imageRect.y, imageRect.width, imageRect.height);
+  drawMosaicBackdrop(context, mosaicCanvas, imageRect, {
+    baseFill: "rgba(8, 2, 4, 0.96)",
+    blurAlpha: 0.46,
+    blur: 18,
+    blurZoom: 2.34,
+    blurSaturate: 0.88,
+    blurBrightness: 0.6,
+    blurContrast: 1.12,
+    detailAlpha: 0,
+    detailZoom: 1,
+    detailSaturate: 0.9,
+    detailBrightness: 0.72,
+    detailContrast: 1.12,
+    bleedRatio: 0.12,
+    overlayStops: [
+      [0, "rgba(10, 3, 5, 0.24)"],
+      [0.5, "rgba(8, 2, 4, 0.34)"],
+      [1, "rgba(6, 1, 3, 0.46)"],
+    ],
+  });
+  drawRandomAtlasBackdrop(context, options.mosaicAtlasImage, options.mosaicAtlas, imageRect, {
+    alpha: 0.24,
+    blur: 1.5,
+    saturate: 0.94,
+    brightness: 0.76,
+    contrast: 1.08,
+    cropRows: 8,
+    zoom: 1.04,
+  });
   drawContainedImage(context, mosaicCanvas, imageRect);
   context.restore();
 }
@@ -618,6 +748,18 @@ async function loadFooterLogo() {
   return footerLogoPromise;
 }
 
+async function loadMosaicAtlasImage(mosaicAtlas) {
+  if (!mosaicAtlas?.url) {
+    return null;
+  }
+
+  try {
+    return await loadImageAsset(mosaicAtlas.url);
+  } catch {
+    return null;
+  }
+}
+
 function loadImageAsset(url) {
   return new Promise((resolve, reject) => {
     const image = new Image();
@@ -644,20 +786,130 @@ function fillPanel(context, rect, { fill, stroke }) {
 }
 
 function drawContainedImage(context, image, rect) {
+  const placement = getContainedImagePlacement(image, rect);
+  if (!placement) {
+    return;
+  }
+
+  context.drawImage(image, placement.x, placement.y, placement.width, placement.height);
+}
+
+function drawCoverImage(context, image, rect, zoom = 1) {
+  const placement = getCoverImagePlacement(image, rect, zoom);
+  if (!placement) {
+    return;
+  }
+
+  context.drawImage(image, placement.x, placement.y, placement.width, placement.height);
+}
+
+function drawRandomAtlasBackdrop(context, atlasImage, atlas, rect, options = {}) {
+  if (!atlasImage || !atlas?.columns || !atlas?.rows || !atlas?.width || !atlas?.height) {
+    return;
+  }
+
+  const {
+    alpha = 0.26,
+    blur = 0,
+    saturate = 1,
+    brightness = 0.75,
+    contrast = 1,
+    cropRows = 8,
+    zoom = 1,
+  } = options;
+
+  const tileWidth = atlas.width / atlas.columns;
+  const tileHeight = atlas.height / atlas.rows;
+  const usableRows = Math.max(1, atlas.rows - 1);
+  const safeCropRows = clamp(Math.round(cropRows), 1, usableRows);
+  const cropAspect = rect.width / Math.max(rect.height, 1);
+  const estimatedCropCols = Math.round(safeCropRows * cropAspect * (tileHeight / tileWidth));
+  const safeCropCols = clamp(estimatedCropCols, 1, atlas.columns);
+  const maxStartColumn = Math.max(0, atlas.columns - safeCropCols);
+  const maxStartRow = Math.max(0, usableRows - safeCropRows);
+  const sourceRect = {
+    x: randomInteger(0, maxStartColumn) * tileWidth,
+    y: randomInteger(0, maxStartRow) * tileHeight,
+    width: safeCropCols * tileWidth,
+    height: safeCropRows * tileHeight,
+  };
+  const placement = getCoverPlacementFromSize(sourceRect.width, sourceRect.height, rect, zoom);
+
+  if (!placement) {
+    return;
+  }
+
+  context.save();
+  context.globalAlpha = alpha;
+  context.filter = `blur(${blur}px) saturate(${saturate}) brightness(${brightness}) contrast(${contrast})`;
+  context.drawImage(
+    atlasImage,
+    sourceRect.x,
+    sourceRect.y,
+    sourceRect.width,
+    sourceRect.height,
+    placement.x,
+    placement.y,
+    placement.width,
+    placement.height,
+  );
+  context.restore();
+}
+
+function getContainedImagePlacement(image, rect) {
   const sourceWidth = image.width || image.videoWidth;
   const sourceHeight = image.height || image.videoHeight;
 
   if (!sourceWidth || !sourceHeight) {
-    return;
+    return null;
   }
 
   const scale = Math.min(rect.width / sourceWidth, rect.height / sourceHeight);
-  const drawWidth = sourceWidth * scale;
-  const drawHeight = sourceHeight * scale;
-  const drawX = rect.x + (rect.width - drawWidth) / 2;
-  const drawY = rect.y + (rect.height - drawHeight) / 2;
+  const width = sourceWidth * scale;
+  const height = sourceHeight * scale;
 
-  context.drawImage(image, drawX, drawY, drawWidth, drawHeight);
+  return {
+    x: rect.x + (rect.width - width) / 2,
+    y: rect.y + (rect.height - height) / 2,
+    width,
+    height,
+  };
+}
+
+function getCoverImagePlacement(image, rect, zoom = 1) {
+  const sourceWidth = image.width || image.videoWidth;
+  const sourceHeight = image.height || image.videoHeight;
+
+  return getCoverPlacementFromSize(sourceWidth, sourceHeight, rect, zoom);
+}
+
+function getCoverPlacementFromSize(sourceWidth, sourceHeight, rect, zoom = 1) {
+  if (!sourceWidth || !sourceHeight) {
+    return null;
+  }
+
+  const scale = Math.max(rect.width / sourceWidth, rect.height / sourceHeight) * zoom;
+  const width = sourceWidth * scale;
+  const height = sourceHeight * scale;
+
+  return {
+    x: rect.x + (rect.width - width) / 2,
+    y: rect.y + (rect.height - height) / 2,
+    width,
+    height,
+  };
+}
+
+function clamp(value, min, max) {
+  return Math.min(max, Math.max(min, value));
+}
+
+function randomInteger(min, max) {
+  if (max <= min) {
+    return min;
+  }
+
+  return min + Math.floor(Math.random() * (max - min + 1));
 }
 
 function drawWrappedText(context, text, options) {

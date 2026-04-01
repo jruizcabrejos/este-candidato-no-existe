@@ -71,7 +71,6 @@ export default function MosaicGeneratorSection({
   const resultViewportRef = useRef(null);
   const sourceUrlRef = useRef("");
   const sourceFileRef = useRef(null);
-  const datasetRequestStartedRef = useRef(false);
   const dragDepthRef = useRef(0);
   const [datasetState, setDatasetState] = useState({
     status: "idle",
@@ -137,11 +136,6 @@ export default function MosaicGeneratorSection({
   }, [isGenerating, onBusyChange, uploadState.status]);
 
   useEffect(() => {
-    if (datasetRequestStartedRef.current) {
-      return undefined;
-    }
-    datasetRequestStartedRef.current = true;
-
     const controller = new AbortController();
 
     async function loadDataset() {
@@ -446,6 +440,7 @@ export default function MosaicGeneratorSection({
 
     return createShareCardAsset({
       mosaicCanvas: canvas,
+      mosaicAtlas: tileIndex?.atlas ?? null,
       format: shareCardFormat,
       composition: shareCardSummary,
       stats: resultStats,
