@@ -1,13 +1,13 @@
 {
   "version": 2,
-  "generatedAt": "2026-03-30T14:15:54.968Z",
+  "generatedAt": "2026-04-23T00:25:16.392Z",
   "analysisSize": 50,
   "renderSize": 20,
   "sampleRatio": 0.6,
   "blur": 0.8,
   "quantizationStep": 16,
   "atlas": {
-    "url": "/generated/mosaic/atlas.webp?v=31027d761034",
+    "url": "/generated/mosaic/atlas.webp?v=e180c9a88292",
     "width": 960,
     "height": 1860,
     "columns": 48,
