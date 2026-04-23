@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
+import DvdPage from "./pages/DvdPage.jsx";
 import backgroundManifest from "./generated/background_manifest.json";
 import "./index.css";
 
@@ -47,13 +48,27 @@ async function preloadBackgroundAtlas() {
 
 async function bootstrap() {
   initializeGoogleAnalytics();
-  await preloadBackgroundAtlas();
+  const useDvdPage = isDvdRoute();
+  if (!useDvdPage) {
+    await preloadBackgroundAtlas();
+  }
+
+  const RootComponent = useDvdPage ? DvdPage : App;
 
   ReactDOM.createRoot(document.getElementById("root")).render(
     <React.StrictMode>
-      <App />
+      <RootComponent />
     </React.StrictMode>,
   );
+}
+
+function isDvdRoute() {
+  if (typeof window === "undefined") {
+    return false;
+  }
+
+  const pathname = window.location.pathname.replace(/\/+$/, "") || "/";
+  return pathname === "/dvd";
 }
 
 bootstrap();

@@ -1,6 +1,6 @@
 {
   "version": 5,
-  "sourceFingerprint": "31027d761034993936480b83426557a19deb332d0a7cdf3d1e5a55550ed74951",
+  "sourceFingerprint": "e180c9a882927d59986ec31c16724509708d903863d57e2e6b1a7e172d89a94c",
   "summary": {
     "totalPortraits": 4456,
     "sexCount": 2,
@@ -10,7 +10,7 @@
   },
   "hero": {
     "label": "Peru 2026",
-    "assetUrl": "/generated/composites/hero.webp?v=31027d761034",
+    "assetUrl": "/generated/composites/hero.webp?v=e180c9a88292",
     "portraitCount": 4456
   },
   "sexes": [
@@ -18,13 +18,13 @@
       "slug": "male",
       "label": "Hombres",
       "portraitCount": 2667,
-      "assetUrl": "/generated/composites/sexes/male.webp?v=31027d761034"
+      "assetUrl": "/generated/composites/sexes/male.webp?v=e180c9a88292"
     },
     {
       "slug": "female",
       "label": "Mujeres",
       "portraitCount": 1789,
-      "assetUrl": "/generated/composites/sexes/female.webp?v=31027d761034"
+      "assetUrl": "/generated/composites/sexes/female.webp?v=e180c9a88292"
     }
   ],
   "regionsBySex": [
@@ -35,7 +35,7 @@
         "slug": "male",
         "label": "Hombres",
         "portraitCount": 2667,
-        "assetUrl": "/generated/composites/sexes/male.webp?v=31027d761034",
+        "assetUrl": "/generated/composites/sexes/male.webp?v=e180c9a88292",
         "percentage": 59.9
       },
       "regions": [
@@ -43,189 +43,189 @@
           "slug": "amazonas",
           "label": "Amazonas",
           "portraitCount": 58,
-          "assetUrl": "/generated/composites/regions-by-sex/male/amazonas.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/regions-by-sex/male/amazonas.webp?v=e180c9a88292",
           "shapeUrl": "/generated/region-shapes/amazonas.svg"
         },
         {
           "slug": "ancash",
           "label": "Ancash",
           "portraitCount": 94,
-          "assetUrl": "/generated/composites/regions-by-sex/male/ancash.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/regions-by-sex/male/ancash.webp?v=e180c9a88292",
           "shapeUrl": "/generated/region-shapes/ancash.svg"
         },
         {
           "slug": "apurimac",
           "label": "Apurimac",
           "portraitCount": 70,
-          "assetUrl": "/generated/composites/regions-by-sex/male/apurimac.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/regions-by-sex/male/apurimac.webp?v=e180c9a88292",
           "shapeUrl": "/generated/region-shapes/apurimac.svg"
         },
         {
           "slug": "arequipa",
           "label": "Arequipa",
           "portraitCount": 92,
-          "assetUrl": "/generated/composites/regions-by-sex/male/arequipa.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/regions-by-sex/male/arequipa.webp?v=e180c9a88292",
           "shapeUrl": "/generated/region-shapes/arequipa.svg"
         },
         {
           "slug": "ayacucho",
           "label": "Ayacucho",
           "portraitCount": 60,
-          "assetUrl": "/generated/composites/regions-by-sex/male/ayacucho.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/regions-by-sex/male/ayacucho.webp?v=e180c9a88292",
           "shapeUrl": "/generated/region-shapes/ayacucho.svg"
         },
         {
           "slug": "cajamarca",
           "label": "Cajamarca",
           "portraitCount": 115,
-          "assetUrl": "/generated/composites/regions-by-sex/male/cajamarca.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/regions-by-sex/male/cajamarca.webp?v=e180c9a88292",
           "shapeUrl": "/generated/region-shapes/cajamarca.svg"
         },
         {
           "slug": "callao",
           "label": "Callao",
           "portraitCount": 74,
-          "assetUrl": "/generated/composites/regions-by-sex/male/callao.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/regions-by-sex/male/callao.webp?v=e180c9a88292",
           "shapeUrl": "/generated/region-shapes/callao.svg"
         },
         {
           "slug": "cusco",
           "label": "Cusco",
           "portraitCount": 85,
-          "assetUrl": "/generated/composites/regions-by-sex/male/cusco.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/regions-by-sex/male/cusco.webp?v=e180c9a88292",
           "shapeUrl": "/generated/region-shapes/cusco.svg"
         },
         {
           "slug": "huancavelica",
           "label": "Huancavelica",
           "portraitCount": 51,
-          "assetUrl": "/generated/composites/regions-by-sex/male/huancavelica.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/regions-by-sex/male/huancavelica.webp?v=e180c9a88292",
           "shapeUrl": "/generated/region-shapes/huancavelica.svg"
         },
         {
           "slug": "huanuco",
           "label": "Huanuco",
           "portraitCount": 68,
-          "assetUrl": "/generated/composites/regions-by-sex/male/huanuco.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/regions-by-sex/male/huanuco.webp?v=e180c9a88292",
           "shapeUrl": "/generated/region-shapes/huanuco.svg"
         },
         {
           "slug": "ica",
           "label": "Ica",
           "portraitCount": 67,
-          "assetUrl": "/generated/composites/regions-by-sex/male/ica.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/regions-by-sex/male/ica.webp?v=e180c9a88292",
           "shapeUrl": "/generated/region-shapes/ica.svg"
         },
         {
           "slug": "junin",
           "label": "Junin",
           "portraitCount": 107,
-          "assetUrl": "/generated/composites/regions-by-sex/male/junin.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/regions-by-sex/male/junin.webp?v=e180c9a88292",
           "shapeUrl": "/generated/region-shapes/junin.svg"
         },
         {
           "slug": "la-libertad",
           "label": "La Libertad",
           "portraitCount": 146,
-          "assetUrl": "/generated/composites/regions-by-sex/male/la-libertad.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/regions-by-sex/male/la-libertad.webp?v=e180c9a88292",
           "shapeUrl": "/generated/region-shapes/la-libertad.svg"
         },
         {
           "slug": "lambayeque",
           "label": "Lambayeque",
           "portraitCount": 103,
-          "assetUrl": "/generated/composites/regions-by-sex/male/lambayeque.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/regions-by-sex/male/lambayeque.webp?v=e180c9a88292",
           "shapeUrl": "/generated/region-shapes/lambayeque.svg"
         },
         {
           "slug": "lima-metropolitana",
           "label": "Lima Metropolitana",
           "portraitCount": 624,
-          "assetUrl": "/generated/composites/regions-by-sex/male/lima-metropolitana.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/regions-by-sex/male/lima-metropolitana.webp?v=e180c9a88292",
           "shapeUrl": "/generated/region-shapes/lima-metropolitana.svg"
         },
         {
           "slug": "lima-provincias",
           "label": "Lima Provincias",
           "portraitCount": 75,
-          "assetUrl": "/generated/composites/regions-by-sex/male/lima-provincias.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/regions-by-sex/male/lima-provincias.webp?v=e180c9a88292",
           "shapeUrl": "/generated/region-shapes/lima-provincias.svg"
         },
         {
           "slug": "loreto",
           "label": "Loreto",
           "portraitCount": 59,
-          "assetUrl": "/generated/composites/regions-by-sex/male/loreto.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/regions-by-sex/male/loreto.webp?v=e180c9a88292",
           "shapeUrl": "/generated/region-shapes/loreto.svg"
         },
         {
           "slug": "madre-de-dios",
           "label": "Madre De Dios",
           "portraitCount": 53,
-          "assetUrl": "/generated/composites/regions-by-sex/male/madre-de-dios.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/regions-by-sex/male/madre-de-dios.webp?v=e180c9a88292",
           "shapeUrl": "/generated/region-shapes/madre-de-dios.svg"
         },
         {
           "slug": "moquegua",
           "label": "Moquegua",
           "portraitCount": 52,
-          "assetUrl": "/generated/composites/regions-by-sex/male/moquegua.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/regions-by-sex/male/moquegua.webp?v=e180c9a88292",
           "shapeUrl": "/generated/region-shapes/moquegua.svg"
         },
         {
           "slug": "pasco",
           "label": "Pasco",
           "portraitCount": 54,
-          "assetUrl": "/generated/composites/regions-by-sex/male/pasco.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/regions-by-sex/male/pasco.webp?v=e180c9a88292",
           "shapeUrl": "/generated/region-shapes/pasco.svg"
         },
         {
           "slug": "piura",
           "label": "Piura",
           "portraitCount": 148,
-          "assetUrl": "/generated/composites/regions-by-sex/male/piura.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/regions-by-sex/male/piura.webp?v=e180c9a88292",
           "shapeUrl": "/generated/region-shapes/piura.svg"
         },
         {
           "slug": "puno",
           "label": "Puno",
           "portraitCount": 99,
-          "assetUrl": "/generated/composites/regions-by-sex/male/puno.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/regions-by-sex/male/puno.webp?v=e180c9a88292",
           "shapeUrl": "/generated/region-shapes/puno.svg"
         },
         {
           "slug": "san-martin",
           "label": "San Martin",
           "portraitCount": 71,
-          "assetUrl": "/generated/composites/regions-by-sex/male/san-martin.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/regions-by-sex/male/san-martin.webp?v=e180c9a88292",
           "shapeUrl": "/generated/region-shapes/san-martin.svg"
         },
         {
           "slug": "tacna",
           "label": "Tacna",
           "portraitCount": 53,
-          "assetUrl": "/generated/composites/regions-by-sex/male/tacna.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/regions-by-sex/male/tacna.webp?v=e180c9a88292",
           "shapeUrl": "/generated/region-shapes/tacna.svg"
         },
         {
           "slug": "tumbes",
           "label": "Tumbes",
           "portraitCount": 53,
-          "assetUrl": "/generated/composites/regions-by-sex/male/tumbes.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/regions-by-sex/male/tumbes.webp?v=e180c9a88292",
           "shapeUrl": "/generated/region-shapes/tumbes.svg"
         },
         {
           "slug": "ucayali",
           "label": "Ucayali",
           "portraitCount": 70,
-          "assetUrl": "/generated/composites/regions-by-sex/male/ucayali.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/regions-by-sex/male/ucayali.webp?v=e180c9a88292",
           "shapeUrl": "/generated/region-shapes/ucayali.svg"
         },
         {
           "slug": "peruanos-residentes-en-el-extranjero",
           "label": "Peruanos Residentes En El Extranjero",
           "portraitCount": 66,
-          "assetUrl": "/generated/composites/regions-by-sex/male/peruanos-residentes-en-el-extranjero.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/regions-by-sex/male/peruanos-residentes-en-el-extranjero.webp?v=e180c9a88292",
           "shapeUrl": "/generated/region-shapes/peruanos-residentes-en-el-extranjero.svg"
         }
       ]
@@ -237,7 +237,7 @@
         "slug": "female",
         "label": "Mujeres",
         "portraitCount": 1789,
-        "assetUrl": "/generated/composites/sexes/female.webp?v=31027d761034",
+        "assetUrl": "/generated/composites/sexes/female.webp?v=e180c9a88292",
         "percentage": 40.1
       },
       "regions": [
@@ -245,189 +245,189 @@
           "slug": "amazonas",
           "label": "Amazonas",
           "portraitCount": 42,
-          "assetUrl": "/generated/composites/regions-by-sex/female/amazonas.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/regions-by-sex/female/amazonas.webp?v=e180c9a88292",
           "shapeUrl": "/generated/region-shapes/amazonas.svg"
         },
         {
           "slug": "ancash",
           "label": "Ancash",
           "portraitCount": 79,
-          "assetUrl": "/generated/composites/regions-by-sex/female/ancash.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/regions-by-sex/female/ancash.webp?v=e180c9a88292",
           "shapeUrl": "/generated/region-shapes/ancash.svg"
         },
         {
           "slug": "apurimac",
           "label": "Apurimac",
           "portraitCount": 34,
-          "assetUrl": "/generated/composites/regions-by-sex/female/apurimac.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/regions-by-sex/female/apurimac.webp?v=e180c9a88292",
           "shapeUrl": "/generated/region-shapes/apurimac.svg"
         },
         {
           "slug": "arequipa",
           "label": "Arequipa",
           "portraitCount": 86,
-          "assetUrl": "/generated/composites/regions-by-sex/female/arequipa.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/regions-by-sex/female/arequipa.webp?v=e180c9a88292",
           "shapeUrl": "/generated/region-shapes/arequipa.svg"
         },
         {
           "slug": "ayacucho",
           "label": "Ayacucho",
           "portraitCount": 35,
-          "assetUrl": "/generated/composites/regions-by-sex/female/ayacucho.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/regions-by-sex/female/ayacucho.webp?v=e180c9a88292",
           "shapeUrl": "/generated/region-shapes/ayacucho.svg"
         },
         {
           "slug": "cajamarca",
           "label": "Cajamarca",
           "portraitCount": 74,
-          "assetUrl": "/generated/composites/regions-by-sex/female/cajamarca.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/regions-by-sex/female/cajamarca.webp?v=e180c9a88292",
           "shapeUrl": "/generated/region-shapes/cajamarca.svg"
         },
         {
           "slug": "callao",
           "label": "Callao",
           "portraitCount": 51,
-          "assetUrl": "/generated/composites/regions-by-sex/female/callao.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/regions-by-sex/female/callao.webp?v=e180c9a88292",
           "shapeUrl": "/generated/region-shapes/callao.svg"
         },
         {
           "slug": "cusco",
           "label": "Cusco",
           "portraitCount": 79,
-          "assetUrl": "/generated/composites/regions-by-sex/female/cusco.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/regions-by-sex/female/cusco.webp?v=e180c9a88292",
           "shapeUrl": "/generated/region-shapes/cusco.svg"
         },
         {
           "slug": "huancavelica",
           "label": "Huancavelica",
           "portraitCount": 35,
-          "assetUrl": "/generated/composites/regions-by-sex/female/huancavelica.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/regions-by-sex/female/huancavelica.webp?v=e180c9a88292",
           "shapeUrl": "/generated/region-shapes/huancavelica.svg"
         },
         {
           "slug": "huanuco",
           "label": "Huanuco",
           "portraitCount": 42,
-          "assetUrl": "/generated/composites/regions-by-sex/female/huanuco.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/regions-by-sex/female/huanuco.webp?v=e180c9a88292",
           "shapeUrl": "/generated/region-shapes/huanuco.svg"
         },
         {
           "slug": "ica",
           "label": "Ica",
           "portraitCount": 50,
-          "assetUrl": "/generated/composites/regions-by-sex/female/ica.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/regions-by-sex/female/ica.webp?v=e180c9a88292",
           "shapeUrl": "/generated/region-shapes/ica.svg"
         },
         {
           "slug": "junin",
           "label": "Junin",
           "portraitCount": 65,
-          "assetUrl": "/generated/composites/regions-by-sex/female/junin.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/regions-by-sex/female/junin.webp?v=e180c9a88292",
           "shapeUrl": "/generated/region-shapes/junin.svg"
         },
         {
           "slug": "la-libertad",
           "label": "La Libertad",
           "portraitCount": 93,
-          "assetUrl": "/generated/composites/regions-by-sex/female/la-libertad.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/regions-by-sex/female/la-libertad.webp?v=e180c9a88292",
           "shapeUrl": "/generated/region-shapes/la-libertad.svg"
         },
         {
           "slug": "lambayeque",
           "label": "Lambayeque",
           "portraitCount": 77,
-          "assetUrl": "/generated/composites/regions-by-sex/female/lambayeque.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/regions-by-sex/female/lambayeque.webp?v=e180c9a88292",
           "shapeUrl": "/generated/region-shapes/lambayeque.svg"
         },
         {
           "slug": "lima-metropolitana",
           "label": "Lima Metropolitana",
           "portraitCount": 395,
-          "assetUrl": "/generated/composites/regions-by-sex/female/lima-metropolitana.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/regions-by-sex/female/lima-metropolitana.webp?v=e180c9a88292",
           "shapeUrl": "/generated/region-shapes/lima-metropolitana.svg"
         },
         {
           "slug": "lima-provincias",
           "label": "Lima Provincias",
           "portraitCount": 48,
-          "assetUrl": "/generated/composites/regions-by-sex/female/lima-provincias.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/regions-by-sex/female/lima-provincias.webp?v=e180c9a88292",
           "shapeUrl": "/generated/region-shapes/lima-provincias.svg"
         },
         {
           "slug": "loreto",
           "label": "Loreto",
           "portraitCount": 45,
-          "assetUrl": "/generated/composites/regions-by-sex/female/loreto.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/regions-by-sex/female/loreto.webp?v=e180c9a88292",
           "shapeUrl": "/generated/region-shapes/loreto.svg"
         },
         {
           "slug": "madre-de-dios",
           "label": "Madre De Dios",
           "portraitCount": 40,
-          "assetUrl": "/generated/composites/regions-by-sex/female/madre-de-dios.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/regions-by-sex/female/madre-de-dios.webp?v=e180c9a88292",
           "shapeUrl": "/generated/region-shapes/madre-de-dios.svg"
         },
         {
           "slug": "moquegua",
           "label": "Moquegua",
           "portraitCount": 41,
-          "assetUrl": "/generated/composites/regions-by-sex/female/moquegua.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/regions-by-sex/female/moquegua.webp?v=e180c9a88292",
           "shapeUrl": "/generated/region-shapes/moquegua.svg"
         },
         {
           "slug": "pasco",
           "label": "Pasco",
           "portraitCount": 30,
-          "assetUrl": "/generated/composites/regions-by-sex/female/pasco.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/regions-by-sex/female/pasco.webp?v=e180c9a88292",
           "shapeUrl": "/generated/region-shapes/pasco.svg"
         },
         {
           "slug": "piura",
           "label": "Piura",
           "portraitCount": 99,
-          "assetUrl": "/generated/composites/regions-by-sex/female/piura.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/regions-by-sex/female/piura.webp?v=e180c9a88292",
           "shapeUrl": "/generated/region-shapes/piura.svg"
         },
         {
           "slug": "puno",
           "label": "Puno",
           "portraitCount": 57,
-          "assetUrl": "/generated/composites/regions-by-sex/female/puno.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/regions-by-sex/female/puno.webp?v=e180c9a88292",
           "shapeUrl": "/generated/region-shapes/puno.svg"
         },
         {
           "slug": "san-martin",
           "label": "San Martin",
           "portraitCount": 37,
-          "assetUrl": "/generated/composites/regions-by-sex/female/san-martin.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/regions-by-sex/female/san-martin.webp?v=e180c9a88292",
           "shapeUrl": "/generated/region-shapes/san-martin.svg"
         },
         {
           "slug": "tacna",
           "label": "Tacna",
           "portraitCount": 40,
-          "assetUrl": "/generated/composites/regions-by-sex/female/tacna.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/regions-by-sex/female/tacna.webp?v=e180c9a88292",
           "shapeUrl": "/generated/region-shapes/tacna.svg"
         },
         {
           "slug": "tumbes",
           "label": "Tumbes",
           "portraitCount": 36,
-          "assetUrl": "/generated/composites/regions-by-sex/female/tumbes.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/regions-by-sex/female/tumbes.webp?v=e180c9a88292",
           "shapeUrl": "/generated/region-shapes/tumbes.svg"
         },
         {
           "slug": "ucayali",
           "label": "Ucayali",
           "portraitCount": 38,
-          "assetUrl": "/generated/composites/regions-by-sex/female/ucayali.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/regions-by-sex/female/ucayali.webp?v=e180c9a88292",
           "shapeUrl": "/generated/region-shapes/ucayali.svg"
         },
         {
           "slug": "peruanos-residentes-en-el-extranjero",
           "label": "Peruanos Residentes En El Extranjero",
           "portraitCount": 41,
-          "assetUrl": "/generated/composites/regions-by-sex/female/peruanos-residentes-en-el-extranjero.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/regions-by-sex/female/peruanos-residentes-en-el-extranjero.webp?v=e180c9a88292",
           "shapeUrl": "/generated/region-shapes/peruanos-residentes-en-el-extranjero.svg"
         }
       ]
@@ -438,189 +438,189 @@
       "slug": "amazonas",
       "label": "Amazonas",
       "portraitCount": 100,
-      "assetUrl": "/generated/composites/regions/amazonas.webp?v=31027d761034",
+      "assetUrl": "/generated/composites/regions/amazonas.webp?v=e180c9a88292",
       "shapeUrl": "/generated/region-shapes/amazonas.svg"
     },
     {
       "slug": "ancash",
       "label": "Ancash",
       "portraitCount": 173,
-      "assetUrl": "/generated/composites/regions/ancash.webp?v=31027d761034",
+      "assetUrl": "/generated/composites/regions/ancash.webp?v=e180c9a88292",
       "shapeUrl": "/generated/region-shapes/ancash.svg"
     },
     {
       "slug": "apurimac",
       "label": "Apurimac",
       "portraitCount": 104,
-      "assetUrl": "/generated/composites/regions/apurimac.webp?v=31027d761034",
+      "assetUrl": "/generated/composites/regions/apurimac.webp?v=e180c9a88292",
       "shapeUrl": "/generated/region-shapes/apurimac.svg"
     },
     {
       "slug": "arequipa",
       "label": "Arequipa",
       "portraitCount": 178,
-      "assetUrl": "/generated/composites/regions/arequipa.webp?v=31027d761034",
+      "assetUrl": "/generated/composites/regions/arequipa.webp?v=e180c9a88292",
       "shapeUrl": "/generated/region-shapes/arequipa.svg"
     },
     {
       "slug": "ayacucho",
       "label": "Ayacucho",
       "portraitCount": 95,
-      "assetUrl": "/generated/composites/regions/ayacucho.webp?v=31027d761034",
+      "assetUrl": "/generated/composites/regions/ayacucho.webp?v=e180c9a88292",
       "shapeUrl": "/generated/region-shapes/ayacucho.svg"
     },
     {
       "slug": "cajamarca",
       "label": "Cajamarca",
       "portraitCount": 189,
-      "assetUrl": "/generated/composites/regions/cajamarca.webp?v=31027d761034",
+      "assetUrl": "/generated/composites/regions/cajamarca.webp?v=e180c9a88292",
       "shapeUrl": "/generated/region-shapes/cajamarca.svg"
     },
     {
       "slug": "callao",
       "label": "Callao",
       "portraitCount": 125,
-      "assetUrl": "/generated/composites/regions/callao.webp?v=31027d761034",
+      "assetUrl": "/generated/composites/regions/callao.webp?v=e180c9a88292",
       "shapeUrl": "/generated/region-shapes/callao.svg"
     },
     {
       "slug": "cusco",
       "label": "Cusco",
       "portraitCount": 164,
-      "assetUrl": "/generated/composites/regions/cusco.webp?v=31027d761034",
+      "assetUrl": "/generated/composites/regions/cusco.webp?v=e180c9a88292",
       "shapeUrl": "/generated/region-shapes/cusco.svg"
     },
     {
       "slug": "huancavelica",
       "label": "Huancavelica",
       "portraitCount": 86,
-      "assetUrl": "/generated/composites/regions/huancavelica.webp?v=31027d761034",
+      "assetUrl": "/generated/composites/regions/huancavelica.webp?v=e180c9a88292",
       "shapeUrl": "/generated/region-shapes/huancavelica.svg"
     },
     {
       "slug": "huanuco",
       "label": "Huanuco",
       "portraitCount": 110,
-      "assetUrl": "/generated/composites/regions/huanuco.webp?v=31027d761034",
+      "assetUrl": "/generated/composites/regions/huanuco.webp?v=e180c9a88292",
       "shapeUrl": "/generated/region-shapes/huanuco.svg"
     },
     {
       "slug": "ica",
       "label": "Ica",
       "portraitCount": 117,
-      "assetUrl": "/generated/composites/regions/ica.webp?v=31027d761034",
+      "assetUrl": "/generated/composites/regions/ica.webp?v=e180c9a88292",
       "shapeUrl": "/generated/region-shapes/ica.svg"
     },
     {
       "slug": "junin",
       "label": "Junin",
       "portraitCount": 172,
-      "assetUrl": "/generated/composites/regions/junin.webp?v=31027d761034",
+      "assetUrl": "/generated/composites/regions/junin.webp?v=e180c9a88292",
       "shapeUrl": "/generated/region-shapes/junin.svg"
     },
     {
       "slug": "la-libertad",
       "label": "La Libertad",
       "portraitCount": 239,
-      "assetUrl": "/generated/composites/regions/la-libertad.webp?v=31027d761034",
+      "assetUrl": "/generated/composites/regions/la-libertad.webp?v=e180c9a88292",
       "shapeUrl": "/generated/region-shapes/la-libertad.svg"
     },
     {
       "slug": "lambayeque",
       "label": "Lambayeque",
       "portraitCount": 180,
-      "assetUrl": "/generated/composites/regions/lambayeque.webp?v=31027d761034",
+      "assetUrl": "/generated/composites/regions/lambayeque.webp?v=e180c9a88292",
       "shapeUrl": "/generated/region-shapes/lambayeque.svg"
     },
     {
       "slug": "lima-metropolitana",
       "label": "Lima Metropolitana",
       "portraitCount": 1019,
-      "assetUrl": "/generated/composites/regions/lima-metropolitana.webp?v=31027d761034",
+      "assetUrl": "/generated/composites/regions/lima-metropolitana.webp?v=e180c9a88292",
       "shapeUrl": "/generated/region-shapes/lima-metropolitana.svg"
     },
     {
       "slug": "lima-provincias",
       "label": "Lima Provincias",
       "portraitCount": 123,
-      "assetUrl": "/generated/composites/regions/lima-provincias.webp?v=31027d761034",
+      "assetUrl": "/generated/composites/regions/lima-provincias.webp?v=e180c9a88292",
       "shapeUrl": "/generated/region-shapes/lima-provincias.svg"
     },
     {
       "slug": "loreto",
       "label": "Loreto",
       "portraitCount": 104,
-      "assetUrl": "/generated/composites/regions/loreto.webp?v=31027d761034",
+      "assetUrl": "/generated/composites/regions/loreto.webp?v=e180c9a88292",
       "shapeUrl": "/generated/region-shapes/loreto.svg"
     },
     {
       "slug": "madre-de-dios",
       "label": "Madre De Dios",
       "portraitCount": 93,
-      "assetUrl": "/generated/composites/regions/madre-de-dios.webp?v=31027d761034",
+      "assetUrl": "/generated/composites/regions/madre-de-dios.webp?v=e180c9a88292",
       "shapeUrl": "/generated/region-shapes/madre-de-dios.svg"
     },
     {
       "slug": "moquegua",
       "label": "Moquegua",
       "portraitCount": 93,
-      "assetUrl": "/generated/composites/regions/moquegua.webp?v=31027d761034",
+      "assetUrl": "/generated/composites/regions/moquegua.webp?v=e180c9a88292",
       "shapeUrl": "/generated/region-shapes/moquegua.svg"
     },
     {
       "slug": "pasco",
       "label": "Pasco",
       "portraitCount": 84,
-      "assetUrl": "/generated/composites/regions/pasco.webp?v=31027d761034",
+      "assetUrl": "/generated/composites/regions/pasco.webp?v=e180c9a88292",
       "shapeUrl": "/generated/region-shapes/pasco.svg"
     },
     {
       "slug": "piura",
       "label": "Piura",
       "portraitCount": 247,
-      "assetUrl": "/generated/composites/regions/piura.webp?v=31027d761034",
+      "assetUrl": "/generated/composites/regions/piura.webp?v=e180c9a88292",
       "shapeUrl": "/generated/region-shapes/piura.svg"
     },
     {
       "slug": "puno",
       "label": "Puno",
       "portraitCount": 156,
-      "assetUrl": "/generated/composites/regions/puno.webp?v=31027d761034",
+      "assetUrl": "/generated/composites/regions/puno.webp?v=e180c9a88292",
       "shapeUrl": "/generated/region-shapes/puno.svg"
     },
     {
       "slug": "san-martin",
       "label": "San Martin",
       "portraitCount": 108,
-      "assetUrl": "/generated/composites/regions/san-martin.webp?v=31027d761034",
+      "assetUrl": "/generated/composites/regions/san-martin.webp?v=e180c9a88292",
       "shapeUrl": "/generated/region-shapes/san-martin.svg"
     },
     {
       "slug": "tacna",
       "label": "Tacna",
       "portraitCount": 93,
-      "assetUrl": "/generated/composites/regions/tacna.webp?v=31027d761034",
+      "assetUrl": "/generated/composites/regions/tacna.webp?v=e180c9a88292",
       "shapeUrl": "/generated/region-shapes/tacna.svg"
     },
     {
       "slug": "tumbes",
       "label": "Tumbes",
       "portraitCount": 89,
-      "assetUrl": "/generated/composites/regions/tumbes.webp?v=31027d761034",
+      "assetUrl": "/generated/composites/regions/tumbes.webp?v=e180c9a88292",
       "shapeUrl": "/generated/region-shapes/tumbes.svg"
     },
     {
       "slug": "ucayali",
       "label": "Ucayali",
       "portraitCount": 108,
-      "assetUrl": "/generated/composites/regions/ucayali.webp?v=31027d761034",
+      "assetUrl": "/generated/composites/regions/ucayali.webp?v=e180c9a88292",
       "shapeUrl": "/generated/region-shapes/ucayali.svg"
     },
     {
       "slug": "peruanos-residentes-en-el-extranjero",
       "label": "Peruanos Residentes En El Extranjero",
       "portraitCount": 107,
-      "assetUrl": "/generated/composites/regions/peruanos-residentes-en-el-extranjero.webp?v=31027d761034",
+      "assetUrl": "/generated/composites/regions/peruanos-residentes-en-el-extranjero.webp?v=e180c9a88292",
       "shapeUrl": "/generated/region-shapes/peruanos-residentes-en-el-extranjero.svg"
     }
   ],
@@ -629,259 +629,259 @@
       "slug": "ahora-nacion-an",
       "label": "Ahora Nacion - An",
       "portraitCount": 146,
-      "assetUrl": "/generated/composites/parties/ahora-nacion-an.webp?v=31027d761034",
+      "assetUrl": "/generated/composites/parties/ahora-nacion-an.webp?v=e180c9a88292",
       "logoUrl": "/generated/party-logos/ahora-nacion-an.webp"
     },
     {
       "slug": "alianza-electoral-venceremos",
       "label": "Alianza Electoral Venceremos",
       "portraitCount": 144,
-      "assetUrl": "/generated/composites/parties/alianza-electoral-venceremos.webp?v=31027d761034",
+      "assetUrl": "/generated/composites/parties/alianza-electoral-venceremos.webp?v=e180c9a88292",
       "logoUrl": "/generated/party-logos/alianza-electoral-venceremos.webp"
     },
     {
       "slug": "alianza-para-el-progreso",
       "label": "Alianza Para El Progreso",
       "portraitCount": 149,
-      "assetUrl": "/generated/composites/parties/alianza-para-el-progreso.webp?v=31027d761034",
+      "assetUrl": "/generated/composites/parties/alianza-para-el-progreso.webp?v=e180c9a88292",
       "logoUrl": "/generated/party-logos/alianza-para-el-progreso.bmp"
     },
     {
       "slug": "avanza-pais-partido-de-integracion-social",
       "label": "Avanza Pais - Partido De Integracion Social",
       "portraitCount": 122,
-      "assetUrl": "/generated/composites/parties/avanza-pais-partido-de-integracion-social.webp?v=31027d761034",
+      "assetUrl": "/generated/composites/parties/avanza-pais-partido-de-integracion-social.webp?v=e180c9a88292",
       "logoUrl": "/generated/party-logos/avanza-pais-partido-de-integracion-social.webp"
     },
     {
       "slug": "fe-en-el-peru",
       "label": "Fe En El Peru",
       "portraitCount": 76,
-      "assetUrl": "/generated/composites/parties/fe-en-el-peru.webp?v=31027d761034",
+      "assetUrl": "/generated/composites/parties/fe-en-el-peru.webp?v=e180c9a88292",
       "logoUrl": "/generated/party-logos/fe-en-el-peru.webp"
     },
     {
       "slug": "frente-popular-agricola-fia-del-peru",
       "label": "Frente Popular Agricola Fia Del Peru",
       "portraitCount": 152,
-      "assetUrl": "/generated/composites/parties/frente-popular-agricola-fia-del-peru.webp?v=31027d761034",
+      "assetUrl": "/generated/composites/parties/frente-popular-agricola-fia-del-peru.webp?v=e180c9a88292",
       "logoUrl": "/generated/party-logos/frente-popular-agricola-fia-del-peru.webp"
     },
     {
       "slug": "fuerza-popular",
       "label": "Fuerza Popular",
       "portraitCount": 148,
-      "assetUrl": "/generated/composites/parties/fuerza-popular.webp?v=31027d761034",
+      "assetUrl": "/generated/composites/parties/fuerza-popular.webp?v=e180c9a88292",
       "logoUrl": "/generated/party-logos/fuerza-popular.webp"
     },
     {
       "slug": "fuerza-y-libertad",
       "label": "Fuerza Y Libertad",
       "portraitCount": 147,
-      "assetUrl": "/generated/composites/parties/fuerza-y-libertad.webp?v=31027d761034",
+      "assetUrl": "/generated/composites/parties/fuerza-y-libertad.webp?v=e180c9a88292",
       "logoUrl": "/generated/party-logos/fuerza-y-libertad.webp"
     },
     {
       "slug": "juntos-por-el-peru",
       "label": "Juntos Por El Peru",
       "portraitCount": 114,
-      "assetUrl": "/generated/composites/parties/juntos-por-el-peru.webp?v=31027d761034",
+      "assetUrl": "/generated/composites/parties/juntos-por-el-peru.webp?v=e180c9a88292",
       "logoUrl": "/generated/party-logos/juntos-por-el-peru.webp"
     },
     {
       "slug": "libertad-popular",
       "label": "Libertad Popular",
       "portraitCount": 99,
-      "assetUrl": "/generated/composites/parties/libertad-popular.webp?v=31027d761034",
+      "assetUrl": "/generated/composites/parties/libertad-popular.webp?v=e180c9a88292",
       "logoUrl": "/generated/party-logos/libertad-popular.webp"
     },
     {
       "slug": "partido-aprista-peruano",
       "label": "Partido Aprista Peruano",
       "portraitCount": 137,
-      "assetUrl": "/generated/composites/parties/partido-aprista-peruano.webp?v=31027d761034",
+      "assetUrl": "/generated/composites/parties/partido-aprista-peruano.webp?v=e180c9a88292",
       "logoUrl": "/generated/party-logos/partido-aprista-peruano.webp"
     },
     {
       "slug": "partido-civico-obras",
       "label": "Partido Civico Obras",
       "portraitCount": 131,
-      "assetUrl": "/generated/composites/parties/partido-civico-obras.webp?v=31027d761034",
+      "assetUrl": "/generated/composites/parties/partido-civico-obras.webp?v=e180c9a88292",
       "logoUrl": "/generated/party-logos/partido-civico-obras.webp"
     },
     {
       "slug": "partido-de-los-trabajadores-y-emprendedores-pte-peru",
       "label": "Partido De Los Trabajadores Y Emprendedores Pte - Peru",
       "portraitCount": 44,
-      "assetUrl": "/generated/composites/parties/partido-de-los-trabajadores-y-emprendedores-pte-peru.webp?v=31027d761034",
+      "assetUrl": "/generated/composites/parties/partido-de-los-trabajadores-y-emprendedores-pte-peru.webp?v=e180c9a88292",
       "logoUrl": "/generated/party-logos/partido-de-los-trabajadores-y-emprendedores-pte-peru.webp"
     },
     {
       "slug": "partido-del-buen-gobierno",
       "label": "Partido Del Buen Gobierno",
       "portraitCount": 147,
-      "assetUrl": "/generated/composites/parties/partido-del-buen-gobierno.webp?v=31027d761034",
+      "assetUrl": "/generated/composites/parties/partido-del-buen-gobierno.webp?v=e180c9a88292",
       "logoUrl": "/generated/party-logos/partido-del-buen-gobierno.webp"
     },
     {
       "slug": "partido-democrata-unido-peru",
       "label": "Partido Democrata Unido Peru",
       "portraitCount": 72,
-      "assetUrl": "/generated/composites/parties/partido-democrata-unido-peru.webp?v=31027d761034",
+      "assetUrl": "/generated/composites/parties/partido-democrata-unido-peru.webp?v=e180c9a88292",
       "logoUrl": "/generated/party-logos/partido-democrata-unido-peru.webp"
     },
     {
       "slug": "partido-democrata-verde",
       "label": "Partido Democrata Verde",
       "portraitCount": 141,
-      "assetUrl": "/generated/composites/parties/partido-democrata-verde.webp?v=31027d761034",
+      "assetUrl": "/generated/composites/parties/partido-democrata-verde.webp?v=e180c9a88292",
       "logoUrl": "/generated/party-logos/partido-democrata-verde.webp"
     },
     {
       "slug": "partido-democratico-federal",
       "label": "Partido Democratico Federal",
       "portraitCount": 103,
-      "assetUrl": "/generated/composites/parties/partido-democratico-federal.webp?v=31027d761034",
+      "assetUrl": "/generated/composites/parties/partido-democratico-federal.webp?v=e180c9a88292",
       "logoUrl": "/generated/party-logos/partido-democratico-federal.webp"
     },
     {
       "slug": "partido-democratico-somos-peru",
       "label": "Partido Democratico Somos Peru",
       "portraitCount": 144,
-      "assetUrl": "/generated/composites/parties/partido-democratico-somos-peru.webp?v=31027d761034",
+      "assetUrl": "/generated/composites/parties/partido-democratico-somos-peru.webp?v=e180c9a88292",
       "logoUrl": "/generated/party-logos/partido-democratico-somos-peru.webp"
     },
     {
       "slug": "partido-frente-de-la-esperanza-2021",
       "label": "Partido Frente De La Esperanza 2021",
       "portraitCount": 127,
-      "assetUrl": "/generated/composites/parties/partido-frente-de-la-esperanza-2021.webp?v=31027d761034",
+      "assetUrl": "/generated/composites/parties/partido-frente-de-la-esperanza-2021.webp?v=e180c9a88292",
       "logoUrl": "/generated/party-logos/partido-frente-de-la-esperanza-2021.webp"
     },
     {
       "slug": "partido-morado",
       "label": "Partido Morado",
       "portraitCount": 114,
-      "assetUrl": "/generated/composites/parties/partido-morado.webp?v=31027d761034",
+      "assetUrl": "/generated/composites/parties/partido-morado.webp?v=e180c9a88292",
       "logoUrl": "/generated/party-logos/partido-morado.webp"
     },
     {
       "slug": "partido-pais-para-todos",
       "label": "Partido Pais Para Todos",
       "portraitCount": 121,
-      "assetUrl": "/generated/composites/parties/partido-pais-para-todos.webp?v=31027d761034",
+      "assetUrl": "/generated/composites/parties/partido-pais-para-todos.webp?v=e180c9a88292",
       "logoUrl": "/generated/party-logos/partido-pais-para-todos.webp"
     },
     {
       "slug": "partido-patriotico-del-peru",
       "label": "Partido Patriotico Del Peru",
       "portraitCount": 90,
-      "assetUrl": "/generated/composites/parties/partido-patriotico-del-peru.webp?v=31027d761034",
+      "assetUrl": "/generated/composites/parties/partido-patriotico-del-peru.webp?v=e180c9a88292",
       "logoUrl": "/generated/party-logos/partido-patriotico-del-peru.webp"
     },
     {
       "slug": "partido-politico-cooperacion-popular",
       "label": "Partido Politico Cooperacion Popular",
       "portraitCount": 152,
-      "assetUrl": "/generated/composites/parties/partido-politico-cooperacion-popular.webp?v=31027d761034",
+      "assetUrl": "/generated/composites/parties/partido-politico-cooperacion-popular.webp?v=e180c9a88292",
       "logoUrl": "/generated/party-logos/partido-politico-cooperacion-popular.webp"
     },
     {
       "slug": "partido-politico-integridad-democratica",
       "label": "Partido Politico Integridad Democratica",
       "portraitCount": 134,
-      "assetUrl": "/generated/composites/parties/partido-politico-integridad-democratica.webp?v=31027d761034",
+      "assetUrl": "/generated/composites/parties/partido-politico-integridad-democratica.webp?v=e180c9a88292",
       "logoUrl": "/generated/party-logos/partido-politico-integridad-democratica.webp"
     },
     {
       "slug": "partido-politico-nacional-peru-libre",
       "label": "Partido Politico Nacional Peru Libre",
       "portraitCount": 150,
-      "assetUrl": "/generated/composites/parties/partido-politico-nacional-peru-libre.webp?v=31027d761034",
+      "assetUrl": "/generated/composites/parties/partido-politico-nacional-peru-libre.webp?v=e180c9a88292",
       "logoUrl": "/generated/party-logos/partido-politico-nacional-peru-libre.webp"
     },
     {
       "slug": "partido-politico-peru-accion",
       "label": "Partido Politico Peru Accion",
       "portraitCount": 98,
-      "assetUrl": "/generated/composites/parties/partido-politico-peru-accion.webp?v=31027d761034",
+      "assetUrl": "/generated/composites/parties/partido-politico-peru-accion.webp?v=e180c9a88292",
       "logoUrl": "/generated/party-logos/partido-politico-peru-accion.webp"
     },
     {
       "slug": "partido-politico-peru-primero",
       "label": "Partido Politico Peru Primero",
       "portraitCount": 143,
-      "assetUrl": "/generated/composites/parties/partido-politico-peru-primero.webp?v=31027d761034",
+      "assetUrl": "/generated/composites/parties/partido-politico-peru-primero.webp?v=e180c9a88292",
       "logoUrl": "/generated/party-logos/partido-politico-peru-primero.webp"
     },
     {
       "slug": "partido-politico-prin",
       "label": "Partido Politico Prin",
       "portraitCount": 99,
-      "assetUrl": "/generated/composites/parties/partido-politico-prin.webp?v=31027d761034",
+      "assetUrl": "/generated/composites/parties/partido-politico-prin.webp?v=e180c9a88292",
       "logoUrl": "/generated/party-logos/partido-politico-prin.webp"
     },
     {
       "slug": "partido-sicreo",
       "label": "Partido Sicreo",
       "portraitCount": 53,
-      "assetUrl": "/generated/composites/parties/partido-sicreo.webp?v=31027d761034",
+      "assetUrl": "/generated/composites/parties/partido-sicreo.webp?v=e180c9a88292",
       "logoUrl": "/generated/party-logos/partido-sicreo.webp"
     },
     {
       "slug": "peru-moderno",
       "label": "Peru Moderno",
       "portraitCount": 83,
-      "assetUrl": "/generated/composites/parties/peru-moderno.webp?v=31027d761034",
+      "assetUrl": "/generated/composites/parties/peru-moderno.webp?v=e180c9a88292",
       "logoUrl": "/generated/party-logos/peru-moderno.webp"
     },
     {
       "slug": "podemos-peru",
       "label": "Podemos Peru",
       "portraitCount": 145,
-      "assetUrl": "/generated/composites/parties/podemos-peru.webp?v=31027d761034",
+      "assetUrl": "/generated/composites/parties/podemos-peru.webp?v=e180c9a88292",
       "logoUrl": "/generated/party-logos/podemos-peru.webp"
     },
     {
       "slug": "primero-la-gente-comunidad-ecologia-libertad-y-progreso",
       "label": "Primero La Gente - Comunidad, Ecologia, Libertad Y Progreso",
       "portraitCount": 89,
-      "assetUrl": "/generated/composites/parties/primero-la-gente-comunidad-ecologia-libertad-y-progreso.webp?v=31027d761034",
+      "assetUrl": "/generated/composites/parties/primero-la-gente-comunidad-ecologia-libertad-y-progreso.webp?v=e180c9a88292",
       "logoUrl": "/generated/party-logos/primero-la-gente-comunidad-ecologia-libertad-y-progreso.webp"
     },
     {
       "slug": "progresemos",
       "label": "Progresemos",
       "portraitCount": 134,
-      "assetUrl": "/generated/composites/parties/progresemos.webp?v=31027d761034",
+      "assetUrl": "/generated/composites/parties/progresemos.webp?v=e180c9a88292",
       "logoUrl": "/generated/party-logos/progresemos.webp"
     },
     {
       "slug": "renovacion-popular",
       "label": "Renovacion Popular",
       "portraitCount": 152,
-      "assetUrl": "/generated/composites/parties/renovacion-popular.webp?v=31027d761034",
+      "assetUrl": "/generated/composites/parties/renovacion-popular.webp?v=e180c9a88292",
       "logoUrl": "/generated/party-logos/renovacion-popular.webp"
     },
     {
       "slug": "salvemos-al-peru",
       "label": "Salvemos Al Peru",
       "portraitCount": 74,
-      "assetUrl": "/generated/composites/parties/salvemos-al-peru.webp?v=31027d761034",
+      "assetUrl": "/generated/composites/parties/salvemos-al-peru.webp?v=e180c9a88292",
       "logoUrl": "/generated/party-logos/salvemos-al-peru.webp"
     },
     {
       "slug": "un-camino-diferente",
       "label": "Un Camino Diferente",
       "portraitCount": 144,
-      "assetUrl": "/generated/composites/parties/un-camino-diferente.webp?v=31027d761034",
+      "assetUrl": "/generated/composites/parties/un-camino-diferente.webp?v=e180c9a88292",
       "logoUrl": "/generated/party-logos/un-camino-diferente.webp"
     },
     {
       "slug": "unidad-nacional",
       "label": "Unidad Nacional",
       "portraitCount": 138,
-      "assetUrl": "/generated/composites/parties/unidad-nacional.webp?v=31027d761034",
+      "assetUrl": "/generated/composites/parties/unidad-nacional.webp?v=e180c9a88292",
       "logoUrl": "/generated/party-logos/unidad-nacional.webp"
     }
   ],
@@ -893,7 +893,7 @@
         "slug": "male",
         "label": "Hombres",
         "portraitCount": 2667,
-        "assetUrl": "/generated/composites/sexes/male.webp?v=31027d761034",
+        "assetUrl": "/generated/composites/sexes/male.webp?v=e180c9a88292",
         "percentage": 59.9
       },
       "items": [
@@ -901,259 +901,259 @@
           "slug": "ahora-nacion-an",
           "label": "Ahora Nacion - An",
           "portraitCount": 89,
-          "assetUrl": "/generated/composites/parties-by-sex/male/ahora-nacion-an.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/parties-by-sex/male/ahora-nacion-an.webp?v=e180c9a88292",
           "logoUrl": "/generated/party-logos/ahora-nacion-an.webp"
         },
         {
           "slug": "alianza-electoral-venceremos",
           "label": "Alianza Electoral Venceremos",
           "portraitCount": 86,
-          "assetUrl": "/generated/composites/parties-by-sex/male/alianza-electoral-venceremos.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/parties-by-sex/male/alianza-electoral-venceremos.webp?v=e180c9a88292",
           "logoUrl": "/generated/party-logos/alianza-electoral-venceremos.webp"
         },
         {
           "slug": "alianza-para-el-progreso",
           "label": "Alianza Para El Progreso",
           "portraitCount": 92,
-          "assetUrl": "/generated/composites/parties-by-sex/male/alianza-para-el-progreso.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/parties-by-sex/male/alianza-para-el-progreso.webp?v=e180c9a88292",
           "logoUrl": "/generated/party-logos/alianza-para-el-progreso.bmp"
         },
         {
           "slug": "avanza-pais-partido-de-integracion-social",
           "label": "Avanza Pais - Partido De Integracion Social",
           "portraitCount": 70,
-          "assetUrl": "/generated/composites/parties-by-sex/male/avanza-pais-partido-de-integracion-social.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/parties-by-sex/male/avanza-pais-partido-de-integracion-social.webp?v=e180c9a88292",
           "logoUrl": "/generated/party-logos/avanza-pais-partido-de-integracion-social.webp"
         },
         {
           "slug": "fe-en-el-peru",
           "label": "Fe En El Peru",
           "portraitCount": 46,
-          "assetUrl": "/generated/composites/parties-by-sex/male/fe-en-el-peru.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/parties-by-sex/male/fe-en-el-peru.webp?v=e180c9a88292",
           "logoUrl": "/generated/party-logos/fe-en-el-peru.webp"
         },
         {
           "slug": "frente-popular-agricola-fia-del-peru",
           "label": "Frente Popular Agricola Fia Del Peru",
           "portraitCount": 86,
-          "assetUrl": "/generated/composites/parties-by-sex/male/frente-popular-agricola-fia-del-peru.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/parties-by-sex/male/frente-popular-agricola-fia-del-peru.webp?v=e180c9a88292",
           "logoUrl": "/generated/party-logos/frente-popular-agricola-fia-del-peru.webp"
         },
         {
           "slug": "fuerza-popular",
           "label": "Fuerza Popular",
           "portraitCount": 83,
-          "assetUrl": "/generated/composites/parties-by-sex/male/fuerza-popular.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/parties-by-sex/male/fuerza-popular.webp?v=e180c9a88292",
           "logoUrl": "/generated/party-logos/fuerza-popular.webp"
         },
         {
           "slug": "fuerza-y-libertad",
           "label": "Fuerza Y Libertad",
           "portraitCount": 87,
-          "assetUrl": "/generated/composites/parties-by-sex/male/fuerza-y-libertad.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/parties-by-sex/male/fuerza-y-libertad.webp?v=e180c9a88292",
           "logoUrl": "/generated/party-logos/fuerza-y-libertad.webp"
         },
         {
           "slug": "juntos-por-el-peru",
           "label": "Juntos Por El Peru",
           "portraitCount": 63,
-          "assetUrl": "/generated/composites/parties-by-sex/male/juntos-por-el-peru.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/parties-by-sex/male/juntos-por-el-peru.webp?v=e180c9a88292",
           "logoUrl": "/generated/party-logos/juntos-por-el-peru.webp"
         },
         {
           "slug": "libertad-popular",
           "label": "Libertad Popular",
           "portraitCount": 63,
-          "assetUrl": "/generated/composites/parties-by-sex/male/libertad-popular.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/parties-by-sex/male/libertad-popular.webp?v=e180c9a88292",
           "logoUrl": "/generated/party-logos/libertad-popular.webp"
         },
         {
           "slug": "partido-aprista-peruano",
           "label": "Partido Aprista Peruano",
           "portraitCount": 79,
-          "assetUrl": "/generated/composites/parties-by-sex/male/partido-aprista-peruano.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/parties-by-sex/male/partido-aprista-peruano.webp?v=e180c9a88292",
           "logoUrl": "/generated/party-logos/partido-aprista-peruano.webp"
         },
         {
           "slug": "partido-civico-obras",
           "label": "Partido Civico Obras",
           "portraitCount": 80,
-          "assetUrl": "/generated/composites/parties-by-sex/male/partido-civico-obras.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/parties-by-sex/male/partido-civico-obras.webp?v=e180c9a88292",
           "logoUrl": "/generated/party-logos/partido-civico-obras.webp"
         },
         {
           "slug": "partido-de-los-trabajadores-y-emprendedores-pte-peru",
           "label": "Partido De Los Trabajadores Y Emprendedores Pte - Peru",
           "portraitCount": 27,
-          "assetUrl": "/generated/composites/parties-by-sex/male/partido-de-los-trabajadores-y-emprendedores-pte-peru.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/parties-by-sex/male/partido-de-los-trabajadores-y-emprendedores-pte-peru.webp?v=e180c9a88292",
           "logoUrl": "/generated/party-logos/partido-de-los-trabajadores-y-emprendedores-pte-peru.webp"
         },
         {
           "slug": "partido-del-buen-gobierno",
           "label": "Partido Del Buen Gobierno",
           "portraitCount": 90,
-          "assetUrl": "/generated/composites/parties-by-sex/male/partido-del-buen-gobierno.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/parties-by-sex/male/partido-del-buen-gobierno.webp?v=e180c9a88292",
           "logoUrl": "/generated/party-logos/partido-del-buen-gobierno.webp"
         },
         {
           "slug": "partido-democrata-unido-peru",
           "label": "Partido Democrata Unido Peru",
           "portraitCount": 54,
-          "assetUrl": "/generated/composites/parties-by-sex/male/partido-democrata-unido-peru.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/parties-by-sex/male/partido-democrata-unido-peru.webp?v=e180c9a88292",
           "logoUrl": "/generated/party-logos/partido-democrata-unido-peru.webp"
         },
         {
           "slug": "partido-democrata-verde",
           "label": "Partido Democrata Verde",
           "portraitCount": 80,
-          "assetUrl": "/generated/composites/parties-by-sex/male/partido-democrata-verde.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/parties-by-sex/male/partido-democrata-verde.webp?v=e180c9a88292",
           "logoUrl": "/generated/party-logos/partido-democrata-verde.webp"
         },
         {
           "slug": "partido-democratico-federal",
           "label": "Partido Democratico Federal",
           "portraitCount": 63,
-          "assetUrl": "/generated/composites/parties-by-sex/male/partido-democratico-federal.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/parties-by-sex/male/partido-democratico-federal.webp?v=e180c9a88292",
           "logoUrl": "/generated/party-logos/partido-democratico-federal.webp"
         },
         {
           "slug": "partido-democratico-somos-peru",
           "label": "Partido Democratico Somos Peru",
           "portraitCount": 86,
-          "assetUrl": "/generated/composites/parties-by-sex/male/partido-democratico-somos-peru.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/parties-by-sex/male/partido-democratico-somos-peru.webp?v=e180c9a88292",
           "logoUrl": "/generated/party-logos/partido-democratico-somos-peru.webp"
         },
         {
           "slug": "partido-frente-de-la-esperanza-2021",
           "label": "Partido Frente De La Esperanza 2021",
           "portraitCount": 78,
-          "assetUrl": "/generated/composites/parties-by-sex/male/partido-frente-de-la-esperanza-2021.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/parties-by-sex/male/partido-frente-de-la-esperanza-2021.webp?v=e180c9a88292",
           "logoUrl": "/generated/party-logos/partido-frente-de-la-esperanza-2021.webp"
         },
         {
           "slug": "partido-morado",
           "label": "Partido Morado",
           "portraitCount": 67,
-          "assetUrl": "/generated/composites/parties-by-sex/male/partido-morado.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/parties-by-sex/male/partido-morado.webp?v=e180c9a88292",
           "logoUrl": "/generated/party-logos/partido-morado.webp"
         },
         {
           "slug": "partido-pais-para-todos",
           "label": "Partido Pais Para Todos",
           "portraitCount": 74,
-          "assetUrl": "/generated/composites/parties-by-sex/male/partido-pais-para-todos.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/parties-by-sex/male/partido-pais-para-todos.webp?v=e180c9a88292",
           "logoUrl": "/generated/party-logos/partido-pais-para-todos.webp"
         },
         {
           "slug": "partido-patriotico-del-peru",
           "label": "Partido Patriotico Del Peru",
           "portraitCount": 52,
-          "assetUrl": "/generated/composites/parties-by-sex/male/partido-patriotico-del-peru.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/parties-by-sex/male/partido-patriotico-del-peru.webp?v=e180c9a88292",
           "logoUrl": "/generated/party-logos/partido-patriotico-del-peru.webp"
         },
         {
           "slug": "partido-politico-cooperacion-popular",
           "label": "Partido Politico Cooperacion Popular",
           "portraitCount": 96,
-          "assetUrl": "/generated/composites/parties-by-sex/male/partido-politico-cooperacion-popular.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/parties-by-sex/male/partido-politico-cooperacion-popular.webp?v=e180c9a88292",
           "logoUrl": "/generated/party-logos/partido-politico-cooperacion-popular.webp"
         },
         {
           "slug": "partido-politico-integridad-democratica",
           "label": "Partido Politico Integridad Democratica",
           "portraitCount": 83,
-          "assetUrl": "/generated/composites/parties-by-sex/male/partido-politico-integridad-democratica.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/parties-by-sex/male/partido-politico-integridad-democratica.webp?v=e180c9a88292",
           "logoUrl": "/generated/party-logos/partido-politico-integridad-democratica.webp"
         },
         {
           "slug": "partido-politico-nacional-peru-libre",
           "label": "Partido Politico Nacional Peru Libre",
           "portraitCount": 89,
-          "assetUrl": "/generated/composites/parties-by-sex/male/partido-politico-nacional-peru-libre.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/parties-by-sex/male/partido-politico-nacional-peru-libre.webp?v=e180c9a88292",
           "logoUrl": "/generated/party-logos/partido-politico-nacional-peru-libre.webp"
         },
         {
           "slug": "partido-politico-peru-accion",
           "label": "Partido Politico Peru Accion",
           "portraitCount": 58,
-          "assetUrl": "/generated/composites/parties-by-sex/male/partido-politico-peru-accion.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/parties-by-sex/male/partido-politico-peru-accion.webp?v=e180c9a88292",
           "logoUrl": "/generated/party-logos/partido-politico-peru-accion.webp"
         },
         {
           "slug": "partido-politico-peru-primero",
           "label": "Partido Politico Peru Primero",
           "portraitCount": 89,
-          "assetUrl": "/generated/composites/parties-by-sex/male/partido-politico-peru-primero.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/parties-by-sex/male/partido-politico-peru-primero.webp?v=e180c9a88292",
           "logoUrl": "/generated/party-logos/partido-politico-peru-primero.webp"
         },
         {
           "slug": "partido-politico-prin",
           "label": "Partido Politico Prin",
           "portraitCount": 49,
-          "assetUrl": "/generated/composites/parties-by-sex/male/partido-politico-prin.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/parties-by-sex/male/partido-politico-prin.webp?v=e180c9a88292",
           "logoUrl": "/generated/party-logos/partido-politico-prin.webp"
         },
         {
           "slug": "partido-sicreo",
           "label": "Partido Sicreo",
           "portraitCount": 36,
-          "assetUrl": "/generated/composites/parties-by-sex/male/partido-sicreo.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/parties-by-sex/male/partido-sicreo.webp?v=e180c9a88292",
           "logoUrl": "/generated/party-logos/partido-sicreo.webp"
         },
         {
           "slug": "peru-moderno",
           "label": "Peru Moderno",
           "portraitCount": 48,
-          "assetUrl": "/generated/composites/parties-by-sex/male/peru-moderno.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/parties-by-sex/male/peru-moderno.webp?v=e180c9a88292",
           "logoUrl": "/generated/party-logos/peru-moderno.webp"
         },
         {
           "slug": "podemos-peru",
           "label": "Podemos Peru",
           "portraitCount": 84,
-          "assetUrl": "/generated/composites/parties-by-sex/male/podemos-peru.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/parties-by-sex/male/podemos-peru.webp?v=e180c9a88292",
           "logoUrl": "/generated/party-logos/podemos-peru.webp"
         },
         {
           "slug": "primero-la-gente-comunidad-ecologia-libertad-y-progreso",
           "label": "Primero La Gente - Comunidad, Ecologia, Libertad Y Progreso",
           "portraitCount": 58,
-          "assetUrl": "/generated/composites/parties-by-sex/male/primero-la-gente-comunidad-ecologia-libertad-y-progreso.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/parties-by-sex/male/primero-la-gente-comunidad-ecologia-libertad-y-progreso.webp?v=e180c9a88292",
           "logoUrl": "/generated/party-logos/primero-la-gente-comunidad-ecologia-libertad-y-progreso.webp"
         },
         {
           "slug": "progresemos",
           "label": "Progresemos",
           "portraitCount": 73,
-          "assetUrl": "/generated/composites/parties-by-sex/male/progresemos.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/parties-by-sex/male/progresemos.webp?v=e180c9a88292",
           "logoUrl": "/generated/party-logos/progresemos.webp"
         },
         {
           "slug": "renovacion-popular",
           "label": "Renovacion Popular",
           "portraitCount": 93,
-          "assetUrl": "/generated/composites/parties-by-sex/male/renovacion-popular.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/parties-by-sex/male/renovacion-popular.webp?v=e180c9a88292",
           "logoUrl": "/generated/party-logos/renovacion-popular.webp"
         },
         {
           "slug": "salvemos-al-peru",
           "label": "Salvemos Al Peru",
           "portraitCount": 44,
-          "assetUrl": "/generated/composites/parties-by-sex/male/salvemos-al-peru.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/parties-by-sex/male/salvemos-al-peru.webp?v=e180c9a88292",
           "logoUrl": "/generated/party-logos/salvemos-al-peru.webp"
         },
         {
           "slug": "un-camino-diferente",
           "label": "Un Camino Diferente",
           "portraitCount": 83,
-          "assetUrl": "/generated/composites/parties-by-sex/male/un-camino-diferente.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/parties-by-sex/male/un-camino-diferente.webp?v=e180c9a88292",
           "logoUrl": "/generated/party-logos/un-camino-diferente.webp"
         },
         {
           "slug": "unidad-nacional",
           "label": "Unidad Nacional",
           "portraitCount": 89,
-          "assetUrl": "/generated/composites/parties-by-sex/male/unidad-nacional.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/parties-by-sex/male/unidad-nacional.webp?v=e180c9a88292",
           "logoUrl": "/generated/party-logos/unidad-nacional.webp"
         }
       ]
@@ -1165,7 +1165,7 @@
         "slug": "female",
         "label": "Mujeres",
         "portraitCount": 1789,
-        "assetUrl": "/generated/composites/sexes/female.webp?v=31027d761034",
+        "assetUrl": "/generated/composites/sexes/female.webp?v=e180c9a88292",
         "percentage": 40.1
       },
       "items": [
@@ -1173,252 +1173,252 @@
           "slug": "ahora-nacion-an",
           "label": "Ahora Nacion - An",
           "portraitCount": 57,
-          "assetUrl": "/generated/composites/parties-by-sex/female/ahora-nacion-an.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/parties-by-sex/female/ahora-nacion-an.webp?v=e180c9a88292",
           "logoUrl": "/generated/party-logos/ahora-nacion-an.webp"
         },
         {
           "slug": "alianza-electoral-venceremos",
           "label": "Alianza Electoral Venceremos",
           "portraitCount": 58,
-          "assetUrl": "/generated/composites/parties-by-sex/female/alianza-electoral-venceremos.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/parties-by-sex/female/alianza-electoral-venceremos.webp?v=e180c9a88292",
           "logoUrl": "/generated/party-logos/alianza-electoral-venceremos.webp"
         },
         {
           "slug": "alianza-para-el-progreso",
           "label": "Alianza Para El Progreso",
           "portraitCount": 57,
-          "assetUrl": "/generated/composites/parties-by-sex/female/alianza-para-el-progreso.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/parties-by-sex/female/alianza-para-el-progreso.webp?v=e180c9a88292",
           "logoUrl": "/generated/party-logos/alianza-para-el-progreso.bmp"
         },
         {
           "slug": "avanza-pais-partido-de-integracion-social",
           "label": "Avanza Pais - Partido De Integracion Social",
           "portraitCount": 52,
-          "assetUrl": "/generated/composites/parties-by-sex/female/avanza-pais-partido-de-integracion-social.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/parties-by-sex/female/avanza-pais-partido-de-integracion-social.webp?v=e180c9a88292",
           "logoUrl": "/generated/party-logos/avanza-pais-partido-de-integracion-social.webp"
         },
         {
           "slug": "fe-en-el-peru",
           "label": "Fe En El Peru",
           "portraitCount": 30,
-          "assetUrl": "/generated/composites/parties-by-sex/female/fe-en-el-peru.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/parties-by-sex/female/fe-en-el-peru.webp?v=e180c9a88292",
           "logoUrl": "/generated/party-logos/fe-en-el-peru.webp"
         },
         {
           "slug": "frente-popular-agricola-fia-del-peru",
           "label": "Frente Popular Agricola Fia Del Peru",
           "portraitCount": 66,
-          "assetUrl": "/generated/composites/parties-by-sex/female/frente-popular-agricola-fia-del-peru.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/parties-by-sex/female/frente-popular-agricola-fia-del-peru.webp?v=e180c9a88292",
           "logoUrl": "/generated/party-logos/frente-popular-agricola-fia-del-peru.webp"
         },
         {
           "slug": "fuerza-popular",
           "label": "Fuerza Popular",
           "portraitCount": 65,
-          "assetUrl": "/generated/composites/parties-by-sex/female/fuerza-popular.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/parties-by-sex/female/fuerza-popular.webp?v=e180c9a88292",
           "logoUrl": "/generated/party-logos/fuerza-popular.webp"
         },
         {
           "slug": "fuerza-y-libertad",
           "label": "Fuerza Y Libertad",
           "portraitCount": 60,
-          "assetUrl": "/generated/composites/parties-by-sex/female/fuerza-y-libertad.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/parties-by-sex/female/fuerza-y-libertad.webp?v=e180c9a88292",
           "logoUrl": "/generated/party-logos/fuerza-y-libertad.webp"
         },
         {
           "slug": "juntos-por-el-peru",
           "label": "Juntos Por El Peru",
           "portraitCount": 51,
-          "assetUrl": "/generated/composites/parties-by-sex/female/juntos-por-el-peru.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/parties-by-sex/female/juntos-por-el-peru.webp?v=e180c9a88292",
           "logoUrl": "/generated/party-logos/juntos-por-el-peru.webp"
         },
         {
           "slug": "libertad-popular",
           "label": "Libertad Popular",
           "portraitCount": 36,
-          "assetUrl": "/generated/composites/parties-by-sex/female/libertad-popular.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/parties-by-sex/female/libertad-popular.webp?v=e180c9a88292",
           "logoUrl": "/generated/party-logos/libertad-popular.webp"
         },
         {
           "slug": "partido-aprista-peruano",
           "label": "Partido Aprista Peruano",
           "portraitCount": 58,
-          "assetUrl": "/generated/composites/parties-by-sex/female/partido-aprista-peruano.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/parties-by-sex/female/partido-aprista-peruano.webp?v=e180c9a88292",
           "logoUrl": "/generated/party-logos/partido-aprista-peruano.webp"
         },
         {
           "slug": "partido-civico-obras",
           "label": "Partido Civico Obras",
           "portraitCount": 51,
-          "assetUrl": "/generated/composites/parties-by-sex/female/partido-civico-obras.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/parties-by-sex/female/partido-civico-obras.webp?v=e180c9a88292",
           "logoUrl": "/generated/party-logos/partido-civico-obras.webp"
         },
         {
           "slug": "partido-de-los-trabajadores-y-emprendedores-pte-peru",
           "label": "Partido De Los Trabajadores Y Emprendedores Pte - Peru",
           "portraitCount": 17,
-          "assetUrl": "/generated/composites/parties-by-sex/female/partido-de-los-trabajadores-y-emprendedores-pte-peru.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/parties-by-sex/female/partido-de-los-trabajadores-y-emprendedores-pte-peru.webp?v=e180c9a88292",
           "logoUrl": "/generated/party-logos/partido-de-los-trabajadores-y-emprendedores-pte-peru.webp"
         },
         {
           "slug": "partido-del-buen-gobierno",
           "label": "Partido Del Buen Gobierno",
           "portraitCount": 57,
-          "assetUrl": "/generated/composites/parties-by-sex/female/partido-del-buen-gobierno.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/parties-by-sex/female/partido-del-buen-gobierno.webp?v=e180c9a88292",
           "logoUrl": "/generated/party-logos/partido-del-buen-gobierno.webp"
         },
         {
           "slug": "partido-democrata-unido-peru",
           "label": "Partido Democrata Unido Peru",
           "portraitCount": 18,
-          "assetUrl": "/generated/composites/parties-by-sex/female/partido-democrata-unido-peru.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/parties-by-sex/female/partido-democrata-unido-peru.webp?v=e180c9a88292",
           "logoUrl": "/generated/party-logos/partido-democrata-unido-peru.webp"
         },
         {
           "slug": "partido-democrata-verde",
           "label": "Partido Democrata Verde",
           "portraitCount": 61,
-          "assetUrl": "/generated/composites/parties-by-sex/female/partido-democrata-verde.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/parties-by-sex/female/partido-democrata-verde.webp?v=e180c9a88292",
           "logoUrl": "/generated/party-logos/partido-democrata-verde.webp"
         },
         {
           "slug": "partido-democratico-federal",
           "label": "Partido Democratico Federal",
           "portraitCount": 40,
-          "assetUrl": "/generated/composites/parties-by-sex/female/partido-democratico-federal.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/parties-by-sex/female/partido-democratico-federal.webp?v=e180c9a88292",
           "logoUrl": "/generated/party-logos/partido-democratico-federal.webp"
         },
         {
           "slug": "partido-democratico-somos-peru",
           "label": "Partido Democratico Somos Peru",
           "portraitCount": 58,
-          "assetUrl": "/generated/composites/parties-by-sex/female/partido-democratico-somos-peru.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/parties-by-sex/female/partido-democratico-somos-peru.webp?v=e180c9a88292",
           "logoUrl": "/generated/party-logos/partido-democratico-somos-peru.webp"
         },
         {
           "slug": "partido-frente-de-la-esperanza-2021",
           "label": "Partido Frente De La Esperanza 2021",
           "portraitCount": 49,
-          "assetUrl": "/generated/composites/parties-by-sex/female/partido-frente-de-la-esperanza-2021.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/parties-by-sex/female/partido-frente-de-la-esperanza-2021.webp?v=e180c9a88292",
           "logoUrl": "/generated/party-logos/partido-frente-de-la-esperanza-2021.webp"
         },
         {
           "slug": "partido-morado",
           "label": "Partido Morado",
           "portraitCount": 47,
-          "assetUrl": "/generated/composites/parties-by-sex/female/partido-morado.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/parties-by-sex/female/partido-morado.webp?v=e180c9a88292",
           "logoUrl": "/generated/party-logos/partido-morado.webp"
         },
         {
           "slug": "partido-pais-para-todos",
           "label": "Partido Pais Para Todos",
           "portraitCount": 47,
-          "assetUrl": "/generated/composites/parties-by-sex/female/partido-pais-para-todos.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/parties-by-sex/female/partido-pais-para-todos.webp?v=e180c9a88292",
           "logoUrl": "/generated/party-logos/partido-pais-para-todos.webp"
         },
         {
           "slug": "partido-patriotico-del-peru",
           "label": "Partido Patriotico Del Peru",
           "portraitCount": 38,
-          "assetUrl": "/generated/composites/parties-by-sex/female/partido-patriotico-del-peru.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/parties-by-sex/female/partido-patriotico-del-peru.webp?v=e180c9a88292",
           "logoUrl": "/generated/party-logos/partido-patriotico-del-peru.webp"
         },
         {
           "slug": "partido-politico-cooperacion-popular",
           "label": "Partido Politico Cooperacion Popular",
           "portraitCount": 56,
-          "assetUrl": "/generated/composites/parties-by-sex/female/partido-politico-cooperacion-popular.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/parties-by-sex/female/partido-politico-cooperacion-popular.webp?v=e180c9a88292",
           "logoUrl": "/generated/party-logos/partido-politico-cooperacion-popular.webp"
         },
         {
           "slug": "partido-politico-integridad-democratica",
           "label": "Partido Politico Integridad Democratica",
           "portraitCount": 51,
-          "assetUrl": "/generated/composites/parties-by-sex/female/partido-politico-integridad-democratica.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/parties-by-sex/female/partido-politico-integridad-democratica.webp?v=e180c9a88292",
           "logoUrl": "/generated/party-logos/partido-politico-integridad-democratica.webp"
         },
         {
           "slug": "partido-politico-nacional-peru-libre",
           "label": "Partido Politico Nacional Peru Libre",
           "portraitCount": 61,
-          "assetUrl": "/generated/composites/parties-by-sex/female/partido-politico-nacional-peru-libre.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/parties-by-sex/female/partido-politico-nacional-peru-libre.webp?v=e180c9a88292",
           "logoUrl": "/generated/party-logos/partido-politico-nacional-peru-libre.webp"
         },
         {
           "slug": "partido-politico-peru-accion",
           "label": "Partido Politico Peru Accion",
           "portraitCount": 40,
-          "assetUrl": "/generated/composites/parties-by-sex/female/partido-politico-peru-accion.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/parties-by-sex/female/partido-politico-peru-accion.webp?v=e180c9a88292",
           "logoUrl": "/generated/party-logos/partido-politico-peru-accion.webp"
         },
         {
           "slug": "partido-politico-peru-primero",
           "label": "Partido Politico Peru Primero",
           "portraitCount": 54,
-          "assetUrl": "/generated/composites/parties-by-sex/female/partido-politico-peru-primero.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/parties-by-sex/female/partido-politico-peru-primero.webp?v=e180c9a88292",
           "logoUrl": "/generated/party-logos/partido-politico-peru-primero.webp"
         },
         {
           "slug": "partido-politico-prin",
           "label": "Partido Politico Prin",
           "portraitCount": 50,
-          "assetUrl": "/generated/composites/parties-by-sex/female/partido-politico-prin.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/parties-by-sex/female/partido-politico-prin.webp?v=e180c9a88292",
           "logoUrl": "/generated/party-logos/partido-politico-prin.webp"
         },
         {
           "slug": "peru-moderno",
           "label": "Peru Moderno",
           "portraitCount": 35,
-          "assetUrl": "/generated/composites/parties-by-sex/female/peru-moderno.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/parties-by-sex/female/peru-moderno.webp?v=e180c9a88292",
           "logoUrl": "/generated/party-logos/peru-moderno.webp"
         },
         {
           "slug": "podemos-peru",
           "label": "Podemos Peru",
           "portraitCount": 61,
-          "assetUrl": "/generated/composites/parties-by-sex/female/podemos-peru.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/parties-by-sex/female/podemos-peru.webp?v=e180c9a88292",
           "logoUrl": "/generated/party-logos/podemos-peru.webp"
         },
         {
           "slug": "primero-la-gente-comunidad-ecologia-libertad-y-progreso",
           "label": "Primero La Gente - Comunidad, Ecologia, Libertad Y Progreso",
           "portraitCount": 31,
-          "assetUrl": "/generated/composites/parties-by-sex/female/primero-la-gente-comunidad-ecologia-libertad-y-progreso.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/parties-by-sex/female/primero-la-gente-comunidad-ecologia-libertad-y-progreso.webp?v=e180c9a88292",
           "logoUrl": "/generated/party-logos/primero-la-gente-comunidad-ecologia-libertad-y-progreso.webp"
         },
         {
           "slug": "progresemos",
           "label": "Progresemos",
           "portraitCount": 61,
-          "assetUrl": "/generated/composites/parties-by-sex/female/progresemos.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/parties-by-sex/female/progresemos.webp?v=e180c9a88292",
           "logoUrl": "/generated/party-logos/progresemos.webp"
         },
         {
           "slug": "renovacion-popular",
           "label": "Renovacion Popular",
           "portraitCount": 59,
-          "assetUrl": "/generated/composites/parties-by-sex/female/renovacion-popular.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/parties-by-sex/female/renovacion-popular.webp?v=e180c9a88292",
           "logoUrl": "/generated/party-logos/renovacion-popular.webp"
         },
         {
           "slug": "salvemos-al-peru",
           "label": "Salvemos Al Peru",
           "portraitCount": 30,
-          "assetUrl": "/generated/composites/parties-by-sex/female/salvemos-al-peru.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/parties-by-sex/female/salvemos-al-peru.webp?v=e180c9a88292",
           "logoUrl": "/generated/party-logos/salvemos-al-peru.webp"
         },
         {
           "slug": "un-camino-diferente",
           "label": "Un Camino Diferente",
           "portraitCount": 61,
-          "assetUrl": "/generated/composites/parties-by-sex/female/un-camino-diferente.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/parties-by-sex/female/un-camino-diferente.webp?v=e180c9a88292",
           "logoUrl": "/generated/party-logos/un-camino-diferente.webp"
         },
         {
           "slug": "unidad-nacional",
           "label": "Unidad Nacional",
           "portraitCount": 49,
-          "assetUrl": "/generated/composites/parties-by-sex/female/unidad-nacional.webp?v=31027d761034",
+          "assetUrl": "/generated/composites/parties-by-sex/female/unidad-nacional.webp?v=e180c9a88292",
           "logoUrl": "/generated/party-logos/unidad-nacional.webp"
         }
       ]

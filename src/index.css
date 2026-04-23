@@ -56,6 +56,32 @@ select {
   isolation: isolate;
 }
 
+.dvd-page {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: #000;
+  color: #fff;
+  isolation: isolate;
+  touch-action: none;
+}
+
+.dvd-face {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: block;
+  max-width: none;
+  height: auto;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  filter: drop-shadow(0 0 14px rgba(255, 255, 255, 0.18));
+  will-change: transform;
+}
+
 .portrait-field,
 .background-vignette,
 .background-glow {

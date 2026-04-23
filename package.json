@@ -8,8 +8,8 @@
     "dev": "npm run sync:favicon && vite",
     "dev:full": "npm run generate && npm run sync:favicon && vite",
     "generate": "node ./scripts/generate-assets.mjs",
-    "build": "npm run sync:favicon && vite build",
-    "build:full": "npm run generate && npm run sync:favicon && vite build",
+    "build": "npm run sync:favicon && vite build && node ./scripts/copy-static-routes.mjs",
+    "build:full": "npm run generate && npm run sync:favicon && vite build && node ./scripts/copy-static-routes.mjs",
     "preview": "vite preview",
     "test:matcher": "node --test --test-isolation=none src/mosaic/matcher.test.js",
     "benchmark:matcher:examples": "node ./scripts/benchmark-matcher-examples.mjs"

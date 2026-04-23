@@ -5,17 +5,21 @@ import sharp from "sharp";
 
 const ROOT = process.cwd();
 const OUTPUT_DIR = path.join(ROOT, "output");
-const FILTERED_DIR = path.join(OUTPUT_DIR, "average_faces", "filtered");
+const AVERAGE_FACES_DIR = path.join(OUTPUT_DIR, "average_faces");
+const FILTERED_DIR = path.join(AVERAGE_FACES_DIR, "filtered");
+const ALL_FACES_DIR = path.join(AVERAGE_FACES_DIR, "all_faces");
 const ALBUM_EXPORT_DIR = path.join(OUTPUT_DIR, "album_export");
 const PUBLIC_GENERATED_DIR = path.join(ROOT, "public", "generated");
 const SRC_GENERATED_DIR = path.join(ROOT, "src", "generated");
 const COMPOSITES_DIR = path.join(PUBLIC_GENERATED_DIR, "composites");
 const BACKGROUND_DIR = path.join(PUBLIC_GENERATED_DIR, "background");
 const MOSAIC_DIR = path.join(PUBLIC_GENERATED_DIR, "mosaic");
+const DVD_DIR = path.join(PUBLIC_GENERATED_DIR, "dvd");
 const PARTY_LOGOS_DIR = path.join(PUBLIC_GENERATED_DIR, "party-logos");
 const REGION_SHAPES_DIR = path.join(PUBLIC_GENERATED_DIR, "region-shapes");
 const STORY_MANIFEST_PATH = path.join(SRC_GENERATED_DIR, "story_manifest.json");
 const BACKGROUND_MANIFEST_PATH = path.join(SRC_GENERATED_DIR, "background_manifest.json");
+const DVD_MANIFEST_PATH = path.join(SRC_GENERATED_DIR, "dvd_manifest.json");
 const MOSAIC_METADATA_PATH = path.join(MOSAIC_DIR, "tiles.json");
 const MOSAIC_ATLAS_PATH = path.join(MOSAIC_DIR, "atlas.webp");
 const REGION_SHAPES_SOURCE_PATH = path.join(ROOT, "gadm41_PER_1.json");
@@ -24,6 +28,11 @@ const GROUP_MANIFEST_PATH = path.join(
   "average_faces",
   "manifests",
   "group_manifest.csv",
+);
+const TRANSPARENT_MANIFEST_PATH = path.join(
+  AVERAGE_FACES_DIR,
+  "manifests",
+  "transparent_manifest.csv",
 );
 const PARTY_MANIFEST_PATH = path.join(
   ALBUM_EXPORT_DIR,
@@ -43,6 +52,7 @@ const MOSAIC_BUCKET_STEP = 16;
 const MOSAIC_ATLAS_COLUMNS = 48;
 const SHUFFLE_SEED = 20260326;
 const STORY_MANIFEST_VERSION = 5;
+const DVD_MANIFEST_VERSION = 1;
 const MOSAIC_METADATA_VERSION = 2;
 const SOURCE_FINGERPRINT_VERSION = 2;
 const REGION_SHAPE_SIZE = 96;
@@ -56,6 +66,19 @@ const SEX_LABELS = {
 const SEX_ORDER = {
   male: 0,
   female: 1,
+};
+const DVD_BLEND_ORDER = {
+  filtered: 0,
+  all_faces: 1,
+};
+const DVD_GROUP_ORDER = {
+  all: 0,
+  sex: 1,
+  region: 2,
+  affiliation: 3,
+  region_sex: 4,
+  affiliation_sex: 5,
+  region_affiliation: 6,
 };
 const REGION_SLUG_ALIASES = {
   lalibertad: "la-libertad",
@@ -77,9 +100,10 @@ async function main() {
   }
   const backgroundAtlasLayout = buildBackgroundAtlasLayout(candidates.length);
 
-  const [groupManifestRows, partyManifestRows] = await Promise.all([
+  const [groupManifestRows, partyManifestRows, transparentManifestRows] = await Promise.all([
     readCsv(GROUP_MANIFEST_PATH),
     readCsv(PARTY_MANIFEST_PATH),
+    readCsv(TRANSPARENT_MANIFEST_PATH),
   ]);
   const sourceFingerprint = await buildSourceFingerprint(candidates);
   const assetVersion = sourceFingerprint.slice(0, 12);
@@ -135,6 +159,15 @@ async function main() {
         partyLabelMap.get(b.affiliation_slug ?? b.group_key),
       );
     });
+  const allRenderedRows = groupManifestRows
+    .filter((row) => row.rendered === "TRUE")
+    .sort(compareDvdRows);
+  const dvdEntries = buildDvdEntries(allRenderedRows, transparentManifestRows, {
+    assetVersion,
+    regionLabelMap,
+    partyLabelMap,
+  });
+  const expectedDvdSummary = summarizeDvdEntries(dvdEntries);
 
   if (
     !(await shouldRegenerate({
@@ -145,6 +178,7 @@ async function main() {
         partyCount: partyRows.length,
       },
       expectedBackgroundAtlas: backgroundAtlasLayout,
+      expectedDvdSummary,
       sourceFingerprint,
     }))
   ) {
@@ -156,11 +190,13 @@ async function main() {
     fs.rm(COMPOSITES_DIR, { recursive: true, force: true }),
     fs.rm(BACKGROUND_DIR, { recursive: true, force: true }),
     fs.rm(MOSAIC_DIR, { recursive: true, force: true }),
+    fs.rm(DVD_DIR, { recursive: true, force: true }),
     fs.rm(REGION_SHAPES_DIR, { recursive: true, force: true }),
   ]);
   await fs.mkdir(COMPOSITES_DIR, { recursive: true });
   await fs.mkdir(BACKGROUND_DIR, { recursive: true });
   await fs.mkdir(MOSAIC_DIR, { recursive: true });
+  await fs.mkdir(DVD_DIR, { recursive: true });
   await fs.mkdir(PARTY_LOGOS_DIR, { recursive: true });
   await fs.mkdir(REGION_SHAPES_DIR, { recursive: true });
   await fs.mkdir(SRC_GENERATED_DIR, { recursive: true });
@@ -356,6 +392,7 @@ async function main() {
     backgroundAtlasLayout,
   );
   const mosaicSummary = await buildMosaicDataset(portraitEntries, assetVersion);
+  await buildDvdAssets(dvdEntries);
 
   const storyManifest = {
     version: STORY_MANIFEST_VERSION,
@@ -395,6 +432,13 @@ async function main() {
     portraitIds: shuffledPortraits.map((portrait) => portrait.id),
     fallbackPortraitIds,
   };
+  const dvdManifest = {
+    version: DVD_MANIFEST_VERSION,
+    sourceFingerprint,
+    assetVersion,
+    summary: expectedDvdSummary,
+    faces: dvdEntries.map(({ sourcePath, targetPath, ...entry }) => entry),
+  };
 
   await Promise.all([
     fs.writeFile(STORY_MANIFEST_PATH, JSON.stringify(storyManifest, null, 2), "utf8"),
@@ -403,10 +447,11 @@ async function main() {
       JSON.stringify(backgroundManifest, null, 2),
       "utf8",
     ),
+    fs.writeFile(DVD_MANIFEST_PATH, JSON.stringify(dvdManifest, null, 2), "utf8"),
   ]);
 
   console.log(
-    `Generated story manifest with ${sexes.length} sex groups, ${regions.length} regions, ${regionsBySex.length} region-by-sex groups, ${parties.length} parties, ${partiesBySex.length} party-by-sex groups, ${candidates.length} portraits, and ${mosaicSummary.tileCount} mosaic tiles.`,
+    `Generated story manifest with ${sexes.length} sex groups, ${regions.length} regions, ${regionsBySex.length} region-by-sex groups, ${parties.length} parties, ${partiesBySex.length} party-by-sex groups, ${candidates.length} portraits, ${mosaicSummary.tileCount} mosaic tiles, and ${expectedDvdSummary.totalFaces} DVD faces.`,
   );
 }
 
@@ -434,6 +479,224 @@ async function optimizeComposite(sourcePath, targetPath, maxWidth) {
     })
     .webp({ quality: 88, alphaQuality: 100, effort: 4 })
     .toFile(targetPath);
+}
+
+function buildDvdEntries(rows, transparentRows, { assetVersion, regionLabelMap, partyLabelMap }) {
+  const transparentPathBySource = buildTransparentPathMap(transparentRows);
+
+  return rows.map((row) => {
+    const blendMode = row.blend_mode || "unknown";
+    const groupMode = row.group_mode || "unknown";
+    const sourceRelativePath = extractAverageFacesRelativePath(row.output_path);
+    const sourcePath = path.join(AVERAGE_FACES_DIR, ...sourceRelativePath.split("/"));
+    const transparentPath =
+      transparentPathBySource.get(sourceRelativePath) ?? buildTransparentPathFromSource(sourcePath);
+    const pathParts = buildDvdPathParts(row);
+    const id = [blendMode, groupMode, ...pathParts].join("-");
+    const targetRelativePath = path.join(
+      "faces",
+      safePathSegment(blendMode),
+      safePathSegment(groupMode),
+      ...pathParts.slice(0, -1).map(safePathSegment),
+      `${safePathSegment(pathParts.at(-1) ?? row.group_key ?? "face")}.webp`,
+    );
+    const assetUrl = withAssetVersion(
+      `/generated/dvd/${toPosix(targetRelativePath)}`,
+      assetVersion,
+    );
+    const identity = getDvdIdentity(row);
+
+    return {
+      id,
+      blendMode,
+      groupMode,
+      groupKey: row.group_key || "",
+      label: buildDvdLabel(row, identity, regionLabelMap, partyLabelMap),
+      sexAssigned: identity.sexAssigned,
+      regionSlug: identity.regionSlug,
+      affiliationSlug: identity.affiliationSlug,
+      portraitCount: Number(row.discovered_count) || Number(row.eligible_count) || 0,
+      assetUrl,
+      sourcePath: transparentPath,
+      targetPath: path.join(DVD_DIR, targetRelativePath),
+    };
+  });
+}
+
+function buildTransparentPathMap(rows) {
+  const map = new Map();
+
+  for (const row of rows) {
+    if (row.status && row.status !== "written") {
+      continue;
+    }
+
+    const sourceRelativePath = extractAverageFacesRelativePath(row.source_path);
+    const transparentRelativePath = extractAverageFacesRelativePath(row.transparent_path);
+    if (!sourceRelativePath || !transparentRelativePath) {
+      continue;
+    }
+
+    map.set(
+      sourceRelativePath,
+      path.join(AVERAGE_FACES_DIR, ...transparentRelativePath.split("/")),
+    );
+  }
+
+  return map;
+}
+
+function extractAverageFacesRelativePath(filePath) {
+  const normalizedPath = toPosix(filePath);
+  const lowerPath = normalizedPath.toLowerCase();
+  const marker = "/average_faces/";
+  const markerIndex = lowerPath.lastIndexOf(marker);
+  if (markerIndex >= 0) {
+    return normalizedPath.slice(markerIndex + marker.length);
+  }
+
+  const fallbackMarker = "average_faces/";
+  const fallbackIndex = lowerPath.lastIndexOf(fallbackMarker);
+  if (fallbackIndex >= 0) {
+    return normalizedPath.slice(fallbackIndex + fallbackMarker.length);
+  }
+
+  throw new Error(`Could not resolve average_faces-relative path from: ${filePath}`);
+}
+
+function buildTransparentPathFromSource(sourcePath) {
+  const parsedPath = path.parse(sourcePath);
+  return path.join(parsedPath.dir, `${parsedPath.name}_transparent.png`);
+}
+
+function buildDvdPathParts(row) {
+  const identity = getDvdIdentity(row);
+  const groupKey = row.group_key || "all";
+
+  switch (row.group_mode) {
+    case "all":
+      return ["all"];
+    case "sex":
+      return [identity.sexAssigned || groupKey];
+    case "region":
+      return [identity.regionSlug || groupKey];
+    case "affiliation":
+      return [identity.affiliationSlug || groupKey];
+    case "region_sex":
+      return [identity.regionSlug || groupKey, identity.sexAssigned || "all"];
+    case "affiliation_sex":
+      return [identity.affiliationSlug || groupKey, identity.sexAssigned || "all"];
+    case "region_affiliation":
+      return [identity.regionSlug || "region", identity.affiliationSlug || groupKey];
+    default:
+      return [groupKey];
+  }
+}
+
+function getDvdIdentity(row) {
+  const groupKey = row.group_key || "";
+  const [leftKey = "", rightKey = ""] = groupKey.split("__");
+
+  switch (row.group_mode) {
+    case "sex":
+      return {
+        sexAssigned: groupKey,
+        regionSlug: "",
+        affiliationSlug: "",
+      };
+    case "region":
+      return {
+        sexAssigned: "",
+        regionSlug: groupKey,
+        affiliationSlug: "",
+      };
+    case "affiliation":
+      return {
+        sexAssigned: "",
+        regionSlug: "",
+        affiliationSlug: groupKey,
+      };
+    case "region_sex":
+      return {
+        sexAssigned: row.sex_assigned || rightKey,
+        regionSlug: row.region_slug || leftKey,
+        affiliationSlug: "",
+      };
+    case "affiliation_sex":
+      return {
+        sexAssigned: row.sex_assigned || rightKey,
+        regionSlug: "",
+        affiliationSlug: row.affiliation_slug || leftKey,
+      };
+    case "region_affiliation":
+      return {
+        sexAssigned: "",
+        regionSlug: row.region_slug || leftKey,
+        affiliationSlug: row.affiliation_slug || rightKey,
+      };
+    default:
+      return {
+        sexAssigned: "",
+        regionSlug: "",
+        affiliationSlug: "",
+      };
+  }
+}
+
+function buildDvdLabel(row, identity, regionLabelMap, partyLabelMap) {
+  const sexLabel = SEX_LABELS[identity.sexAssigned] ?? titleize(identity.sexAssigned);
+  const regionLabel = regionLabelMap.get(identity.regionSlug) ?? titleize(identity.regionSlug);
+  const partyLabel = partyLabelMap.get(identity.affiliationSlug) ?? titleize(identity.affiliationSlug);
+
+  switch (row.group_mode) {
+    case "all":
+      return "All Candidates";
+    case "sex":
+      return sexLabel;
+    case "region":
+      return regionLabel;
+    case "affiliation":
+      return partyLabel;
+    case "region_sex":
+      return [regionLabel, sexLabel].filter(Boolean).join(" / ");
+    case "affiliation_sex":
+      return [partyLabel, sexLabel].filter(Boolean).join(" / ");
+    case "region_affiliation":
+      return [regionLabel, partyLabel].filter(Boolean).join(" / ");
+    default:
+      return titleize(row.group_label || row.group_key || "Face");
+  }
+}
+
+function summarizeDvdEntries(entries) {
+  return {
+    totalFaces: entries.length,
+    filteredCount: entries.filter((entry) => entry.blendMode === "filtered").length,
+    allFacesCount: entries.filter((entry) => entry.blendMode === "all_faces").length,
+  };
+}
+
+async function buildDvdAssets(entries) {
+  console.log(`Building ${entries.length} DVD face assets...`);
+
+  await mapLimit(entries, 12, async (entry, index) => {
+    await ensureExists(entry.sourcePath);
+    await fs.mkdir(path.dirname(entry.targetPath), { recursive: true });
+    await sharp(entry.sourcePath)
+      .trim({ threshold: 1 })
+      .resize({
+        width: 700,
+        height: 700,
+        fit: "inside",
+        withoutEnlargement: true,
+      })
+      .webp({ quality: 88, alphaQuality: 100, effort: 4 })
+      .toFile(entry.targetPath);
+
+    if ((index + 1) % 160 === 0 || index + 1 === entries.length) {
+      console.log(`Processed ${index + 1}/${entries.length} DVD faces...`);
+    }
+  });
 }
 
 function transparentAverageFacePath(...parts) {
@@ -992,6 +1255,10 @@ function slugify(value) {
     .replace(/(^-|-$)/g, "");
 }
 
+function safePathSegment(value) {
+  return slugify(value) || "face";
+}
+
 function titleize(value) {
   return String(value)
     .split(/[\s-]+/)
@@ -1002,6 +1269,22 @@ function titleize(value) {
 
 function compareLabels(left, right) {
   return String(left ?? "").localeCompare(String(right ?? ""), "es");
+}
+
+function compareDvdRows(left, right) {
+  const blendDifference =
+    (DVD_BLEND_ORDER[left.blend_mode] ?? 99) - (DVD_BLEND_ORDER[right.blend_mode] ?? 99);
+  if (blendDifference !== 0) {
+    return blendDifference;
+  }
+
+  const groupDifference =
+    (DVD_GROUP_ORDER[left.group_mode] ?? 99) - (DVD_GROUP_ORDER[right.group_mode] ?? 99);
+  if (groupDifference !== 0) {
+    return groupDifference;
+  }
+
+  return compareLabels(left.group_label || left.group_key, right.group_label || right.group_key);
 }
 
 function compareRegionRows(left, right, regionLabelMap) {
@@ -1073,9 +1356,14 @@ async function ensureInternalDatasetAvailable() {
   const requiredInputs = [
     { path: OUTPUT_DIR, label: "output/" },
     { path: FILTERED_DIR, label: "output/average_faces/filtered/" },
+    { path: ALL_FACES_DIR, label: "output/average_faces/all_faces/" },
     { path: ALBUM_EXPORT_DIR, label: "output/album_export/" },
     { path: CANDIDATES_PATH, label: "output/album_export/candidates.json" },
     { path: GROUP_MANIFEST_PATH, label: "output/average_faces/manifests/group_manifest.csv" },
+    {
+      path: TRANSPARENT_MANIFEST_PATH,
+      label: "output/average_faces/manifests/transparent_manifest.csv",
+    },
     { path: PARTY_MANIFEST_PATH, label: "output/album_export/manifests/party_manifest.csv" },
     { path: REGION_SHAPES_SOURCE_PATH, label: "gadm41_PER_1.json" },
   ];
@@ -1240,13 +1528,17 @@ async function buildSourceFingerprint(candidates) {
     path.join(ALBUM_EXPORT_DIR, candidate.portraitImage.replaceAll("/", path.sep)),
   );
   const filteredPaths = await listFilesRecursive(FILTERED_DIR);
+  const allFacePaths = await listFilesRecursive(ALL_FACES_DIR);
   const sourcePaths = [
     CANDIDATES_PATH,
     GROUP_MANIFEST_PATH,
+    TRANSPARENT_MANIFEST_PATH,
     PARTY_MANIFEST_PATH,
     REGION_SHAPES_SOURCE_PATH,
     FILTERED_DIR,
+    ALL_FACES_DIR,
     ...filteredPaths,
+    ...allFacePaths,
     ...portraitPaths,
   ];
   const uniquePaths = [...new Set(sourcePaths)].sort((left, right) =>
@@ -1297,6 +1589,7 @@ async function createStatFingerprint(filePath) {
 async function shouldRegenerate({
   expectedSummary,
   expectedBackgroundAtlas,
+  expectedDvdSummary,
   sourceFingerprint,
 }) {
   if (process.env.FORCE_GENERATE === "1") {
@@ -1306,12 +1599,14 @@ async function shouldRegenerate({
   const requiredPaths = [
     STORY_MANIFEST_PATH,
     BACKGROUND_MANIFEST_PATH,
+    DVD_MANIFEST_PATH,
     MOSAIC_METADATA_PATH,
     MOSAIC_ATLAS_PATH,
     path.join(COMPOSITES_DIR, "hero.webp"),
     path.join(COMPOSITES_DIR, "parties-by-sex"),
     path.join(COMPOSITES_DIR, "regions-by-sex"),
     path.join(BACKGROUND_DIR, "portrait-atlas.webp"),
+    DVD_DIR,
     PARTY_LOGOS_DIR,
     REGION_SHAPES_DIR,
   ];
@@ -1323,9 +1618,10 @@ async function shouldRegenerate({
   }
 
   try {
-    const [storyManifest, backgroundManifest, mosaicMetadata] = await Promise.all([
+    const [storyManifest, backgroundManifest, dvdManifest, mosaicMetadata] = await Promise.all([
       fs.readFile(STORY_MANIFEST_PATH, "utf8").then((source) => JSON.parse(source)),
       fs.readFile(BACKGROUND_MANIFEST_PATH, "utf8").then((source) => JSON.parse(source)),
+      fs.readFile(DVD_MANIFEST_PATH, "utf8").then((source) => JSON.parse(source)),
       fs.readFile(MOSAIC_METADATA_PATH, "utf8").then((source) => JSON.parse(source)),
     ]);
 
@@ -1390,6 +1686,19 @@ async function shouldRegenerate({
       backgroundManifest.rows === expectedBackgroundAtlas.rows &&
       backgroundManifest.atlasWidth === expectedBackgroundAtlas.atlasWidth &&
       backgroundManifest.atlasHeight === expectedBackgroundAtlas.atlasHeight;
+    const dvdMatches =
+      dvdManifest?.version === DVD_MANIFEST_VERSION &&
+      dvdManifest?.sourceFingerprint === sourceFingerprint &&
+      dvdManifest?.summary?.totalFaces === expectedDvdSummary.totalFaces &&
+      dvdManifest?.summary?.filteredCount === expectedDvdSummary.filteredCount &&
+      dvdManifest?.summary?.allFacesCount === expectedDvdSummary.allFacesCount &&
+      Array.isArray(dvdManifest?.faces) &&
+      dvdManifest.faces.length === expectedDvdSummary.totalFaces &&
+      dvdManifest.faces.every(
+        (face) =>
+          face?.assetUrl?.startsWith("/generated/dvd/faces/") &&
+          face?.assetUrl?.includes("?v="),
+      );
     const mosaicMatches =
       mosaicMetadata?.version === MOSAIC_METADATA_VERSION &&
       Array.isArray(mosaicMetadata?.tiles) &&
@@ -1400,7 +1709,7 @@ async function shouldRegenerate({
       mosaicMetadata.atlas?.columns === MOSAIC_ATLAS_COLUMNS &&
       mosaicMetadata.tiles.some((tile) => tile?.partyLogoUrl?.startsWith("/generated/party-logos/"));
 
-    return !(summaryMatches && storyStructureMatches && backgroundMatches && mosaicMatches);
+    return !(summaryMatches && storyStructureMatches && backgroundMatches && dvdMatches && mosaicMatches);
   } catch {
     return true;
   }
