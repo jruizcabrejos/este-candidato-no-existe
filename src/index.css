@@ -1102,6 +1102,20 @@ select {
   padding-bottom: clamp(5rem, 9vw, 6.5rem);
 }
 
+.mosaic-standalone-page {
+  min-height: 100vh;
+  padding: clamp(1rem, 3vw, 2rem);
+}
+
+.mosaic-standalone-page .mosaic-section {
+  padding: 0;
+}
+
+.mosaic-standalone-page .section-header {
+  position: relative;
+  top: auto;
+}
+
 .mosaic-shell {
   background:
     linear-gradient(180deg, rgba(46, 15, 24, 0.88), rgba(14, 5, 7, 0.96)),

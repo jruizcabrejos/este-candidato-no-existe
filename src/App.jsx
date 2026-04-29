@@ -7,6 +7,7 @@ import MosaicGeneratorSection from "./components/MosaicGeneratorSection.jsx";
 import backgroundManifest from "./generated/background_manifest.json";
 import storyManifest from "./generated/story_manifest.json";
 import usePrefersReducedMotion from "./hooks/usePrefersReducedMotion.js";
+import { assetUrl } from "./utils/urls.js";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -269,7 +270,7 @@ export default function App() {
                         aria-hidden={frame.slot !== "center"}
                       >
                         <img
-                          src={frame.assetUrl}
+                          src={assetUrl(frame.assetUrl)}
                           alt={frame.slot === "center" ? frame.alt : ""}
                         />
                       </div>
@@ -295,7 +296,7 @@ export default function App() {
           <div className="story-slide-stage story-slide-stage-split story-slide-stage-ghosted">
             <img
               className="story-slide-background-face"
-              src={storyManifest.hero.assetUrl}
+              src={assetUrl(storyManifest.hero.assetUrl)}
               alt=""
               aria-hidden="true"
             />
@@ -336,7 +337,7 @@ export default function App() {
             <div className="story-slide-portrait-block">
               <figure className="story-slide-portrait story-slide-portrait-secondary">
                 <img
-                  src={storyManifest.hero.assetUrl}
+                  src={assetUrl(storyManifest.hero.assetUrl)}
                   alt="Rostro promedio nacional de las candidaturas al Congreso 2026"
                 />
               </figure>
@@ -463,7 +464,7 @@ export default function App() {
               target="_blank"
               rel="noreferrer"
             >
-              <img className="site-footer-logo" src="/favicon/logo.png" alt="IncaSlop" />
+              <img className="site-footer-logo" src={assetUrl("/favicon/logo.png")} alt="IncaSlop" />
               <span className="site-footer-brand-copy">
                 <span className="site-footer-brand-label">IncaSlop</span>
                 <span className="site-footer-brand-note">Colectivo y archivo vivo</span>

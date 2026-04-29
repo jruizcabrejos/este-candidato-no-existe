@@ -4,7 +4,7 @@ import {
   clearCanvas,
   drawSourcePreview,
   loadImageFromUrl,
-  prepareUploadImageFile,
+  prepareImageSource,
 } from "../mosaic/imageUtils.js";
 import { buildTileIndex, matchCells } from "../mosaic/matcher.js";
 import { downloadCanvasImage, renderMosaic } from "../mosaic/renderer.js";
@@ -14,8 +14,11 @@ import {
   SHARE_CARD_FORMATS,
 } from "../mosaic/shareCard.js";
 import backgroundManifest from "../generated/background_manifest.json";
+import { assetUrl, imageProxyUrl, SITE_URL } from "../utils/urls.js";
 
-const DATASET_URL = `/generated/mosaic/tiles.json?v=${backgroundManifest.assetVersion ?? "1"}`;
+const DATASET_URL = assetUrl(
+  `/generated/mosaic/tiles.json?v=${backgroundManifest.assetVersion ?? "1"}`,
+);
 const DETAIL_OPTIONS = [
   { value: 32, label: "Ligero" },
   { value: 44, label: "Medio" },
@@ -50,17 +53,20 @@ const INITIAL_PROGRESS = {
   fraction: 0,
 };
 const COMPOSITION_PREVIEW_LIMIT = 24;
-const WEBSITE_URL = "https://candidatos.incaslop.online/";
+const WEBSITE_URL = SITE_URL;
 const ACCEPTED_IMAGE_TYPES = "image/png,image/jpeg,image/webp";
 const CARD_EXAMPLES = [
-  "/examples/card/card-example-1.png",
-  "/examples/card/card-example-2.png",
-  "/examples/card/card-example-3.png",
+  assetUrl("/examples/card/card-example-1.png"),
+  assetUrl("/examples/card/card-example-2.png"),
+  assetUrl("/examples/card/card-example-3.png"),
 ];
 
 export default function MosaicGeneratorSection({
   sectionRef: providedSectionRef = null,
   onBusyChange,
+  onStatusChange,
+  sourceImageUrl = "",
+  autoGenerate = false,
   title = "Tu foto dentro del mosaico electoral",
 }) {
   const localSectionRef = useRef(null);
@@ -70,8 +76,9 @@ export default function MosaicGeneratorSection({
   const resultCanvasRef = useRef(null);
   const resultViewportRef = useRef(null);
   const sourceUrlRef = useRef("");
-  const sourceFileRef = useRef(null);
+  const sourceInputRef = useRef(null);
   const dragDepthRef = useRef(0);
+  const autoRunKeyRef = useRef("");
   const [datasetState, setDatasetState] = useState({
     status: "idle",
     data: null,
@@ -185,7 +192,7 @@ export default function MosaicGeneratorSection({
   }, []);
 
   useEffect(() => {
-    if (!sourceFileRef.current) {
+    if (!sourceInputRef.current) {
       return undefined;
     }
 
@@ -193,13 +200,13 @@ export default function MosaicGeneratorSection({
 
     async function reprocessSource() {
       try {
-        await prepareSelectedFile(sourceFileRef.current, {
+        await prepareSelectedSource(sourceInputRef.current, {
           maxDimension: effectiveUploadMaxDimension,
           reprocessing: true,
           isCancelled: () => cancelled,
         });
       } catch {
-        // Errors are handled inside prepareSelectedFile.
+        // Errors are handled inside prepareSelectedSource.
       }
     }
 
@@ -208,6 +215,50 @@ export default function MosaicGeneratorSection({
       cancelled = true;
     };
   }, [effectiveUploadMaxDimension]);
+
+  useEffect(() => {
+    if (!sourceImageUrl) {
+      return undefined;
+    }
+
+    let cancelled = false;
+    const normalizedUrl = normalizeRemoteImageUrl(sourceImageUrl);
+
+    if (!normalizedUrl) {
+      sourceInputRef.current = null;
+      setUploadState({
+        status: "error",
+        message: "La URL de imagen no es valida.",
+        meta: null,
+      });
+      return undefined;
+    }
+
+    const sourceInput = {
+      kind: "remote",
+      source: imageProxyUrl(normalizedUrl),
+      originalUrl: normalizedUrl,
+    };
+
+    sourceInputRef.current = sourceInput;
+    autoRunKeyRef.current = "";
+    setHasGeneratedResult(false);
+
+    (async () => {
+      try {
+        await prepareSelectedSource(sourceInput, {
+          maxDimension: effectiveUploadMaxDimension,
+          isCancelled: () => cancelled,
+        });
+      } catch {
+        // Errors are handled inside prepareSelectedSource.
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [sourceImageUrl]);
 
   useEffect(() => {
     if (!resultViewportRef.current) {
@@ -242,6 +293,34 @@ export default function MosaicGeneratorSection({
   const visibleComposition = showAllComposition
     ? compositionBreakdown
     : compositionBreakdown.slice(0, COMPOSITION_PREVIEW_LIMIT);
+  const externalStatus = buildExternalStatus({
+    autoGenerate,
+    datasetState,
+    isGenerating,
+    progress,
+    resultStats,
+    sourceImageUrl,
+    sourceUrl,
+    uploadState,
+  });
+
+  useEffect(() => {
+    onStatusChange?.(externalStatus);
+  }, [externalStatus.message, externalStatus.status, onStatusChange]);
+
+  useEffect(() => {
+    if (!autoGenerate || !canGenerate || resultStats || isGenerating) {
+      return;
+    }
+
+    const autoRunKey = `${sourceUrl}|${effectiveDetail}|${settings.tileSize}`;
+    if (autoRunKeyRef.current === autoRunKey) {
+      return;
+    }
+
+    autoRunKeyRef.current = autoRunKey;
+    handleGenerate();
+  }, [autoGenerate, canGenerate, effectiveDetail, isGenerating, resultStats, settings.tileSize, sourceUrl]);
 
   function resetMosaicViews() {
     setShowCroppedPreview(false);
@@ -262,8 +341,8 @@ export default function MosaicGeneratorSection({
     }
   }
 
-  async function prepareSelectedFile(
-    file,
+  async function prepareSelectedSource(
+    sourceInput,
     { maxDimension, reprocessing = false, isCancelled = () => false } = {},
   ) {
     const previousSourceUrl = sourceUrlRef.current;
@@ -274,13 +353,15 @@ export default function MosaicGeneratorSection({
       status: "processing",
       message: reprocessing
         ? "Reoptimizando la foto con la nueva fidelidad."
-        : "Optimizando la foto antes de generar el mosaico.",
+        : sourceInput.kind === "remote"
+          ? "Cargando la imagen remota antes de generar el mosaico."
+          : "Optimizando la foto antes de generar el mosaico.",
       meta: null,
     });
     resetMosaicViews();
 
     try {
-      const prepared = await prepareUploadImageFile(file, {
+      const prepared = await prepareImageSource(sourceInput.source, {
         maxDimension,
         quality: maxDimension > DEFAULT_UPLOAD_MAX_DIMENSION ? 0.92 : 0.88,
       });
@@ -298,7 +379,10 @@ export default function MosaicGeneratorSection({
       setSourceUrl(prepared.url);
       setUploadState({
         status: "ready",
-        message: `Foto lista: ${prepared.width} x ${prepared.height}px, ${formatFileSize(prepared.size)}.`,
+        message:
+          sourceInput.kind === "remote"
+            ? `Imagen remota lista: ${prepared.width} x ${prepared.height}px, ${formatFileSize(prepared.size)}.`
+            : `Foto lista: ${prepared.width} x ${prepared.height}px, ${formatFileSize(prepared.size)}.`,
         meta: prepared,
       });
     } catch (error) {
@@ -490,8 +574,14 @@ export default function MosaicGeneratorSection({
       return;
     }
 
-    sourceFileRef.current = file;
-    await prepareSelectedFile(file, {
+    const sourceInput = {
+      kind: "file",
+      source: file,
+    };
+
+    sourceInputRef.current = sourceInput;
+    autoRunKeyRef.current = "";
+    await prepareSelectedSource(sourceInput, {
       maxDimension: effectiveUploadMaxDimension,
     });
   }
@@ -944,6 +1034,83 @@ export default function MosaicGeneratorSection({
   );
 }
 
+function buildExternalStatus({
+  autoGenerate,
+  datasetState,
+  isGenerating,
+  progress,
+  resultStats,
+  sourceImageUrl,
+  sourceUrl,
+  uploadState,
+}) {
+  if (datasetState.status === "error") {
+    return {
+      status: "error",
+      message: datasetState.error || "No se pudo cargar la metadata del mosaico.",
+    };
+  }
+
+  if (uploadState.status === "error") {
+    return {
+      status: "error",
+      message: uploadState.message || "No se pudo preparar la imagen.",
+    };
+  }
+
+  if (progress.status === "error") {
+    return {
+      status: "error",
+      message: progress.label || "No se pudo generar el mosaico.",
+    };
+  }
+
+  if (resultStats) {
+    return {
+      status: "ready",
+      message: "Mosaico listo.",
+    };
+  }
+
+  if (
+    isGenerating ||
+    uploadState.status === "processing" ||
+    datasetState.status === "loading" ||
+    (autoGenerate && sourceImageUrl && !sourceUrl)
+  ) {
+    return {
+      status: "loading",
+      message: progress.label || uploadState.message || "Preparando el mosaico.",
+    };
+  }
+
+  return {
+    status: "idle",
+    message: uploadState.message || progress.label || "",
+  };
+}
+
+function normalizeRemoteImageUrl(value) {
+  const trimmed = String(value ?? "").trim();
+  if (!trimmed) {
+    return "";
+  }
+
+  const withProtocol = /^[a-z][a-z0-9+.-]*:\/\//i.test(trimmed)
+    ? trimmed
+    : `https://${trimmed}`;
+
+  try {
+    const url = new URL(withProtocol);
+    if (url.protocol !== "http:" && url.protocol !== "https:") {
+      return "";
+    }
+    return url.href;
+  } catch {
+    return "";
+  }
+}
+
 function formatCount(value) {
   return new Intl.NumberFormat("es-PE").format(value);
 }
@@ -1078,7 +1245,7 @@ function CandidatePortrait({ atlas, item }) {
       className="composition-candidate-portrait"
       aria-hidden="true"
       style={{
-        backgroundImage: `url(${atlas.url})`,
+        backgroundImage: `url(${assetUrl(atlas.url)})`,
         backgroundSize: `${atlas.width * scale}px ${atlas.height * scale}px`,
         backgroundPosition: `${-item.x * scale}px ${-item.y * scale}px`,
       }}

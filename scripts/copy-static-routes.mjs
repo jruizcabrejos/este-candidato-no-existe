@@ -4,7 +4,7 @@ import path from "node:path";
 const ROOT = process.cwd();
 const DIST_DIR = path.join(ROOT, "dist");
 const INDEX_PATH = path.join(DIST_DIR, "index.html");
-const STATIC_ROUTES = ["dvd"];
+const STATIC_ROUTES = ["dvd", "mosaico"];
 
 async function main() {
   await fs.access(INDEX_PATH);

@@ -22,13 +22,17 @@ export async function loadImageFromUrl(url) {
 }
 
 export async function prepareUploadImageFile(file, options = {}) {
+  return prepareImageSource(file, options);
+}
+
+export async function prepareImageSource(sourceInput, options = {}) {
   const {
     maxDimension = 1600,
     mimeType = "image/jpeg",
     quality = 0.88,
   } = options;
 
-  const source = await loadSourceBitmap(file);
+  const source = await loadSourceBitmap(sourceInput);
   const sourceWidth = source.naturalWidth || source.width;
   const sourceHeight = source.naturalHeight || source.height;
   const scale = Math.min(1, maxDimension / Math.max(sourceWidth, sourceHeight));
@@ -163,16 +167,30 @@ function createCanvas(width, height) {
   return canvas;
 }
 
-async function loadSourceBitmap(file) {
+async function loadSourceBitmap(sourceInput) {
+  if (typeof sourceInput === "string") {
+    const response = await fetch(sourceInput);
+    if (!response.ok) {
+      throw new Error(await readImageFetchError(response));
+    }
+
+    const blob = await response.blob();
+    if (!blob.type?.startsWith("image/")) {
+      throw new Error("La URL no devolvio una imagen PNG, JPG o WebP.");
+    }
+
+    return loadSourceBitmap(blob);
+  }
+
   if ("createImageBitmap" in window) {
     try {
-      return await window.createImageBitmap(file);
+      return await window.createImageBitmap(sourceInput);
     } catch {
       // Fall back to the Image element path below.
     }
   }
 
-  const objectUrl = URL.createObjectURL(file);
+  const objectUrl = URL.createObjectURL(sourceInput);
 
   try {
     const image = await loadImageFromUrl(objectUrl);
@@ -185,6 +203,28 @@ async function loadSourceBitmap(file) {
     URL.revokeObjectURL(objectUrl);
     throw error;
   }
+}
+
+async function readImageFetchError(response) {
+  try {
+    const data = await response.json();
+    if (data?.error) {
+      return data.error;
+    }
+  } catch {
+    // Fall back to text below.
+  }
+
+  try {
+    const text = await response.text();
+    if (text) {
+      return text.slice(0, 180);
+    }
+  } catch {
+    // Use the generic message below.
+  }
+
+  return "No se pudo leer la imagen remota.";
 }
 
 function cleanupSourceBitmap(source) {

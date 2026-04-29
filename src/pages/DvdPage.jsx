@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import dvdManifest from "../generated/dvd_manifest.json";
 import usePrefersReducedMotion from "../hooks/usePrefersReducedMotion.js";
+import { assetUrl } from "../utils/urls.js";
 
 const PRELOAD_AHEAD = 5;
 const REDUCED_MOTION_CYCLE_MS = 1800;
@@ -102,14 +103,15 @@ export default function DvdPage() {
 
     for (let offset = 0; offset <= PRELOAD_AHEAD; offset += 1) {
       const face = faces[(currentIndex + offset) % faces.length];
-      if (!face?.assetUrl || preloadCacheRef.current.has(face.assetUrl)) {
+      const faceAssetUrl = assetUrl(face?.assetUrl);
+      if (!faceAssetUrl || preloadCacheRef.current.has(faceAssetUrl)) {
         continue;
       }
 
       const image = new Image();
       image.decoding = "async";
-      image.src = face.assetUrl;
-      preloadCacheRef.current.set(face.assetUrl, image);
+      image.src = faceAssetUrl;
+      preloadCacheRef.current.set(faceAssetUrl, image);
     }
 
     return undefined;
@@ -193,7 +195,7 @@ export default function DvdPage() {
         <img
           ref={imageRef}
           className="dvd-face"
-          src={currentFace.assetUrl}
+          src={assetUrl(currentFace.assetUrl)}
           alt=""
           aria-hidden="true"
           decoding="async"

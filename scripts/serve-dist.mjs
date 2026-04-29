@@ -6,6 +6,7 @@ const root = process.cwd();
 const distDir = path.join(root, "dist");
 const host = process.env.HOST || "127.0.0.1";
 const port = Number(process.env.PORT || 4173);
+const basePath = (process.env.BASE_PATH || "/candidatos/").replace(/\/+$/, "");
 
 const mimeTypes = new Map([
   [".html", "text/html; charset=utf-8"],
@@ -23,7 +24,13 @@ const mimeTypes = new Map([
 const server = http.createServer(async (request, response) => {
   try {
     const requestUrl = new URL(request.url || "/", `http://${host}:${port}`);
-    const pathname = decodeURIComponent(requestUrl.pathname);
+    let pathname = decodeURIComponent(requestUrl.pathname);
+    if (basePath && basePath !== "/" && pathname.startsWith(`${basePath}/`)) {
+      pathname = pathname.slice(basePath.length);
+    } else if (basePath && pathname === basePath) {
+      pathname = "/";
+    }
+
     let relativePath = pathname === "/" ? "index.html" : pathname.replace(/^\/+/, "");
     let filePath = path.join(distDir, relativePath);
 

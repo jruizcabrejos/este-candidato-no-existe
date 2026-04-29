@@ -1,3 +1,5 @@
+import { assetUrl } from "../utils/urls.js";
+
 const SHARE_CARD_CONFIG = {
   portrait: {
     label: "Vertical",
@@ -19,7 +21,7 @@ const PERCENT_FORMATTER = new Intl.NumberFormat("es-PE", {
 });
 
 const COUNT_FORMATTER = new Intl.NumberFormat("es-PE");
-const FOOTER_LOGO_URL = "/favicon/logo.png";
+const FOOTER_LOGO_URL = assetUrl("/favicon/logo.png");
 
 let footerLogoPromise = null;
 
@@ -754,7 +756,7 @@ async function loadMosaicAtlasImage(mosaicAtlas) {
   }
 
   try {
-    return await loadImageAsset(mosaicAtlas.url);
+    return await loadImageAsset(assetUrl(mosaicAtlas.url));
   } catch {
     return null;
   }

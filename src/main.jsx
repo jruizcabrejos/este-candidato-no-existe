@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import backgroundManifest from "./generated/background_manifest.json";
+import { appRoutePath, assetUrl } from "./utils/urls.js";
 import "./index.css";
 
 const GA_ID = import.meta.env.VITE_GA_ID;
@@ -40,18 +41,19 @@ async function preloadBackgroundAtlas() {
     image.fetchPriority = "high";
     image.onload = () => resolve();
     image.onerror = () => resolve();
-    image.src = backgroundManifest.atlasUrl;
+    image.src = assetUrl(backgroundManifest.atlasUrl);
   });
 }
 
 async function bootstrap() {
   initializeGoogleAnalytics();
-  const useDvdPage = isDvdRoute();
-  if (!useDvdPage) {
+  setRuntimeCssAssets();
+  const route = getCurrentRoute();
+  if (route === "story") {
     await preloadBackgroundAtlas();
   }
 
-  const RootComponent = await loadRootComponent(useDvdPage);
+  const RootComponent = await loadRootComponent(route);
 
   ReactDOM.createRoot(document.getElementById("root")).render(
     <React.StrictMode>
@@ -60,18 +62,39 @@ async function bootstrap() {
   );
 }
 
-async function loadRootComponent(useDvdPage) {
-  const module = useDvdPage ? await import("./pages/DvdPage.jsx") : await import("./App.jsx");
+async function loadRootComponent(route) {
+  const module = route === "dvd"
+    ? await import("./pages/DvdPage.jsx")
+    : route === "mosaic"
+      ? await import("./pages/MosaicPage.jsx")
+      : await import("./App.jsx");
   return module.default;
 }
 
-function isDvdRoute() {
+function getCurrentRoute() {
   if (typeof window === "undefined") {
-    return false;
+    return "story";
   }
 
-  const pathname = window.location.pathname.replace(/\/+$/, "") || "/";
-  return pathname === "/dvd";
+  const pathname = appRoutePath();
+  if (pathname === "/dvd") {
+    return "dvd";
+  }
+  if (pathname === "/mosaico") {
+    return "mosaic";
+  }
+  return "story";
+}
+
+function setRuntimeCssAssets() {
+  if (typeof document === "undefined") {
+    return;
+  }
+
+  document.documentElement.style.setProperty(
+    "--peru-flag-url",
+    `url("${assetUrl("/favicon/Flag_of_Peru.svg")}")`,
+  );
 }
 
 bootstrap();

@@ -1,3 +1,5 @@
+import { assetUrl } from "../utils/urls.js";
+
 const atlasCache = new Map();
 
 export async function renderMosaic({
@@ -14,7 +16,7 @@ export async function renderMosaic({
     throw new Error("No se pudo crear el canvas final.");
   }
 
-  const atlasImage = await loadAtlasImage(atlas.url);
+  const atlasImage = await loadAtlasImage(assetUrl(atlas.url));
   canvas.width = columns * tileSize;
   canvas.height = rows * tileSize;
   context.clearRect(0, 0, canvas.width, canvas.height);

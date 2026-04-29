@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+import { assetUrl } from "../utils/urls.js";
 
 const DEFAULT_MOOD = {
   opacity: 0.32,
@@ -32,7 +33,7 @@ export default function PortraitField({
     const atlas = new Image();
     atlas.decoding = "async";
     atlas.fetchPriority = "high";
-    atlas.src = manifest.atlasUrl;
+    atlas.src = assetUrl(manifest.atlasUrl);
 
     const resizeCanvas = () => {
       const width = window.innerWidth;

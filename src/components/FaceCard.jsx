@@ -1,4 +1,5 @@
 import React from "react";
+import { assetUrl } from "../utils/urls.js";
 
 const countFormatter = new Intl.NumberFormat("es-PE");
 
@@ -21,7 +22,7 @@ export default function FaceCard({
     <figure className={className}>
       <div className="face-card-media">
         <img
-          src={item.assetUrl}
+          src={assetUrl(item.assetUrl)}
           alt={`Rostro promedio de ${item.label}`}
           loading="lazy"
           decoding="async"
@@ -33,7 +34,7 @@ export default function FaceCard({
           {showShape && item.shapeUrl ? (
             <img
               className="face-card-shape"
-              src={item.shapeUrl}
+              src={assetUrl(item.shapeUrl)}
               alt=""
               loading="lazy"
               decoding="async"
