@@ -1,8 +1,11 @@
 import React, { useCallback, useMemo, useRef, useState } from "react";
 import MosaicGeneratorSection from "../components/MosaicGeneratorSection.jsx";
+import { appRoutePath } from "../utils/urls.js";
+
+const MOSAIC_ROUTE_PREFIX = "/mosaico/";
 
 export default function MosaicPage() {
-  const sourceImageUrl = useMemo(() => getQueryImageUrl(), []);
+  const sourceImageUrl = useMemo(() => getSourceImageUrl(), []);
   const [status, setStatus] = useState({
     status: sourceImageUrl ? "loading" : "idle",
     message: sourceImageUrl ? "Preparando la imagen remota." : "",
@@ -53,6 +56,10 @@ export default function MosaicPage() {
   );
 }
 
+function getSourceImageUrl() {
+  return getQueryImageUrl() || getPathImageUrl();
+}
+
 function getQueryImageUrl() {
   if (typeof window === "undefined") {
     return "";
@@ -79,4 +86,37 @@ function getQueryImageUrl() {
   } catch {
     return bareValue;
   }
+}
+
+function getPathImageUrl() {
+  if (typeof window === "undefined") {
+    return "";
+  }
+
+  const pathname = appRoutePath();
+  if (!pathname.startsWith(MOSAIC_ROUTE_PREFIX)) {
+    return "";
+  }
+
+  const rawValue = pathname.slice(MOSAIC_ROUTE_PREFIX.length).trim();
+  if (!rawValue) {
+    return "";
+  }
+
+  return decodeRouteImageUrl(rawValue);
+}
+
+function decodeRouteImageUrl(value) {
+  const normalizedValue = value.replace(/^\/+/, "");
+  let decodedValue = normalizedValue;
+
+  try {
+    decodedValue = decodeURIComponent(normalizedValue);
+  } catch {
+    decodedValue = normalizedValue;
+  }
+
+  return decodedValue
+    .replace(/^([a-z][a-z0-9+.-]*:)\/(?!\/)/i, "$1//")
+    .trim();
 }

@@ -77,10 +77,10 @@ function getCurrentRoute() {
   }
 
   const pathname = appRoutePath();
-  if (pathname === "/dvd") {
+  if (pathname === "/dvd" || pathname.startsWith("/dvd/")) {
     return "dvd";
   }
-  if (pathname === "/mosaico") {
+  if (pathname === "/mosaico" || pathname.startsWith("/mosaico/")) {
     return "mosaic";
   }
   return "story";

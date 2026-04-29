@@ -24,7 +24,7 @@ Las imagenes son obtenidas y procesadas desde: https://github.com/jruizcabrejos/
 - Una apertura con la bandera del Peru y rostros promedio rotando por region y sexo.
 - Un rostro promedio nacional con drawers comparativos por regiones y partidos.
 - Un generador de mosaicos que corre completamente en el navegador, con exportacion de imagen y tarjeta para compartir.
-- Una ruta iframe-friendly en `/candidatos/mosaico` que puede recibir una imagen remota por query string.
+- Una ruta iframe-friendly en `/candidatos/mosaico` que puede recibir una imagen remota por query string o como path.
 
 ## Desarrollo rapido
 
