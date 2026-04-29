@@ -1103,11 +1103,14 @@ select {
 }
 
 .mosaic-standalone-page {
+  display: grid;
+  justify-items: center;
   min-height: 100vh;
-  padding: clamp(1rem, 3vw, 2rem);
+  padding: 0 clamp(0.75rem, 3vw, 2rem) clamp(1rem, 3vw, 2rem);
 }
 
 .mosaic-standalone-page .mosaic-section {
+  width: 100%;
   padding: 0;
 }
 
@@ -1120,6 +1123,10 @@ select {
   background:
     linear-gradient(180deg, rgba(46, 15, 24, 0.88), rgba(14, 5, 7, 0.96)),
     radial-gradient(circle at top right, rgba(224, 169, 87, 0.12), transparent 38%);
+}
+
+.mosaic-shell-bare {
+  padding-top: clamp(0.35rem, 1vw, 0.75rem);
 }
 
 .mosaic-header {

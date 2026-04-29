@@ -67,6 +67,7 @@ export default function MosaicGeneratorSection({
   onStatusChange,
   sourceImageUrl = "",
   autoGenerate = false,
+  showHeader = true,
   title = "Tu foto dentro del mosaico electoral",
 }) {
   const localSectionRef = useRef(null);
@@ -678,23 +679,32 @@ export default function MosaicGeneratorSection({
   }
 
   return (
-    <section ref={sectionRef} className="catalog-section mosaic-section">
-      <div className="section-shell mosaic-shell js-reveal">
-        <header className="section-header mosaic-header">
-          <div className="mosaic-header-main">
-            <h2 className="section-title">{title}</h2>
-            <div className="mosaic-header-card-examples" aria-hidden="true">
-              {CARD_EXAMPLES.map((assetUrl, index) => (
-                <figure
-                  key={assetUrl}
-                  className={`mosaic-header-card-example mosaic-header-card-example-${index + 1}`}
-                >
-                  <img src={assetUrl} alt="" />
-                </figure>
-              ))}
+    <section
+      ref={sectionRef}
+      className={`catalog-section mosaic-section${showHeader ? "" : " mosaic-section-bare"}`}
+    >
+      <div
+        className={`section-shell mosaic-shell js-reveal${
+          showHeader ? "" : " mosaic-shell-bare"
+        }`}
+      >
+        {showHeader ? (
+          <header className="section-header mosaic-header">
+            <div className="mosaic-header-main">
+              <h2 className="section-title">{title}</h2>
+              <div className="mosaic-header-card-examples" aria-hidden="true">
+                {CARD_EXAMPLES.map((assetUrl, index) => (
+                  <figure
+                    key={assetUrl}
+                    className={`mosaic-header-card-example mosaic-header-card-example-${index + 1}`}
+                  >
+                    <img src={assetUrl} alt="" />
+                  </figure>
+                ))}
+              </div>
             </div>
-          </div>
-        </header>
+          </header>
+        ) : null}
 
         <div className="mosaic-layout">
           <div className="mosaic-stage">

@@ -49,6 +49,7 @@ export default function MosaicPage() {
       <MosaicGeneratorSection
         autoGenerate={Boolean(sourceImageUrl)}
         onStatusChange={handleStatusChange}
+        showHeader={false}
         sourceImageUrl={sourceImageUrl}
         title="Mosaico de candidaturas"
       />
