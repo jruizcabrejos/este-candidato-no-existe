@@ -32,6 +32,26 @@ jobs:
           VITE_GA_ID: ${{ secrets.GA_ID }}
         run: npm run build
 
+      - name: Validate FTP destination
+        env:
+          FTP_DESTINATION: ${{ secrets.FTP_DESTINATION }}
+        run: |
+          set -euo pipefail
+
+          if [[ -z "${FTP_DESTINATION}" ]]; then
+            echo "::error title=Missing FTP_DESTINATION::Set FTP_DESTINATION to the remote server directory that maps to /candidatos/."
+            exit 1
+          fi
+
+          if [[ "${FTP_DESTINATION}" == http://* || "${FTP_DESTINATION}" == https://* || "${FTP_DESTINATION}" == *"://"* ]]; then
+            echo "::error title=Invalid FTP_DESTINATION::FTP_DESTINATION must be a server path such as /public_html/candidatos/, not a website URL."
+            exit 1
+          fi
+
+          if [[ "${FTP_DESTINATION}" != */ ]]; then
+            echo "::warning title=FTP_DESTINATION missing trailing slash::A trailing slash is recommended, for example /public_html/candidatos/."
+          fi
+
       - name: Upload via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
